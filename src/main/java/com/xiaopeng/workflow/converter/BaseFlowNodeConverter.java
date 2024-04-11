@@ -26,45 +26,18 @@ public class BaseFlowNodeConverter implements FlowNodeConverter {
     @Override
     public Map<String, Object> convert(FlowNode flowNode, BpmnModel bpmnModel, Map<String, Object> flowDef) {
         Map<String, Object> node = new HashMap<>();
-        // ID and Name
+        // 1.填充id
         node.put(DefConstants.COMMON_PROP_ID, flowNode.getId());
         if (StringUtils.isNotEmpty(flowNode.getName())) {
             node.put(DefConstants.COMMON_PROP_NAME, flowNode.getName());
         }
-        // Properties
+
+
+        // 2.设置额外属性
         Map<String, Object> properties = null;
         Map<String, List<ExtensionElement>> extensionElementMap = flowNode.getExtensionElements();
-        if (extensionElementMap != null && extensionElementMap.containsKey(BpmnXmlConstants.PROPERTIES)) {
-            properties = ConvertUtil.getMapValue(node, DefConstants.COMMON_PROP_PROPERTIES);
-            ExtensionElement element = extensionElementMap.get(BpmnXmlConstants.PROPERTIES).get(0);
-            String elementText = element.getElementText();
-            try {
-                Map<String, Object> map = JSONUtil.toBean(elementText, Map.class);
-                properties.putAll(map);
-            } catch (Exception e) {
-                throw new RuntimeException("Property JSON parse error, Node:" + flowNode.getId() + ", Property:" + elementText + "." + e.getMessage(), e);
-            }
-        }
-        // Start
-        if (extensionElementMap != null && extensionElementMap.containsKey(BpmnXmlConstants.START)) {
-            ExtensionElement element = extensionElementMap.get(BpmnXmlConstants.START).get(0);
-            String elementText = element.getElementText();
-            node.put(DefConstants.NODE_PROP_START, JSONUtil.toBean(elementText, Boolean.class));
-        }
-        // Pre
-        // self first
-        if (extensionElementMap != null && extensionElementMap.containsKey(BpmnXmlConstants.PRE)) {
-            ExtensionElement element = extensionElementMap.get(BpmnXmlConstants.PRE).get(0);
-            String elementText = element.getElementText();
-            node.put(DefConstants.NODE_PROP_PRE, JSONUtil.toBean(elementText, Map.class));
-        }
-        // Action
-        // self first
-        if (extensionElementMap != null && extensionElementMap.containsKey(BpmnXmlConstants.ACTION)) {
-            ExtensionElement element = extensionElementMap.get(BpmnXmlConstants.ACTION).get(0);
-            String elementText = element.getElementText();
-            node.put(DefConstants.NODE_PROP_ACTION, JSONUtil.toBean(elementText, Map.class));
-        }
+        setExtenProperties(flowNode, extensionElementMap, node);
+
         // Post
         // self first.
         if (extensionElementMap != null && extensionElementMap.containsKey(BpmnXmlConstants.POST)) {
@@ -124,6 +97,42 @@ public class BaseFlowNodeConverter implements FlowNodeConverter {
             }
         }
         return node;
+    }
+
+    private static void setExtenProperties(FlowNode flowNode, Map<String, List<ExtensionElement>> extensionElementMap, Map<String, Object> node) {
+        Map<String, Object> properties;
+        if (extensionElementMap != null && extensionElementMap.containsKey(BpmnXmlConstants.PROPERTIES)) {
+            properties = ConvertUtil.getMapValue(node, DefConstants.COMMON_PROP_PROPERTIES);
+            ExtensionElement element = extensionElementMap.get(BpmnXmlConstants.PROPERTIES).get(0);
+            String elementText = element.getElementText();
+            try {
+                Map<String, Object> map = JSONUtil.toBean(elementText, Map.class);
+                properties.putAll(map);
+            } catch (Exception e) {
+                throw new RuntimeException("Property JSON parse error, Node:" + flowNode.getId() + ", Property:" + elementText + "." + e.getMessage(), e);
+            }
+        }
+
+        // Start
+        if (extensionElementMap != null && extensionElementMap.containsKey(BpmnXmlConstants.START)) {
+            ExtensionElement element = extensionElementMap.get(BpmnXmlConstants.START).get(0);
+            String elementText = element.getElementText();
+            node.put(DefConstants.NODE_PROP_START, JSONUtil.toBean(elementText, Boolean.class));
+        }
+        // Pre
+        // self first
+        if (extensionElementMap != null && extensionElementMap.containsKey(BpmnXmlConstants.PRE)) {
+            ExtensionElement element = extensionElementMap.get(BpmnXmlConstants.PRE).get(0);
+            String elementText = element.getElementText();
+            node.put(DefConstants.NODE_PROP_PRE, JSONUtil.toBean(elementText, Map.class));
+        }
+        // Action
+        // self first
+        if (extensionElementMap != null && extensionElementMap.containsKey(BpmnXmlConstants.ACTION)) {
+            ExtensionElement element = extensionElementMap.get(BpmnXmlConstants.ACTION).get(0);
+            String elementText = element.getElementText();
+            node.put(DefConstants.NODE_PROP_ACTION, JSONUtil.toBean(elementText, Map.class));
+        }
     }
 
 }
