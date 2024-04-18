@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.xiaopeng.workflow.converter.constant.BpmnXmlConstants;
 import com.xiaopeng.workflow.converter.constant.DefConstants;
 import com.xiaopeng.workflow.converter.event.StartEventConverter;
+import com.xiaopeng.workflow.converter.gateway.ParallelGatewayConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.*;
@@ -34,6 +35,7 @@ public class BpmnConverter {
 
     static {
         flowNodeConverterMap.put(StartEvent.class, new StartEventConverter());
+        flowNodeConverterMap.put(ParallelGateway.class, new ParallelGatewayConverter());
     }
 
     public static void main(String[] args) {
@@ -118,7 +120,22 @@ public class BpmnConverter {
                         "Unsupported BPMN element:ID" + flowElement.getId() + " TYPE:" + flowElement.getClass().getCanonicalName());
             }
         }
+        flowNodeListPostProcess(nodeList);
+        //最外层 getExtensionElements 属性处理
+        proceesPostProcess(flowDef, extensionElementMap);
+    }
 
+    /**
+     * 流程各个节点后处理
+     * 处理并行网关等数据
+     *
+     * @param nodeList
+     */
+    private static void flowNodeListPostProcess(List<Map<String, Object>> nodeList) {
+
+    }
+
+    private static void proceesPostProcess(Map<String, Object> flowDef, Map<String, List<ExtensionElement>> extensionElementMap) {
         // flow post handler
         if (extensionElementMap != null && extensionElementMap.containsKey(BpmnXmlConstants.POST)) {
             ExtensionElement element = extensionElementMap.get(BpmnXmlConstants.POST).get(0);

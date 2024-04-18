@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="17.0.2">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="Camunda Modeler" exporterVersion="5.19.0">
   <process id="Process_1" isExecutable="false">
     <task id="Activity_0f4gdnr" name="initEnv">
       <incoming>Flow_0d4wp19</incoming>
@@ -46,6 +46,11 @@
     <sequenceFlow id="Flow_1rep229" sourceRef="Gateway_1w2mwuc" targetRef="Activity_0x16198" />
     <sequenceFlow id="Flow_02ewhym" sourceRef="Activity_16tx0fl" targetRef="Gateway_02l4v8y" />
     <parallelGateway id="Gateway_02l4v8y">
+      <extensionElements>
+        <camunda:properties>
+        {"joinwith":"Gateway_198j34n"}
+        </camunda:properties>
+      </extensionElements>
       <incoming>Flow_02ewhym</incoming>
       <outgoing>Flow_1k986fk</outgoing>
       <outgoing>Flow_099hkg7</outgoing>
@@ -112,6 +117,10 @@
         <omgdc:Bounds x="350" y="1110" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05xo0zp_di" bpmnElement="Activity_05xo0zp">
+        <omgdc:Bounds x="720" y="1430" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1kxqd05_di" bpmnElement="Gateway_1w2mwuc">
         <omgdc:Bounds x="735" y="335" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -121,15 +130,11 @@
       <bpmndi:BPMNShape id="Gateway_18pw7z7_di" bpmnElement="Gateway_198j34n">
         <omgdc:Bounds x="375" y="945" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1nrj4rm_di" bpmnElement="Event_1nrj4rm">
-        <omgdc:Bounds x="742" y="82" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_05xo0zp_di" bpmnElement="Activity_05xo0zp">
-        <omgdc:Bounds x="720" y="1430" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1akfwt2_di" bpmnElement="Gateway_0yopqts">
         <omgdc:Bounds x="745" y="1335" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1nrj4rm_di" bpmnElement="Event_1nrj4rm">
+        <omgdc:Bounds x="742" y="82" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1a39h8v_di" bpmnElement="Flow_1a39h8v">
         <omgdi:waypoint x="1130" y="870" />
@@ -190,18 +195,18 @@
         <omgdi:waypoint x="1130" y="1360" />
         <omgdi:waypoint x="795" y="1360" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dtflao_di" bpmnElement="Flow_1dtflao">
+        <omgdi:waypoint x="770" y="1385" />
+        <omgdi:waypoint x="770" y="1430" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0d4wp19_di" bpmnElement="Flow_0d4wp19">
         <omgdi:waypoint x="760" y="118" />
         <omgdi:waypoint x="760" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_10ollkl_di" bpmnElement="Flow_10ollkl">
-        <omgdi:waypoint x="420" y="1190" />
-        <omgdi:waypoint x="420" y="1360" />
+        <omgdi:waypoint x="400" y="1190" />
+        <omgdi:waypoint x="400" y="1360" />
         <omgdi:waypoint x="745" y="1360" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1dtflao_di" bpmnElement="Flow_1dtflao">
-        <omgdi:waypoint x="770" y="1385" />
-        <omgdi:waypoint x="770" y="1430" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

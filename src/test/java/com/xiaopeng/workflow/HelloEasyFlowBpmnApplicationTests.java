@@ -1,5 +1,6 @@
 package com.xiaopeng.workflow;
 
+import cn.hutool.json.JSONUtil;
 import com.xiaopeng.workflow.converter.BpmnConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ class HelloEasyFlowBpmnApplicationTests {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource resource = resolver.getResource("classpath:flow/converter/paral.bpmn");
         List<Map<String, Object>> convert = BpmnConverter.convert(resource.getInputStream());
-        log.info("Model is:" + convert);
+        log.info("Model is:" + JSONUtil.toJsonStr(convert));
     }
 
 }
