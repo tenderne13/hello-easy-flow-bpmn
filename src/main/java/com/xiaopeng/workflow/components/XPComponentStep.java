@@ -15,8 +15,22 @@ import java.util.List;
 public class XPComponentStep {
     private String name;
     private String component;
+    /**
+     * 串行流步骤
+     */
     private List<XPComponentStep> sequentialSteps;
+    /**
+     * 并行流步骤
+     */
     private List<XPComponentStep> parallelSteps;
+
+    /**
+     * 条件流step 标识
+     * 1：then
+     * 2: otherwise
+     */
+    private Integer conditionStep = 1;
+
     private String type = "single";
 
     public XPComponentStep() {
