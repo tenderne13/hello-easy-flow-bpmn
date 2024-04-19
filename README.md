@@ -98,51 +98,51 @@ flowchart TD
 ``` shell
 mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#testConvertXPComp -e
 
-20:29:56.351 [main] INFO   - ===================> sequential build start <====================
-20:29:56.351 [main] INFO   - build single component:INIT_ENV
-20:29:56.353 [main] INFO   - build single component:RETRIEVE_VOCAB
-20:29:56.353 [main] INFO   - ===================> parallel build start <====================
-20:29:56.353 [main] INFO   - build single component:BERT_CRF_ENTITY_EXTRACTOR
-20:29:56.353 [main] INFO   - build single component:TEMPLATE_QUERY_MATCHER
-20:29:56.359 [main] INFO   - =======> build parallel flow success, component info  ==> {"name":"并行执行","parallelSteps":[{"component":"BERT_CRF_ENTITY_EXTRACTOR","type":"single"},{"component":"TEMPLATE_QUERY_MATCHER","type":"single"}],"type":"parallel"} <===
-20:29:56.374 [main] INFO   - build single component:ENTITY_ENSEMBLE
-20:29:56.374 [main] INFO   - ===================> parallel build start <====================
-20:29:56.374 [main] INFO   - ===================> sequential build start <====================
-20:29:56.374 [main] INFO   - build single component:GENERAL_RULE_TAGGER
-20:29:56.374 [main] INFO   - build single component:TAG_ENSEMBLE
-20:29:56.374 [main] INFO   - ===================> parallel build start <====================
-20:29:56.374 [main] INFO   - build single component:TEMPLATE_ACTION_PREDICTION
-20:29:56.374 [main] INFO   - build single component:UNILM_ACTION_PREDICTION
-20:29:56.375 [main] INFO   - =======> build parallel flow success, component info  ==> {"name":"并行执行预测","parallelSteps":[{"component":"TEMPLATE_ACTION_PREDICTION","type":"single"},{"component":"UNILM_ACTION_PREDICTION","type":"single"}],"type":"parallel"} <===
-20:29:56.377 [main] INFO   - =======> build sequential flow success, component info  ==> {"name":"全局节点","sequentialSteps":[{"name":"初始化操作","component":"GENERAL_RULE_TAGGER","type":"single"},{"name":"标签集成","component":"TAG_ENSEMBLE","type":"single"},{"name":"并行执行预测","parallelSteps":[{"component":"TEMPLATE_ACTION_PREDICTION","type":"single"},{"component":"UNILM_ACTION_PREDICTION","type":"single"}],"type":"parallel"}],"type":"sequential"} <===
-20:29:56.381 [main] INFO   - build single component:SCENE_ES
-20:29:56.383 [main] INFO   - =======> build parallel flow success, component info  ==> {"name":"并行执行全局节点和可见及可说节点","parallelSteps":[{"name":"全局节点","sequentialSteps":[{"name":"初始化操作","component":"GENERAL_RULE_TAGGER","type":"single"},{"name":"标签集成","component":"TAG_ENSEMBLE","type":"single"},{"name":"并行执行预测","parallelSteps":[{"component":"TEMPLATE_ACTION_PREDICTION","type":"single"},{"component":"UNILM_ACTION_PREDICTION","type":"single"}],"type":"parallel"}],"type":"sequential"},{"name":"场景ES","component":"SCENE_ES","type":"single"}],"type":"parallel"} <===
-20:29:56.384 [main] INFO   - build single component:GLOBAL_SCENE_FUSION
-20:29:56.387 [main] INFO   - =======> build sequential flow success, component info  ==> {"name":"工作流","sequentialSteps":[{"name":"初始化操作","component":"INIT_ENV","type":"single"},{"name":"获取词汇表","component":"RETRIEVE_VOCAB","type":"single"},{"name":"并行执行","parallelSteps":[{"component":"BERT_CRF_ENTITY_EXTRACTOR","type":"single"},{"component":"TEMPLATE_QUERY_MATCHER","type":"single"}],"type":"parallel"},{"name":"实体集成","component":"ENTITY_ENSEMBLE","type":"single"},{"name":"并行执行全局节点和可见及可说节点","parallelSteps":[{"name":"全局节点","sequentialSteps":[{"name":"初始化操作","component":"GENERAL_RULE_TAGGER","type":"single"},{"name":"标签集成","component":"TAG_ENSEMBLE","type":"single"},{"name":"并行执行预测","parallelSteps":[{"component":"TEMPLATE_ACTION_PREDICTION","type":"single"},{"component":"UNILM_ACTION_PREDICTION","type":"single"}],"type":"parallel"}],"type":"sequential"},{"name":"场景ES","component":"SCENE_ES","type":"single"}],"type":"parallel"},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION","type":"single"}],"type":"sequential"} <===
-20:29:56.388 [main] INFO   - Running workflow ''工作流''
-20:29:56.388 [main] INFO   - INIT_ENV execute start
-20:29:58.130 [main] INFO   - INIT_ENV execute end ==> cost time:1738ms
-20:29:58.131 [main] INFO   - RETRIEVE_VOCAB execute start
-20:30:00.040 [main] INFO   - RETRIEVE_VOCAB execute end ==> cost time:1906ms
-20:30:00.041 [pool-1-thread-1] INFO   - BERT_CRF_ENTITY_EXTRACTOR execute start
-20:30:00.042 [pool-1-thread-2] INFO   - TEMPLATE_QUERY_MATCHER execute start
-20:30:00.762 [pool-1-thread-2] INFO   - TEMPLATE_QUERY_MATCHER execute end ==> cost time:716ms
-20:30:03.374 [pool-1-thread-1] INFO   - BERT_CRF_ENTITY_EXTRACTOR execute end ==> cost time:3328ms
-20:30:03.374 [main] INFO   - ENTITY_ENSEMBLE execute start
-20:30:05.637 [main] INFO   - ENTITY_ENSEMBLE execute end ==> cost time:2258ms
-20:30:05.638 [pool-1-thread-3] INFO   - GENERAL_RULE_TAGGER execute start
-20:30:05.638 [pool-1-thread-4] INFO   - SCENE_ES execute start
-20:30:08.340 [pool-1-thread-4] INFO   - SCENE_ES execute end ==> cost time:2697ms
-20:30:10.611 [pool-1-thread-3] INFO   - GENERAL_RULE_TAGGER execute end ==> cost time:4969ms
-20:30:10.612 [pool-1-thread-3] INFO   - TAG_ENSEMBLE execute start
-20:30:13.369 [pool-1-thread-3] INFO   - TAG_ENSEMBLE execute end ==> cost time:2753ms
-20:30:13.369 [pool-1-thread-5] INFO   - TEMPLATE_ACTION_PREDICTION execute start
-20:30:13.370 [pool-1-thread-6] INFO   - UNILM_ACTION_PREDICTION execute start
-20:30:16.557 [pool-1-thread-6] INFO   - UNILM_ACTION_PREDICTION execute end ==> cost time:3184ms
-20:30:17.890 [pool-1-thread-5] INFO   - TEMPLATE_ACTION_PREDICTION execute end ==> cost time:4517ms
-20:30:17.890 [main] INFO   - globalSceneFusion execute start
-20:30:21.065 [main] INFO   - GLOBAL_SCENE_FUSION execute end ==> cost time:3170ms
-20:30:21.065 [main] INFO   - report:DefaultWorkReport {status=COMPLETED, context=context={}}, error=''}
+11:37:38.315 [main] INFO   - ===================> sequential ULY9n94D build start <====================
+11:37:38.318 [main] INFO   - build single component:INIT_ENV
+11:37:38.318 [main] INFO   - build single component:RETRIEVE_VOCAB
+11:37:38.318 [main] INFO   - ===================> parallel dA7jGnb4 build start <====================
+11:37:38.318 [main] INFO   - build single component:BERT_CRF_ENTITY_EXTRACTOR
+11:37:38.319 [main] INFO   - build single component:TEMPLATE_QUERY_MATCHER
+11:37:38.331 [main] INFO   - =======> build parallel dA7jGnb4 flow success, component info  ==> {"name":"并行执行","parallelSteps":[{"component":"BERT_CRF_ENTITY_EXTRACTOR","type":"single"},{"component":"TEMPLATE_QUERY_MATCHER","type":"single"}],"type":"parallel"} <===
+11:37:38.357 [main] INFO   - build single component:ENTITY_ENSEMBLE
+11:37:38.357 [main] INFO   - ===================> parallel wPyDLLfE build start <====================
+11:37:38.357 [main] INFO   - ===================> sequential oZa3MR3x build start <====================
+11:37:38.358 [main] INFO   - build single component:GENERAL_RULE_TAGGER
+11:37:38.358 [main] INFO   - build single component:TAG_ENSEMBLE
+11:37:38.358 [main] INFO   - ===================> parallel GJLQBFkH build start <====================
+11:37:38.358 [main] INFO   - build single component:TEMPLATE_ACTION_PREDICTION
+11:37:38.358 [main] INFO   - build single component:UNILM_ACTION_PREDICTION
+11:37:38.359 [main] INFO   - =======> build parallel GJLQBFkH flow success, component info  ==> {"name":"并行执行预测","parallelSteps":[{"component":"TEMPLATE_ACTION_PREDICTION","type":"single"},{"component":"UNILM_ACTION_PREDICTION","type":"single"}],"type":"parallel"} <===
+11:37:38.362 [main] INFO   - =======> build sequential oZa3MR3x flow success, component info  ==> {"name":"全局节点","sequentialSteps":[{"name":"初始化操作","component":"GENERAL_RULE_TAGGER","type":"single"},{"name":"标签集成","component":"TAG_ENSEMBLE","type":"single"},{"name":"并行执行预测","parallelSteps":[{"component":"TEMPLATE_ACTION_PREDICTION","type":"single"},{"component":"UNILM_ACTION_PREDICTION","type":"single"}],"type":"parallel"}],"type":"sequential"} <===
+11:37:38.367 [main] INFO   - build single component:SCENE_ES
+11:37:38.369 [main] INFO   - =======> build parallel wPyDLLfE flow success, component info  ==> {"name":"并行执行全局节点和可见及可说节点","parallelSteps":[{"name":"全局节点","sequentialSteps":[{"name":"初始化操作","component":"GENERAL_RULE_TAGGER","type":"single"},{"name":"标签集成","component":"TAG_ENSEMBLE","type":"single"},{"name":"并行执行预测","parallelSteps":[{"component":"TEMPLATE_ACTION_PREDICTION","type":"single"},{"component":"UNILM_ACTION_PREDICTION","type":"single"}],"type":"parallel"}],"type":"sequential"},{"name":"场景ES","component":"SCENE_ES","type":"single"}],"type":"parallel"} <===
+11:37:38.370 [main] INFO   - build single component:GLOBAL_SCENE_FUSION
+11:37:38.374 [main] INFO   - =======> build sequential ULY9n94D flow success, component info  ==> {"name":"工作流","sequentialSteps":[{"name":"初始化操作","component":"INIT_ENV","type":"single"},{"name":"获取词汇表","component":"RETRIEVE_VOCAB","type":"single"},{"name":"并行执行","parallelSteps":[{"component":"BERT_CRF_ENTITY_EXTRACTOR","type":"single"},{"component":"TEMPLATE_QUERY_MATCHER","type":"single"}],"type":"parallel"},{"name":"实体集成","component":"ENTITY_ENSEMBLE","type":"single"},{"name":"并行执行全局节点和可见及可说节点","parallelSteps":[{"name":"全局节点","sequentialSteps":[{"name":"初始化操作","component":"GENERAL_RULE_TAGGER","type":"single"},{"name":"标签集成","component":"TAG_ENSEMBLE","type":"single"},{"name":"并行执行预测","parallelSteps":[{"component":"TEMPLATE_ACTION_PREDICTION","type":"single"},{"component":"UNILM_ACTION_PREDICTION","type":"single"}],"type":"parallel"}],"type":"sequential"},{"name":"场景ES","component":"SCENE_ES","type":"single"}],"type":"parallel"},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION","type":"single"}],"type":"sequential"} <===
+11:37:38.376 [main] INFO   - Running workflow ''工作流''
+11:37:38.376 [main] INFO   - INIT_ENV execute start
+11:37:42.516 [main] INFO   - INIT_ENV execute end ==> cost time:4134ms
+11:37:42.516 [main] INFO   - RETRIEVE_VOCAB execute start
+11:37:47.387 [main] INFO   - RETRIEVE_VOCAB execute end ==> cost time:4867ms
+11:37:47.390 [pool-1-thread-1] INFO   - BERT_CRF_ENTITY_EXTRACTOR execute start
+11:37:47.390 [pool-1-thread-2] INFO   - TEMPLATE_QUERY_MATCHER execute start
+11:37:49.884 [pool-1-thread-1] INFO   - BERT_CRF_ENTITY_EXTRACTOR execute end ==> cost time:2490ms
+11:37:52.385 [pool-1-thread-2] INFO   - TEMPLATE_QUERY_MATCHER execute end ==> cost time:4991ms
+11:37:52.385 [main] INFO   - ENTITY_ENSEMBLE execute start
+11:37:56.389 [main] INFO   - ENTITY_ENSEMBLE execute end ==> cost time:4000ms
+11:37:56.390 [pool-1-thread-3] INFO   - GENERAL_RULE_TAGGER execute start
+11:37:56.390 [pool-1-thread-4] INFO   - SCENE_ES execute start
+11:37:56.446 [pool-1-thread-3] INFO   - GENERAL_RULE_TAGGER execute end ==> cost time:51ms
+11:37:56.446 [pool-1-thread-3] INFO   - TAG_ENSEMBLE execute start
+11:37:59.189 [pool-1-thread-4] INFO   - SCENE_ES execute end ==> cost time:2796ms
+11:38:00.987 [pool-1-thread-3] INFO   - TAG_ENSEMBLE execute end ==> cost time:4536ms
+11:38:00.987 [pool-1-thread-5] INFO   - TEMPLATE_ACTION_PREDICTION execute start
+11:38:00.987 [pool-1-thread-6] INFO   - UNILM_ACTION_PREDICTION execute start
+11:38:01.663 [pool-1-thread-6] INFO   - UNILM_ACTION_PREDICTION execute end ==> cost time:673ms
+11:38:05.296 [pool-1-thread-5] INFO   - TEMPLATE_ACTION_PREDICTION execute end ==> cost time:4304ms
+11:38:05.296 [main] INFO   - globalSceneFusion execute start
+11:38:08.398 [main] INFO   - GLOBAL_SCENE_FUSION execute end ==> cost time:3098ms
+11:38:08.398 [main] INFO   - report:DefaultWorkReport {status=COMPLETED, context=context={}}, error=''}
 
 
 
