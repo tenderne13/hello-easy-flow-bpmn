@@ -65,7 +65,7 @@ class HelloEasyFlowBpmnApplicationTests {
 
         WorkFlowEngine engine = aNewWorkFlowEngine().build();
         WorkContext workContext = new WorkContext();
-        workContext.put("XGPTSwitch", false);
+        workContext.put("XGPTSwitch", true);
         final WorkReport report = engine.run(workFlow, workContext);
         log.info("report:{}", report);
     }
