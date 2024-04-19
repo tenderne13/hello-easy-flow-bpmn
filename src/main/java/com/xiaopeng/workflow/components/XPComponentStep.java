@@ -29,7 +29,7 @@ public class XPComponentStep {
     private Integer conditionStep = FlowConstants.THEN_STEP;
 
     /**
-     * 类型 single | sequential | parallel | conditional | loop
+     * 类型 single | sequential | parallel | conditional | repeat
      */
     private String type = "single";
 
