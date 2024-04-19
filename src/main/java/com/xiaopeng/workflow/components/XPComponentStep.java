@@ -1,6 +1,6 @@
 package com.xiaopeng.workflow.components;
 
-import cn.hutool.core.collection.CollectionUtil;
+import com.xiaopeng.workflow.components.constants.FlowConstants;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,8 +13,32 @@ import java.util.List;
 @Data
 @Slf4j
 public class XPComponentStep {
+    /**
+     * 组件名称
+     */
     private String name;
+    /**
+     * 组件标识
+     */
     private String component;
+    /**
+     * 条件流step 标识
+     * 1：then
+     * 2: otherwise
+     */
+    private Integer conditionStep = FlowConstants.THEN_STEP;
+
+    /**
+     * 类型 single | sequential | parallel | conditional | loop
+     */
+    private String type = "single";
+
+    /**
+     * 条件流的条件类名 类型为条件流 | 循环流 为必填
+     */
+    private String predicateClassName;
+
+
     /**
      * 串行流步骤
      */
@@ -23,41 +47,4 @@ public class XPComponentStep {
      * 并行流步骤
      */
     private List<XPComponentStep> parallelSteps;
-
-    /**
-     * 条件流step 标识
-     * 1：then
-     * 2: otherwise
-     */
-    private Integer conditionStep = 1;
-
-    private String type = "single";
-
-    public XPComponentStep() {
-    }
-
-    public XPComponentStep(String name, String component, List<XPComponentStep> sequentialSteps, List<XPComponentStep> parallelSteps, String type) {
-        this.name = name;
-        this.component = component;
-        this.sequentialSteps = sequentialSteps;
-        this.parallelSteps = parallelSteps;
-        this.setType();
-    }
-
-    public void setType() {
-        if (CollectionUtil.isNotEmpty(sequentialSteps)) {
-            this.type = "sequential";
-        } else if (CollectionUtil.isNotEmpty(parallelSteps)) {
-            this.type = "parallel";
-        }
-    }
-
-    public String getType() {
-        if (CollectionUtil.isNotEmpty(sequentialSteps)) {
-            this.type = "sequential";
-        } else if (CollectionUtil.isNotEmpty(parallelSteps)) {
-            this.type = "parallel";
-        }
-        return type;
-    }
 }

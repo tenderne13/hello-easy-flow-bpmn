@@ -48,20 +48,36 @@ class HelloEasyFlowBpmnApplicationTests {
         log.info("Model is:" + JSONUtil.toJsonStr(convert));
     }
 
+    /**
+     * 拉齐现有工作流功能 case
+     */
     @Test
     public void testConvertXPComp() {
 
         String jsonStr = "{\"name\":\"工作流\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"并行执行\",\"parallelSteps\":[{\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"},{\"component\":\"TEMPLATE_QUERY_MATCHER\"}]},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行全局节点和可见及可说节点\",\"parallelSteps\":[{\"name\":\"全局节点\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"GENERAL_RULE_TAGGER\"},{\"name\":\"标签集成\",\"component\":\"TAG_ENSEMBLE\"},{\"name\":\"并行执行预测\",\"parallelSteps\":[{\"component\":\"TEMPLATE_ACTION_PREDICTION\"},{\"component\":\"UNILM_ACTION_PREDICTION\"}]}]},{\"name\":\"场景ES\",\"component\":\"SCENE_ES\"}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        commonExecute(jsonStr);
+    }
+
+    private static void commonExecute(String jsonStr) {
         XPComponentStep xpComponentStep = JSONUtil.toBean(jsonStr, XPComponentStep.class);
-
         HashMap<String, WorkFlow> componentMap = buildComponentMap();
-
-
         WorkFlow workFlow = XPWorkFLowBuilder.buildWorkFlow(componentMap, xpComponentStep, THREAD_POOL);
 
         WorkFlowEngine engine = aNewWorkFlowEngine().build();
-        final WorkReport report = engine.run(workFlow, new WorkContext());
+        WorkContext workContext = new WorkContext();
+        workContext.put("XGPTSwitch", true);
+        final WorkReport report = engine.run(workFlow, workContext);
         log.info("report:{}", report);
+    }
+
+
+    /**
+     * 测试条件组件
+     */
+    @Test
+    public void testConditionXPComp() {
+        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"e2e and llm flow\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"e2e-flow\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"并行执行\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"},{\"component\":\"TEMPLATE_QUERY_MATCHER\"}]},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行全局节点和可见及可说节点\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"全局节点\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"GENERAL_RULE_TAGGER\"},{\"name\":\"标签集成\",\"component\":\"TAG_ENSEMBLE\"},{\"name\":\"并行执行预测\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"TEMPLATE_ACTION_PREDICTION\"},{\"component\":\"UNILM_ACTION_PREDICTION\"}]}]},{\"name\":\"场景ES\",\"component\":\"SCENE_ES\"}]}]},{\"name\":\"llm 链路\",\"type\":\"conditional\",\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate\",\"sequentialSteps\":[{\"name\":\"thenWorkFlow\",\"type\":\"sequential\",\"conditionStep\":1,\"sequentialSteps\":[{\"name\":\"llmParael\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"LLM\",\"component\":\"LLM\"},{\"name\":\"LLM_TEMPLATE_QUERY_MATCHER\",\"component\":\"LLM_TEMPLATE_QUERY_MATCHER\"}]},{\"name\":\"LLMPOST_RULE\",\"component\":\"LLMPOST_RULE\"}]}]}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        commonExecute(jsonStr);
     }
 
 
@@ -76,6 +92,10 @@ class HelloEasyFlowBpmnApplicationTests {
         String tagEnsemble = "TAG_ENSEMBLE";
         String templateActionPrediction = "TEMPLATE_ACTION_PREDICTION";
         String unilmActionPrediction = "UNILM_ACTION_PREDICTION";
+
+        String LLM = "LLM";
+        String LLM_TEMPLATE_QUERY_MATCHER = "LLM_TEMPLATE_QUERY_MATCHER";
+        String LLMPOST_RULE = "LLMPOST_RULE";
         HashMap<String, WorkFlow> componentMap = new HashMap<>();
         componentMap.put(initEnv, workContext -> {
             log.info("INIT_ENV execute start");
@@ -142,6 +162,25 @@ class HelloEasyFlowBpmnApplicationTests {
         componentMap.put(globalSceneFusion, workContext -> {
             log.info("globalSceneFusion execute start");
             sleepForAWhile(globalSceneFusion);
+            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
+        });
+
+
+        componentMap.put(LLM, workContext -> {
+            log.info(LLM + " execute start");
+            sleepForAWhile(LLM);
+            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
+        });
+
+        componentMap.put(LLM_TEMPLATE_QUERY_MATCHER, workContext -> {
+            log.info(LLM_TEMPLATE_QUERY_MATCHER + " execute start");
+            sleepForAWhile(LLM_TEMPLATE_QUERY_MATCHER);
+            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
+        });
+
+        componentMap.put(LLMPOST_RULE, workContext -> {
+            log.info(LLMPOST_RULE + " execute start");
+            sleepForAWhile(LLMPOST_RULE);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
         return componentMap;
