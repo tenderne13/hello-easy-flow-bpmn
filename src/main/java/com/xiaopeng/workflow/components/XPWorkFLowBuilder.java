@@ -9,7 +9,6 @@ import org.jeasy.flows.work.WorkReportPredicate;
 import org.jeasy.flows.work.WorkStatus;
 import org.jeasy.flows.workflow.WorkFlow;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -22,9 +21,9 @@ public class XPWorkFLowBuilder {
 
     static {
         componentStepParserMap.put("single", new SingleComponentStepParser());
-        componentStepParserMap.put("parallel", new ParallComponentStepParser());
-        componentStepParserMap.put("sequential", new SeqComponentStepParser());
-        componentStepParserMap.put("conditional", new ConComponentStepParser());
+        componentStepParserMap.put("parallel", new ParallelComponentStepParser());
+        componentStepParserMap.put("sequential", new SequentialComponentStepParser());
+        componentStepParserMap.put("conditional", new ConditionalComponentStepParser());
     }
 
 

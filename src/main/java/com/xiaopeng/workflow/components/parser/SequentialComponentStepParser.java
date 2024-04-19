@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import static com.xiaopeng.workflow.components.XPWorkFLowBuilder.buildWorkFlow;
 
 @Slf4j
-public class SeqComponentStepParser implements ComponentStepParser {
+public class SequentialComponentStepParser implements ComponentStepParser {
     @Override
     public WorkFlow parse(Map<String, WorkFlow> componentMap, XPComponentStep componentStep, ExecutorService threadPool) {
         String stepId = RandomUtil.randomString(8);
