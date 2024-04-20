@@ -38,6 +38,11 @@ public class XPComponentStep {
      */
     private String predicateClassName;
 
+    /**
+     * 多条件步骤
+     */
+    private List<XPConditionStep> conditionSteps;
+
 
     /**
      * 串行流步骤
