@@ -195,7 +195,9 @@ flowchart TD
     INIT_ENV --> LLMSUB
     LLMSUB --> GLOBAL_SCENE_FUSION
 ```
+
 ## template json
+
 ```json
 {
   "name": "工作流",
@@ -314,6 +316,7 @@ flowchart TD
 ```
 
 ## UT
+
 ```shell
 mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#testConditionXPComp -e
 
@@ -386,8 +389,108 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 
 ```
 
+# mulit condition Flow
 
+## mulit condition Flow define
 
+``` java
+public class XPConditionStep {
+    private String conditionType;
+    /**
+     * 条件流step 标识
+     * 1：then
+     * 2: otherwise
+     */
+    private Integer conditionStep = FlowConstants.THEN_STEP;
+
+    /**
+     * 条件流的条件类名 类型为条件流 | 循环流 为必填
+     */
+    private String predicateClassName;
+
+    /**
+     * 命中条件时执行的WorkFlow 配置
+     */
+    private XPComponentStep componentStep;
+}
+```
+
+```mermaid
+graph TB
+    Start(开始) --> PredicateCheck1{检查第一个条件}
+    PredicateCheck1 -- 条件满足 --> Work1[执行第一个工作]
+    Work1 --> End(结束)
+    PredicateCheck1 -- 条件不满足 --> PredicateCheck2{检查第二个条件}
+    PredicateCheck2 -- 条件满足 --> Work2[执行第二个工作]
+    Work2 --> End
+    PredicateCheck2 -- 条件不满足 --> PredicateCheckN{检查第N个条件}
+    PredicateCheckN -- 条件满足 --> WorkN[执行第N个工作]
+    WorkN --> End
+    PredicateCheckN -- 条件不满足 --> OtherwiseWork[执行兜底工作]
+    OtherwiseWork --> End
+
+```
+
+## test Case flow
+
+```mermaid
+flowchart TD
+    INIT_ENV
+    INIT_ENV --> PREDICT1{PREDICT1}
+    INIT_ENV --> PREDICT2{PREDICT2}
+    INIT_ENV --> PREDICT3{PREDICT3}
+    PREDICT1 -- if hit --> RETRIEVE_VOCAB
+    PREDICT2 -- elseif hit --> BERT_CRF_ENTITY_EXTRACTOR
+    PREDICT3 -- elseif hit --> TEMPLATE_QUERY_MATCHER
+    INIT_ENV -- else --> GLOBAL_SCENE_FUSION
+```
+
+## template json
+
+```json
+{
+  "name": "工作流",
+  "type": "sequential",
+  "sequentialSteps": [
+    {
+      "name": "初始化操作",
+      "component": "INIT_ENV"
+    },
+    {
+      "name": "多条件流",
+      "type": "multiCondition",
+      "multiConditionSteps": [
+        {
+          "conditionType": "com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate",
+          "componentStep": {
+            "name": "获取词汇表",
+            "component": "RETRIEVE_VOCAB"
+          }
+        },
+        {
+          "conditionType": "com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate",
+          "componentStep": {
+            "name": "BERT_CRF_ENTITY_EXTRACTOR",
+            "component": "BERT_CRF_ENTITY_EXTRACTOR"
+          }
+        },
+        {
+          "conditionType": "com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate",
+          "componentStep": {
+            "name": "TEMPLATE_QUERY_MATCHER",
+            "component": "TEMPLATE_QUERY_MATCHER"
+          }
+        }
+      ]
+    },
+    {
+      "name": "全局场景融合",
+      "component": "GLOBAL_SCENE_FUSION"
+    }
+  ]
+}
+
+```
 
 # 3. repeat Flow
 
