@@ -14,7 +14,7 @@ public class XPConditionStep {
     private Integer conditionStep = FlowConstants.THEN_STEP;
 
     /**
-     * 条件流的条件类名 类型为条件流 | 循环流 为必填
+     * 用于判断是否命中条件
      */
     private String predicateClassName;
 

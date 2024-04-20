@@ -10,6 +10,8 @@ import com.xiaopeng.workflow.components.factory.ConditionFlowFactory;
 import com.xiaopeng.workflow.components.factory.WorkReportPredicateFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.jeasy.flows.work.NoOpWork;
+import org.jeasy.flows.work.Work;
 import org.jeasy.flows.work.WorkReportPredicate;
 import org.jeasy.flows.workflow.WorkFlow;
 
@@ -28,8 +30,35 @@ public class MultConditionalComponentStepParser implements ComponentStepParser {
 
         log.info("===================> conditional {} build start <====================", stepId);
         List<XPConditionStep> conditionSteps = componentStep.getConditionSteps();
-        MulitConditionalFlow mulitConditionalFlow = new MulitConditionalFlow(componentStep.getName(), conditionSteps, componentMap, threadPool);
+
+        // 1, 构建IF THEN 工作流
+        List<MulitConditionalFlow.PredictWorkPair> predictWorkPairs = buildPredictWorkPairList(conditionSteps, componentMap, threadPool);
+        // 2, 构建OTHERWISE 工作流
+        Work otherWishWork = buildOtherWishWork(conditionSteps, componentMap, threadPool);
+        MulitConditionalFlow conditionalFlow = new MulitConditionalFlow(predictWorkPairs, otherWishWork);
         log.info("===================> conditional {} flow build success, component info  ==> {} <===", stepId, JSONUtil.toJsonStr(componentStep));
-        return mulitConditionalFlow;
+        return conditionalFlow;
+    }
+
+    private Work buildOtherWishWork(List<XPConditionStep> conditionSteps, Map<String, WorkFlow> componentMap, ExecutorService threadPool) {
+        Optional<XPConditionStep> otherStep = conditionSteps.stream().filter(step -> FlowConstants.OTHERWISE_STEP.equals(step.getConditionStep())).findFirst();
+        if (otherStep.isPresent()) {
+            XPConditionStep xpConditionStep = otherStep.get();
+            XPComponentStep componentStep = xpConditionStep.getComponentStep();
+            return buildWorkFlow(componentMap, componentStep, threadPool);
+        }
+        return new NoOpWork();
+    }
+
+    private List<MulitConditionalFlow.PredictWorkPair> buildPredictWorkPairList(List<XPConditionStep> conditionSteps, Map<String, WorkFlow> componentMap, ExecutorService threadPool) {
+        return conditionSteps.stream().filter(step -> FlowConstants.THEN_STEP.equals(step.getConditionStep())).map(step -> {
+            XPComponentStep componentStep = step.getComponentStep();
+            // 构建命中该条件分支时的工作流
+            WorkFlow workFlow = buildWorkFlow(componentMap, componentStep, threadPool);
+            // 构建条件判断器
+            String predicateClassName = step.getPredicateClassName();
+            WorkReportPredicate predicate = StringUtils.isNotEmpty(predicateClassName) ? WorkReportPredicateFactory.createPredicate(predicateClassName) : WorkReportPredicate.ALWAYS_FALSE;
+            return new MulitConditionalFlow.PredictWorkPair(predicate, workFlow);
+        }).toList();
     }
 }

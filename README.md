@@ -458,24 +458,24 @@ flowchart TD
     },
     {
       "name": "多条件流",
-      "type": "multiCondition",
-      "multiConditionSteps": [
+      "type": "conditional",
+      "conditionSteps": [
         {
-          "conditionType": "com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate",
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE",
           "componentStep": {
             "name": "获取词汇表",
             "component": "RETRIEVE_VOCAB"
           }
         },
         {
-          "conditionType": "com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate",
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE",
           "componentStep": {
             "name": "BERT_CRF_ENTITY_EXTRACTOR",
             "component": "BERT_CRF_ENTITY_EXTRACTOR"
           }
         },
         {
-          "conditionType": "com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate",
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE",
           "componentStep": {
             "name": "TEMPLATE_QUERY_MATCHER",
             "component": "TEMPLATE_QUERY_MATCHER"
