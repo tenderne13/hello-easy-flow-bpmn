@@ -25,7 +25,7 @@ public class ParallelComponentStepParser implements ComponentStepParser {
         for (XPComponentStep parallelStep : parallelSteps) {
             tmpWorkFlows.add(buildWorkFlow(componentMap, parallelStep, threadPool));
         }
-        log.info("=======> build parallel {} flow success, component info  ==> {} <===", stepId, JSONUtil.toJsonStr(componentStep));
+        log.info("===================> parallel {} flow build success, component info  ==> {} <===", stepId, JSONUtil.toJsonStr(componentStep));
         return ParallelFlowFactory.buildParallelFlow(componentStep.getName(), tmpWorkFlows, threadPool);
     }
 }

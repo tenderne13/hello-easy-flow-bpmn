@@ -26,7 +26,7 @@ public class SequentialComponentStepParser implements ComponentStepParser {
         for (XPComponentStep parallelStep : sequentialSteps) {
             tmpSeqWorkFlows.add(buildWorkFlow(componentMap, parallelStep, threadPool));
         }
-        log.info("=======> build sequential {} flow success, component info  ==> {} <===", stepId, JSONUtil.toJsonStr(componentStep));
+        log.info("===================> sequential {} flow build success, component info  ==> {} <===", stepId, JSONUtil.toJsonStr(componentStep));
         return SequentialFlowFactory.buildSequentialFlow(componentStep.getName(), tmpSeqWorkFlows);
     }
 }

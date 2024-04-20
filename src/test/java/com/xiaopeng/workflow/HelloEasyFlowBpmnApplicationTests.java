@@ -66,7 +66,7 @@ class HelloEasyFlowBpmnApplicationTests {
         WorkFlowEngine engine = aNewWorkFlowEngine().build();
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
-        workContext.put("conditionPath", "TEMPLATE_QUERY_MATCHER");
+        workContext.put("conditionPath", "RETRIEVE_VOCAB");
         final WorkReport report = engine.run(workFlow, workContext);
         log.info("report:{}", report);
     }
@@ -84,6 +84,12 @@ class HelloEasyFlowBpmnApplicationTests {
     @Test
     public void testSimpleMulitPredicate() {
         String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"多条件流\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE\",\"componentStep\":{\"name\":\"BERT_CRF_ENTITY_EXTRACTOR\",\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE\",\"componentStep\":{\"name\":\"TEMPLATE_QUERY_MATCHER\",\"component\":\"TEMPLATE_QUERY_MATCHER\"}}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        commonExecute(jsonStr);
+    }
+
+    @Test
+    public void testSimpleRepeat() {
+        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"多条件流\",\"type\":\"repeat\",\"repeatStep\":{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"}}},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
         commonExecute(jsonStr);
     }
 

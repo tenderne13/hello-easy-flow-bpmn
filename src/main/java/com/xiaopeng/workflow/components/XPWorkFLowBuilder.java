@@ -18,6 +18,7 @@ public class XPWorkFLowBuilder {
         componentStepParserMap.put("parallel", new ParallelComponentStepParser());
         componentStepParserMap.put("sequential", new SequentialComponentStepParser());
         componentStepParserMap.put("conditional", new MultConditionalComponentStepParser());
+        componentStepParserMap.put("repeat", new RepeatComponentStepParser());
     }
 
 
