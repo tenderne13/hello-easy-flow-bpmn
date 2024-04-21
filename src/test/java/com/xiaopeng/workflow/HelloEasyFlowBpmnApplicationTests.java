@@ -68,7 +68,7 @@ class HelloEasyFlowBpmnApplicationTests {
         WorkFlow workFlow = XPWorkFLowBuilder.buildWorkFlow(componentMap, xpComponentStep, THREAD_POOL);
         WorkFlowEngine engine = aNewWorkFlowEngine().build();
         final WorkReport report = engine.run(workFlow, workContext);
-        log.info("report:{}", report);
+        log.info("report:{}", JSONUtil.toJsonStr(report));
     }
 
 

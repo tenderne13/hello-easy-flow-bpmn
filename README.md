@@ -134,22 +134,22 @@ graph LR
 ## UT
 
 ```shell
-mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#testSimpleSequentialFlow -e
+mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests.testSimpleSequential -e
 
-10:29:56.496 [main] INFO   - jsonStr:{"name":"工作流","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"INIT_ENV"},{"name":"获取词汇表","component":"RETRIEVE_VOCAB"},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION"}]}
-10:29:56.573 [main] INFO   - ===================> sequential ra6UwH6J build start <====================
-10:29:56.573 [main] INFO   - build single component:INIT_ENV
-10:29:56.573 [main] INFO   - build single component:RETRIEVE_VOCAB
-10:29:56.573 [main] INFO   - build single component:GLOBAL_SCENE_FUSION
-10:29:56.578 [main] INFO   - ===================> sequential ra6UwH6J flow build success, component info  ==> {"name":"工作流","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"INIT_ENV","type":"single"},{"name":"获取词汇表","component":"RETRIEVE_VOCAB","type":"single"},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION","type":"single"}]} <===
-10:29:56.589 [main] INFO   - Running workflow ''工作流''
-10:29:56.589 [main] INFO   - INIT_ENV execute start
-10:29:57.628 [main] INFO   - INIT_ENV execute end ==> cost time:1035ms
-10:29:57.629 [main] INFO   - RETRIEVE_VOCAB execute start
-10:30:01.464 [main] INFO   - RETRIEVE_VOCAB execute end ==> cost time:3834ms
-10:30:01.464 [main] INFO   - globalSceneFusion execute start
-10:30:03.504 [main] INFO   - GLOBAL_SCENE_FUSION execute end ==> cost time:2037ms
-10:30:03.504 [main] INFO   - report:DefaultWorkReport {status=COMPLETED, context=context={XGPTSwitch=true, conditionPath=RETRIEVE_VOCAB}}, error=''}
+11:30:07.158 [main] INFO   - jsonStr:{"name":"工作流","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"INIT_ENV"},{"name":"获取词汇表","component":"RETRIEVE_VOCAB"},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION"}]}
+11:30:07.226 [main] INFO   - ===================> sequential 5Kgs4zJS build start <====================
+11:30:07.226 [main] INFO   - build single component:INIT_ENV
+11:30:07.226 [main] INFO   - build single component:RETRIEVE_VOCAB
+11:30:07.227 [main] INFO   - build single component:GLOBAL_SCENE_FUSION
+11:30:07.231 [main] INFO   - ===================> sequential 5Kgs4zJS flow build success, component info  ==> {"name":"工作流","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"INIT_ENV","type":"single"},{"name":"获取词汇表","component":"RETRIEVE_VOCAB","type":"single"},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION","type":"single"}]} <===
+11:30:07.243 [main] INFO   - Running workflow ''工作流''
+11:30:07.243 [main] INFO   - INIT_ENV execute start
+11:30:12.112 [main] INFO   - INIT_ENV execute end ==> cost time:4864ms
+11:30:12.113 [main] INFO   - RETRIEVE_VOCAB execute start
+11:30:16.621 [main] INFO   - RETRIEVE_VOCAB execute end ==> cost time:4503ms
+11:30:16.621 [main] INFO   - globalSceneFusion execute start
+11:30:18.534 [main] INFO   - GLOBAL_SCENE_FUSION execute end ==> cost time:1908ms
+11:30:18.535 [main] INFO   - report:{"status":"COMPLETED","workContext":{}}
 ```
 
 ## 2. 简单并行流
@@ -198,19 +198,20 @@ graph TB
 ```shell
 mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests.testSimpleParallel -e
 
-10:36:19.937 [main] INFO   - jsonStr:{"name":"工作流","type":"parallel","parallelSteps":[{"name":"初始化操作","component":"INIT_ENV"},{"name":"获取词汇表","component":"RETRIEVE_VOCAB"},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION"}]}
-10:36:20.021 [main] INFO   - ===================> parallel rBupah00 build start <====================
-10:36:20.021 [main] INFO   - build single component:INIT_ENV
-10:36:20.021 [main] INFO   - build single component:RETRIEVE_VOCAB
-10:36:20.021 [main] INFO   - build single component:GLOBAL_SCENE_FUSION
-10:36:20.026 [main] INFO   - ===================> parallel rBupah00 flow build success, component info  ==> {"name":"工作流","type":"parallel","parallelSteps":[{"name":"初始化操作","component":"INIT_ENV","type":"single"},{"name":"获取词汇表","component":"RETRIEVE_VOCAB","type":"single"},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION","type":"single"}]} <===
-10:36:20.040 [main] INFO   - Running workflow ''工作流''
-10:36:20.041 [pool-1-thread-1] INFO   - INIT_ENV execute start
-10:36:20.042 [pool-1-thread-2] INFO   - RETRIEVE_VOCAB execute start
-10:36:20.042 [pool-1-thread-3] INFO   - globalSceneFusion execute start
-10:36:20.575 [pool-1-thread-3] INFO   - GLOBAL_SCENE_FUSION execute end ==> cost time:528ms
-10:36:21.031 [pool-1-thread-2] INFO   - RETRIEVE_VOCAB execute end ==> cost time:988ms
-10:36:21.866 [pool-1-thread-1] INFO   - INIT_ENV execute end ==> cost time:1820ms
+11:31:32.547 [main] INFO   - jsonStr:{"name":"工作流","type":"parallel","parallelSteps":[{"name":"初始化操作","component":"INIT_ENV"},{"name":"获取词汇表","component":"RETRIEVE_VOCAB"},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION"}]}
+11:31:32.624 [main] INFO   - ===================> parallel UPxPSBi3 build start <====================
+11:31:32.624 [main] INFO   - build single component:INIT_ENV
+11:31:32.624 [main] INFO   - build single component:RETRIEVE_VOCAB
+11:31:32.624 [main] INFO   - build single component:GLOBAL_SCENE_FUSION
+11:31:32.628 [main] INFO   - ===================> parallel UPxPSBi3 flow build success, component info  ==> {"name":"工作流","type":"parallel","parallelSteps":[{"name":"初始化操作","component":"INIT_ENV","type":"single"},{"name":"获取词汇表","component":"RETRIEVE_VOCAB","type":"single"},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION","type":"single"}]} <===
+11:31:32.640 [main] INFO   - Running workflow ''工作流''
+11:31:32.641 [pool-1-thread-1] INFO   - INIT_ENV execute start
+11:31:32.641 [pool-1-thread-2] INFO   - RETRIEVE_VOCAB execute start
+11:31:32.641 [pool-1-thread-3] INFO   - globalSceneFusion execute start
+11:31:34.597 [pool-1-thread-2] INFO   - RETRIEVE_VOCAB execute end ==> cost time:1952ms
+11:31:34.842 [pool-1-thread-3] INFO   - GLOBAL_SCENE_FUSION execute end ==> cost time:2197ms
+11:31:35.162 [pool-1-thread-1] INFO   - INIT_ENV execute end ==> cost time:2518ms
+11:31:35.164 [main] INFO   - report:{"reports":[{"status":"COMPLETED","workContext":{}},{"status":"COMPLETED","workContext":{}},{"status":"COMPLETED","workContext":{}}]}
 ```
 
 ## 3.多条件流
@@ -292,28 +293,28 @@ UT
 ```shell
 mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests.testSimpleMulitCondition -e
 
-10:50:35.166 [main] INFO   - jsonStr:{"name":"工作流","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"INIT_ENV"},{"name":"多条件流","type":"conditional","conditionSteps":[{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE","componentStep":{"name":"获取词汇表","component":"RETRIEVE_VOCAB"}},{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE","componentStep":{"name":"BERT_CRF_ENTITY_EXTRACTOR","component":"BERT_CRF_ENTITY_EXTRACTOR"}},{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE","componentStep":{"name":"TEMPLATE_QUERY_MATCHER","component":"TEMPLATE_QUERY_MATCHER"}},{"conditionStep":2,"componentStep":{"name":"LLM","component":"LLM"}}]},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION"}]}
-10:50:35.245 [main] INFO   - ===================> sequential oq6adnqi build start <====================
-10:50:35.246 [main] INFO   - build single component:INIT_ENV
-10:50:35.246 [main] INFO   - ===================> conditional FbnMKILf build start <====================
-10:50:35.247 [main] INFO   - build single component:RETRIEVE_VOCAB
-10:50:35.260 [main] INFO   - build single component:BERT_CRF_ENTITY_EXTRACTOR
-10:50:35.260 [main] INFO   - build single component:TEMPLATE_QUERY_MATCHER
-10:50:35.261 [main] INFO   - build single component:LLM
-10:50:35.268 [main] INFO   - ===================> conditional FbnMKILf flow build success, component info  ==> {"name":"多条件流","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE","componentStep":{"name":"获取词汇表","component":"RETRIEVE_VOCAB","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE","componentStep":{"name":"BERT_CRF_ENTITY_EXTRACTOR","component":"BERT_CRF_ENTITY_EXTRACTOR","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE","componentStep":{"name":"TEMPLATE_QUERY_MATCHER","component":"TEMPLATE_QUERY_MATCHER","type":"single"}},{"conditionStep":2,"componentStep":{"name":"LLM","component":"LLM","type":"single"}}]} <===
-10:50:35.268 [main] INFO   - build single component:GLOBAL_SCENE_FUSION
-10:50:35.270 [main] INFO   - ===================> sequential oq6adnqi flow build success, component info  ==> {"name":"工作流","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"INIT_ENV","type":"single"},{"name":"多条件流","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE","componentStep":{"name":"获取词汇表","component":"RETRIEVE_VOCAB","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE","componentStep":{"name":"BERT_CRF_ENTITY_EXTRACTOR","component":"BERT_CRF_ENTITY_EXTRACTOR","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE","componentStep":{"name":"TEMPLATE_QUERY_MATCHER","component":"TEMPLATE_QUERY_MATCHER","type":"single"}},{"conditionStep":2,"componentStep":{"name":"LLM","component":"LLM","type":"single"}}]},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION","type":"single"}]} <===
-10:50:35.273 [main] INFO   - Running workflow ''工作流''
-10:50:35.273 [main] INFO   - INIT_ENV execute start
-10:50:36.993 [main] INFO   - INIT_ENV execute end ==> cost time:1716ms
-10:50:36.995 [main] INFO   - IF_RETRIEVE_VOCAB_CASE judge 是否命中分支条件 ==> false
-10:50:36.995 [main] INFO   - IF_BERT_CRF_ENTITY_EXTRACTOR_CASE judge 是否命中分支条件 ==> false
-10:50:36.995 [main] INFO   - IF_TEMPLATE_QUERY_MATCHER_CASE judge 是否命中分支条件 ==> false
-10:50:36.995 [main] INFO   - LLM execute start
-10:50:41.282 [main] INFO   - LLM execute end ==> cost time:4282ms
-10:50:41.283 [main] INFO   - globalSceneFusion execute start
-10:50:45.385 [main] INFO   - GLOBAL_SCENE_FUSION execute end ==> cost time:4098ms
-10:50:45.386 [main] INFO   - report:DefaultWorkReport {status=COMPLETED, context=context={}}, error=''}
+11:32:11.401 [main] INFO   - jsonStr:{"name":"工作流","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"INIT_ENV"},{"name":"多条件流","type":"conditional","conditionSteps":[{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE","componentStep":{"name":"获取词汇表","component":"RETRIEVE_VOCAB"}},{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE","componentStep":{"name":"BERT_CRF_ENTITY_EXTRACTOR","component":"BERT_CRF_ENTITY_EXTRACTOR"}},{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE","componentStep":{"name":"TEMPLATE_QUERY_MATCHER","component":"TEMPLATE_QUERY_MATCHER"}},{"conditionStep":2,"componentStep":{"name":"LLM","component":"LLM"}}]},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION"}]}
+11:32:11.486 [main] INFO   - ===================> sequential pAmaBavk build start <====================
+11:32:11.486 [main] INFO   - build single component:INIT_ENV
+11:32:11.487 [main] INFO   - ===================> conditional b8eX0yYK build start <====================
+11:32:11.488 [main] INFO   - build single component:RETRIEVE_VOCAB
+11:32:11.499 [main] INFO   - build single component:BERT_CRF_ENTITY_EXTRACTOR
+11:32:11.499 [main] INFO   - build single component:TEMPLATE_QUERY_MATCHER
+11:32:11.499 [main] INFO   - build single component:LLM
+11:32:11.505 [main] INFO   - ===================> conditional b8eX0yYK flow build success, component info  ==> {"name":"多条件流","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE","componentStep":{"name":"获取词汇表","component":"RETRIEVE_VOCAB","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE","componentStep":{"name":"BERT_CRF_ENTITY_EXTRACTOR","component":"BERT_CRF_ENTITY_EXTRACTOR","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE","componentStep":{"name":"TEMPLATE_QUERY_MATCHER","component":"TEMPLATE_QUERY_MATCHER","type":"single"}},{"conditionStep":2,"componentStep":{"name":"LLM","component":"LLM","type":"single"}}]} <===
+11:32:11.506 [main] INFO   - build single component:GLOBAL_SCENE_FUSION
+11:32:11.507 [main] INFO   - ===================> sequential pAmaBavk flow build success, component info  ==> {"name":"工作流","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"INIT_ENV","type":"single"},{"name":"多条件流","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE","componentStep":{"name":"获取词汇表","component":"RETRIEVE_VOCAB","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE","componentStep":{"name":"BERT_CRF_ENTITY_EXTRACTOR","component":"BERT_CRF_ENTITY_EXTRACTOR","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE","componentStep":{"name":"TEMPLATE_QUERY_MATCHER","component":"TEMPLATE_QUERY_MATCHER","type":"single"}},{"conditionStep":2,"componentStep":{"name":"LLM","component":"LLM","type":"single"}}]},{"name":"全局场景融合","component":"GLOBAL_SCENE_FUSION","type":"single"}]} <===
+11:32:11.510 [main] INFO   - Running workflow ''工作流''
+11:32:11.511 [main] INFO   - INIT_ENV execute start
+11:32:12.373 [main] INFO   - INIT_ENV execute end ==> cost time:857ms
+11:32:12.376 [main] INFO   - IF_RETRIEVE_VOCAB_CASE judge 是否命中分支条件 ==> false
+11:32:12.376 [main] INFO   - IF_BERT_CRF_ENTITY_EXTRACTOR_CASE judge 是否命中分支条件 ==> false
+11:32:12.376 [main] INFO   - IF_TEMPLATE_QUERY_MATCHER_CASE judge 是否命中分支条件 ==> false
+11:32:12.376 [main] INFO   - LLM execute start
+11:32:14.312 [main] INFO   - LLM execute end ==> cost time:1932ms
+11:32:14.312 [main] INFO   - globalSceneFusion execute start
+11:32:17.535 [main] INFO   - GLOBAL_SCENE_FUSION execute end ==> cost time:3219ms
+11:32:17.536 [main] INFO   - report:{"status":"COMPLETED","workContext":{}}
 ```
 
 ## 4.重复流
@@ -353,23 +354,23 @@ graph LR
 ```
 
 ```shell
-mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests.testSimpleRepeat -e
+mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests.testSimpleRepeatCase -e
 
-11:05:17.065 [main] INFO   - jsonStr:{"name":"工作流","type":"sequential","sequentialSteps":[{"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE","componentStep":{"name":"INIT_ENV","component":"INIT_ENV"}}}]}
-11:05:17.132 [main] INFO   - ===================> sequential Jj1u7Vbp build start <====================
-11:05:17.132 [main] INFO   - ===================> repeat GeomcYSa build start <====================
-11:05:17.144 [main] INFO   - build single component:INIT_ENV
-11:05:17.149 [main] INFO   - ===================> repeat GeomcYSa flow build success, component info  ==> {"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE","componentStep":{"name":"INIT_ENV","component":"INIT_ENV","type":"single"}}} <===
-11:05:17.155 [main] INFO   - ===================> sequential Jj1u7Vbp flow build success, component info  ==> {"name":"工作流","type":"sequential","sequentialSteps":[{"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE","componentStep":{"name":"INIT_ENV","component":"INIT_ENV","type":"single"}}}]} <===
-11:05:17.157 [main] INFO   - Running workflow ''工作流''
-11:05:17.158 [main] INFO   - INIT_ENV execute start
-11:05:18.125 [main] INFO   - INIT_ENV execute end ==> cost time:966ms
-11:05:18.127 [main] INFO   - repeat 次数 1
-11:05:18.127 [main] INFO   - INIT_ENV execute start
-11:05:20.438 [main] INFO   - INIT_ENV execute end ==> cost time:2309ms
-11:05:20.439 [main] INFO   - repeat 次数 2
-11:05:20.439 [main] INFO   - INIT_ENV execute start
-11:05:22.028 [main] INFO   - INIT_ENV execute end ==> cost time:1585ms
-11:05:22.028 [main] INFO   - repeat 次数 3
-11:05:22.028 [main] INFO   - report:DefaultWorkReport {status=COMPLETED, context=context={times=3}}, error=''}
+11:32:57.833 [main] INFO   - jsonStr:{"name":"工作流","type":"sequential","sequentialSteps":[{"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE","componentStep":{"name":"INIT_ENV","component":"INIT_ENV"}}}]}
+11:32:57.927 [main] INFO   - ===================> sequential TIIgaJNZ build start <====================
+11:32:57.927 [main] INFO   - ===================> repeat 5VgDqiqu build start <====================
+11:32:57.939 [main] INFO   - build single component:INIT_ENV
+11:32:57.945 [main] INFO   - ===================> repeat 5VgDqiqu flow build success, component info  ==> {"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE","componentStep":{"name":"INIT_ENV","component":"INIT_ENV","type":"single"}}} <===
+11:32:57.950 [main] INFO   - ===================> sequential TIIgaJNZ flow build success, component info  ==> {"name":"工作流","type":"sequential","sequentialSteps":[{"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE","componentStep":{"name":"INIT_ENV","component":"INIT_ENV","type":"single"}}}]} <===
+11:32:57.955 [main] INFO   - Running workflow ''工作流''
+11:32:57.956 [main] INFO   - INIT_ENV execute start
+11:32:59.660 [main] INFO   - INIT_ENV execute end ==> cost time:1701ms
+11:32:59.661 [main] INFO   - repeat 次数 1
+11:32:59.661 [main] INFO   - INIT_ENV execute start
+11:33:00.452 [main] INFO   - INIT_ENV execute end ==> cost time:787ms
+11:33:00.453 [main] INFO   - repeat 次数 2
+11:33:00.453 [main] INFO   - INIT_ENV execute start
+11:33:03.061 [main] INFO   - INIT_ENV execute end ==> cost time:2606ms
+11:33:03.061 [main] INFO   - repeat 次数 3
+11:33:03.062 [main] INFO   - report:{"status":"COMPLETED","workContext":{}}
 ```
