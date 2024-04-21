@@ -23,8 +23,8 @@ public class SequentialComponentStepParser implements ComponentStepParser {
         log.info("===================> sequential {} build start <====================", stepId);
         List<XPComponentStep> sequentialSteps = componentStep.getSequentialSteps();
         List<WorkFlow> tmpSeqWorkFlows = new ArrayList<>();
-        for (XPComponentStep parallelStep : sequentialSteps) {
-            tmpSeqWorkFlows.add(buildWorkFlow(componentMap, parallelStep, threadPool));
+        for (XPComponentStep sequentialStep : sequentialSteps) {
+            tmpSeqWorkFlows.add(buildWorkFlow(componentMap, sequentialStep, threadPool));
         }
         log.info("===================> sequential {} flow build success, component info  ==> {} <===", stepId, JSONUtil.toJsonStr(componentStep));
         return SequentialFlowFactory.buildSequentialFlow(componentStep.getName(), tmpSeqWorkFlows);

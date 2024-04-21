@@ -55,18 +55,18 @@ class HelloEasyFlowBpmnApplicationTests {
     public void testConvertXPComp() {
 
         String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"并行执行\",\"parallelSteps\":[{\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"},{\"component\":\"TEMPLATE_QUERY_MATCHER\"}],\"type\":\"parallel\"},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行全局节点和可见及可说节点\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"全局节点\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"GENERAL_RULE_TAGGER\"},{\"name\":\"标签集成\",\"component\":\"TAG_ENSEMBLE\"},{\"name\":\"并行执行预测\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"TEMPLATE_ACTION_PREDICTION\"},{\"component\":\"UNILM_ACTION_PREDICTION\"}]}]},{\"name\":\"场景ES\",\"component\":\"SCENE_ES\"}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
-        commonExecute(jsonStr);
-    }
-
-    private static void commonExecute(String jsonStr) {
-        XPComponentStep xpComponentStep = JSONUtil.toBean(jsonStr, XPComponentStep.class);
-        HashMap<String, WorkFlow> componentMap = buildComponentMap();
-        WorkFlow workFlow = XPWorkFLowBuilder.buildWorkFlow(componentMap, xpComponentStep, THREAD_POOL);
-
-        WorkFlowEngine engine = aNewWorkFlowEngine().build();
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
         workContext.put("conditionPath", "RETRIEVE_VOCAB");
+        commonExecute(jsonStr, workContext);
+    }
+
+    private static void commonExecute(String jsonStr, WorkContext workContext) {
+        log.info("jsonStr:{}", jsonStr);
+        XPComponentStep xpComponentStep = JSONUtil.toBean(jsonStr, XPComponentStep.class);
+        HashMap<String, WorkFlow> componentMap = buildComponentMap();
+        WorkFlow workFlow = XPWorkFLowBuilder.buildWorkFlow(componentMap, xpComponentStep, THREAD_POOL);
+        WorkFlowEngine engine = aNewWorkFlowEngine().build();
         final WorkReport report = engine.run(workFlow, workContext);
         log.info("report:{}", report);
     }
@@ -78,19 +78,61 @@ class HelloEasyFlowBpmnApplicationTests {
     @Test
     public void testConditionXPComp() {
         String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"e2e and llm flow\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"e2e-flow\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"并行执行\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"},{\"component\":\"TEMPLATE_QUERY_MATCHER\"}]},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行全局节点和可见及可说节点\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"全局节点\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"GENERAL_RULE_TAGGER\"},{\"name\":\"标签集成\",\"component\":\"TAG_ENSEMBLE\"},{\"name\":\"并行执行预测\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"TEMPLATE_ACTION_PREDICTION\"},{\"component\":\"UNILM_ACTION_PREDICTION\"}]}]},{\"name\":\"场景ES\",\"component\":\"SCENE_ES\"}]}]},{\"name\":\"llm 链路\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate\",\"componentStep\":{\"type\":\"sequential\",\"name\":\"thenWorkFlow\",\"sequentialSteps\":[{\"name\":\"thenWorkFlow\",\"type\":\"sequential\",\"conditionStep\":1,\"sequentialSteps\":[{\"name\":\"llmParael\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"LLM\",\"component\":\"LLM\"},{\"name\":\"LLM_TEMPLATE_QUERY_MATCHER\",\"component\":\"LLM_TEMPLATE_QUERY_MATCHER\"}]},{\"name\":\"LLMPOST_RULE\",\"component\":\"LLMPOST_RULE\"}]}]}}]}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
-        commonExecute(jsonStr);
+        WorkContext workContext = new WorkContext();
+        workContext.put("XGPTSwitch", true);
+        workContext.put("conditionPath", "RETRIEVE_VOCAB");
+        commonExecute(jsonStr, workContext);
     }
 
     @Test
     public void testSimpleMulitPredicate() {
         String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"多条件流\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE\",\"componentStep\":{\"name\":\"BERT_CRF_ENTITY_EXTRACTOR\",\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE\",\"componentStep\":{\"name\":\"TEMPLATE_QUERY_MATCHER\",\"component\":\"TEMPLATE_QUERY_MATCHER\"}}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
-        commonExecute(jsonStr);
+        WorkContext workContext = new WorkContext();
+        workContext.put("XGPTSwitch", true);
+        workContext.put("conditionPath", "RETRIEVE_VOCAB");
+        commonExecute(jsonStr, workContext);
     }
 
     @Test
     public void testSimpleRepeat() {
         String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"多条件流\",\"type\":\"repeat\",\"repeatStep\":{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"}}},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
-        commonExecute(jsonStr);
+        WorkContext workContext = new WorkContext();
+        workContext.put("XGPTSwitch", true);
+        workContext.put("conditionPath", "RETRIEVE_VOCAB");
+        commonExecute(jsonStr, workContext);
+    }
+
+    /**
+     * 简单顺序执行示例
+     */
+    @Test
+    public void testSimpleSequential() {
+        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        WorkContext workContext = new WorkContext();
+        commonExecute(jsonStr, workContext);
+    }
+
+    @Test
+    public void testSimpleParallel() {
+        String jsonStr = "{\"name\":\"工作流\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        WorkContext workContext = new WorkContext();
+        commonExecute(jsonStr, workContext);
+    }
+
+    @Test
+    public void testSimpleMulitCondition() {
+        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"多条件流\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE\",\"componentStep\":{\"name\":\"BERT_CRF_ENTITY_EXTRACTOR\",\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE\",\"componentStep\":{\"name\":\"TEMPLATE_QUERY_MATCHER\",\"component\":\"TEMPLATE_QUERY_MATCHER\"}},{\"conditionStep\":2,\"componentStep\":{\"name\":\"LLM\",\"component\":\"LLM\"}}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        WorkContext workContext = new WorkContext();
+        //workContext.put("conditionPath", "RETRIEVE_VOCAB");
+        commonExecute(jsonStr, workContext);
+    }
+
+
+    @Test
+    public void testSimpleRepeatCase() {
+        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"重复3次\",\"type\":\"repeat\",\"repeatStep\":{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE\",\"componentStep\":{\"name\":\"INIT_ENV\",\"component\":\"INIT_ENV\"}}}]}";
+        WorkContext workContext = new WorkContext();
+        commonExecute(jsonStr, workContext);
     }
 
 

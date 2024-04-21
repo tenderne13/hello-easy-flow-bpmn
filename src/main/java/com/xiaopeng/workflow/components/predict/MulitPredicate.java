@@ -2,6 +2,7 @@ package com.xiaopeng.workflow.components.predict;
 
 import com.xiaopeng.workflow.components.XPConditionStep;
 import lombok.extern.slf4j.Slf4j;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReportPredicate;
 
 /**
@@ -41,5 +42,20 @@ public class MulitPredicate {
         boolean equals = "TEMPLATE_QUERY_MATCHER".equals(flag);
         log.info("IF_TEMPLATE_QUERY_MATCHER_CASE judge 是否命中分支条件 ==> {}", equals);
         return equals;
+    };
+
+
+    public WorkReportPredicate REPEAT_PREDICATE = workReport -> {
+        WorkContext workContext = workReport.getWorkContext();
+        Object ott = workContext.get("times");
+        int tt;
+        if (ott == null) {
+            tt = 1;
+        } else {
+            tt = (int) ott + 1;
+        }
+        workContext.put("times", tt);
+        log.info("repeat 次数 {}", tt);
+        return tt <= 2;
     };
 }
