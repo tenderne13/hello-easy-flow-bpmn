@@ -382,6 +382,7 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 
 ## 复杂流程示例
 
+### json 结构示例
 ```json
 {
   "name": "复杂工作流示例",
@@ -506,6 +507,72 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
   ]
 }
 ```
+
+### yml 结构示例
+```yaml
+name: 复杂工作流示例
+type: sequential
+sequentialSteps:
+  - name: 初始化操作
+    component: INIT_ENV
+  - name: e2e and llm flow
+    type: parallel
+    parallelSteps:
+      - name: e2e-flow
+        type: sequential
+        sequentialSteps:
+          - name: 获取词汇表
+            component: RETRIEVE_VOCAB
+          - name: 并行执行
+            type: parallel
+            parallelSteps:
+              - component: BERT_CRF_ENTITY_EXTRACTOR
+              - component: TEMPLATE_QUERY_MATCHER
+          - name: 实体集成
+            component: ENTITY_ENSEMBLE
+          - name: 并行执行全局节点和可见及可说节点
+            type: parallel
+            parallelSteps:
+              - name: 全局节点
+                type: sequential
+                sequentialSteps:
+                  - name: 初始化操作
+                    component: GENERAL_RULE_TAGGER
+                  - name: 标签集成
+                    component: TAG_ENSEMBLE
+                  - name: 并行执行预测
+                    type: parallel
+                    parallelSteps:
+                      - component: TEMPLATE_ACTION_PREDICTION
+                      - component: UNILM_ACTION_PREDICTION
+              - name: 场景ES
+                component: SCENE_ES
+      - name: llm 链路
+        type: conditional
+        conditionSteps:
+          - predicateClassName: com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate
+            componentStep:
+              type: sequential
+              name: thenWorkFlow
+              sequentialSteps:
+                - name: thenWorkFlow
+                  type: sequential
+                  conditionStep: 1
+                  sequentialSteps:
+                    - name: llmParael
+                      type: parallel
+                      parallelSteps:
+                        - name: LLM
+                          component: LLM
+                        - name: LLM_TEMPLATE_QUERY_MATCHER
+                          component: LLM_TEMPLATE_QUERY_MATCHER
+                    - name: LLMPOST_RULE
+                      component: LLMPOST_RULE
+  - name: 全局场景融合
+    component: GLOBAL_SCENE_FUSION
+
+```
+
 
 ## 流程图
 ```mermaid
