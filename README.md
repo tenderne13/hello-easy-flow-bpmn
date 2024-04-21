@@ -507,3 +507,89 @@ graph TB
 1. prediction 若不指定实现，默认为false Action 只会执行一次，然后向下执行
 2. Action 若不指定 implement 默认为 NoOpWork 直接返回 COMPLETE
 
+# XPComponentStep 类文档说明
+
+## 概述
+
+`XPComponentStep` 类是 `com.xiaopeng.workflow.components` 包的一部分。它代表工作流中的一个步骤，可以是以下几种类型：单一(
+single)、顺序(sequential)、并行(parallel)、条件(conditional)、重复(repeat)。
+
+## 类型解析
+
+### 单一(single)
+
+单一类型的步骤表示在工作流中只执行一个操作。在 `XPComponentStep` 中，如果 `type` 字段为 "single"，则表示此步骤是单一操作。
+该类型为工作流中最原子操作，不包含其他操作。
+
+```mermaid
+graph LR
+    Start(开始) --> SingleAction[执行单一操作]
+    SingleAction --> End(结束)
+```
+
+### 顺序(sequential)
+
+顺序类型的步骤表示在工作流中按照一定的顺序执行一系列的操作。在 `XPComponentStep` 中，如果 `type` 字段为 "sequential"
+，则 `sequentialSteps` 字段会包含一个 `XPComponentStep` 对象的列表，表示顺序执行的步骤。
+以下示例中第一步、第二步、第N步操作都可能为其他类型的步骤。
+
+```mermaid
+graph LR
+    Start(开始) --> Step1[执行第一步操作]
+    Step1 --> Step2[执行第二步操作]
+    Step2 --> StepN[执行第N步操作]
+    StepN --> End(结束)
+```
+
+### 并行(parallel)
+
+并行类型的步骤表示在工作流中同时执行多个操作。在 `XPComponentStep` 中，如果 `type` 字段为 "parallel"，则 `parallelSteps`
+字段会包含一个 `XPComponentStep` 对象的列表，表示并行执行的步骤。
+
+```mermaid
+graph LR
+    Start(开始) --> Step1[执行第一步操作]
+    Start --> Step2[执行第二步操作]
+    Start --> StepN[执行第N步操作]
+    Step1 --> End(结束)
+    Step2 --> End
+    StepN --> End
+```
+
+### 条件(conditional)
+
+条件类型的步骤表示在工作流中根据一定的条件选择执行不同的操作。在 `XPComponentStep` 中，如果 `type` 字段为 "conditional"
+，则 `conditionSteps` 字段会包含一个 `XPConditionStep` 对象的列表，表示条件执行的步骤。
+因原始 `org.jeasy.flows.workflow.ConditionalFlow`
+未提供多条件实现，现重新定义多条件条件流，详情请看`com.xiaopeng.workflow.components.base.MulitConditionalFlow`。
+
+```mermaid
+graph TB
+    Start(开始) --> PredicateCheck1{检查第一个条件}
+    PredicateCheck1 -- 条件满足 --> Work1[执行第一个工作]
+    Work1 --> End(结束)
+    PredicateCheck1 -- 条件不满足 --> PredicateCheck2{检查第二个条件}
+    PredicateCheck2 -- 条件满足 --> Work2[执行第二个工作]
+    Work2 --> End
+    PredicateCheck2 -- 条件不满足 --> PredicateCheckN{检查第N个条件}
+    PredicateCheckN -- 条件满足 --> WorkN[执行第N个工作]
+    WorkN --> End
+    PredicateCheckN -- 条件不满足 --> OtherwiseWork[执行兜底工作]
+    OtherwiseWork --> End
+```
+
+### 重复(repeat)
+
+重复类型的步骤表示在工作流中重复执行一个操作。类似 do while形式，该类型，先执行工作单元，再判断是否继续repeat.
+在 `XPComponentStep` 中，如果 `type` 字段为 "repeat"，则 `repeatStep`
+字段会包含一个 `XPRepeatStep` 对象，表示重复执行的步骤。
+
+```mermaid
+graph LR
+    Start(开始) --> Action(执行工作单元)
+    Action -- 是否符合重复条件 --> Repeat
+    Repeat -- 是 --> Action
+    Repeat -- 否 --> End(结束)
+```
+
+
