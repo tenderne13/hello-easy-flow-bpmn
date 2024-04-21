@@ -6,7 +6,6 @@ import com.xiaopeng.workflow.components.XPComponentStep;
 import com.xiaopeng.workflow.components.XPConditionStep;
 import com.xiaopeng.workflow.components.base.MulitConditionalFlow;
 import com.xiaopeng.workflow.components.constants.FlowConstants;
-import com.xiaopeng.workflow.components.factory.ConditionFlowFactory;
 import com.xiaopeng.workflow.components.factory.WorkReportPredicateFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

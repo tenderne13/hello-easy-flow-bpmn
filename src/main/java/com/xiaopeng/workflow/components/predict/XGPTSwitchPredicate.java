@@ -10,7 +10,7 @@ public class XGPTSwitchPredicate implements WorkReportPredicate {
     @Override
     public boolean apply(WorkReport workReport) {
         Object flag = workReport.getWorkContext().get("XGPTSwitch");
-        log.info("XgptSwitchPredicate 大模型开关开启状态 ==> {}", flag);
+        log.info("XGPTSwitchPredicate 大模型开关开启状态 ==> {}", flag);
         return Boolean.TRUE.equals(flag);
     }
 }

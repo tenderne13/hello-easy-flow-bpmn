@@ -6,7 +6,6 @@ import com.xiaopeng.workflow.converter.constant.DefConstants;
 import com.xiaopeng.workflow.util.ConvertUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.bpmn.model.*;
-import org.activiti.bpmn.model.Process;
 
 import java.util.ArrayList;
 import java.util.List;

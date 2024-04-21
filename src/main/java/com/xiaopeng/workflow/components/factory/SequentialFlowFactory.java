@@ -6,7 +6,6 @@ import org.jeasy.flows.workflow.SequentialFlow;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 public class SequentialFlowFactory {
 

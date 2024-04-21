@@ -1,6 +1,5 @@
 package com.xiaopeng.workflow.components;
 
-import com.xiaopeng.workflow.components.constants.FlowConstants;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 

@@ -3,12 +3,9 @@ package com.xiaopeng.workflow.components.factory;
 import org.apache.commons.lang3.StringUtils;
 import org.jeasy.flows.work.Work;
 import org.jeasy.flows.workflow.ParallelFlow;
-import org.jeasy.flows.workflow.WorkFlow;
 
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ParallelFlowFactory {
 
