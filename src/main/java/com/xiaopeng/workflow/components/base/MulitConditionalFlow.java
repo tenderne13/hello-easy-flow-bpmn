@@ -30,7 +30,7 @@ public class MulitConditionalFlow implements WorkFlow {
 
     @Override
     public WorkReport execute(WorkContext workContext) {
-        WorkReport workReport = new DefaultWorkReport(WorkStatus.FAILED, workContext);
+        WorkReport workReport = new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         for (PredictWorkPair predictWorkPair : thenWorkList) {
             WorkReportPredicate predicate = predictWorkPair.getPredicate();
             Work work = predictWorkPair.getWork();
