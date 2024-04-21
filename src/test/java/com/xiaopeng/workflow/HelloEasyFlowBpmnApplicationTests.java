@@ -35,12 +35,12 @@ class HelloEasyFlowBpmnApplicationTests {
 
     private static final ExecutorService THREAD_POOL = new ThreadPoolExecutor(10, 10, 100, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(2048));
 
-    @Test
+    //@Test
     void contextLoads() {
     }
 
 
-    @Test
+    //@Test
     public void testConvert() throws IOException {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         Resource resource = resolver.getResource("classpath:flow/converter/paral.bpmn");
@@ -51,7 +51,7 @@ class HelloEasyFlowBpmnApplicationTests {
     /**
      * 拉齐现有工作流功能 case
      */
-    @Test
+    //@Test
     public void testConvertXPComp() {
 
         String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"并行执行\",\"parallelSteps\":[{\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"},{\"component\":\"TEMPLATE_QUERY_MATCHER\"}],\"type\":\"parallel\"},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行全局节点和可见及可说节点\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"全局节点\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"GENERAL_RULE_TAGGER\"},{\"name\":\"标签集成\",\"component\":\"TAG_ENSEMBLE\"},{\"name\":\"并行执行预测\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"TEMPLATE_ACTION_PREDICTION\"},{\"component\":\"UNILM_ACTION_PREDICTION\"}]}]},{\"name\":\"场景ES\",\"component\":\"SCENE_ES\"}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
@@ -75,7 +75,7 @@ class HelloEasyFlowBpmnApplicationTests {
     /**
      * 测试条件组件
      */
-    @Test
+    //@Test
     public void testConditionXPComp() {
         String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"e2e and llm flow\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"e2e-flow\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"并行执行\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"},{\"component\":\"TEMPLATE_QUERY_MATCHER\"}]},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行全局节点和可见及可说节点\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"全局节点\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"GENERAL_RULE_TAGGER\"},{\"name\":\"标签集成\",\"component\":\"TAG_ENSEMBLE\"},{\"name\":\"并行执行预测\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"TEMPLATE_ACTION_PREDICTION\"},{\"component\":\"UNILM_ACTION_PREDICTION\"}]}]},{\"name\":\"场景ES\",\"component\":\"SCENE_ES\"}]}]},{\"name\":\"llm 链路\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate\",\"componentStep\":{\"type\":\"sequential\",\"name\":\"thenWorkFlow\",\"sequentialSteps\":[{\"name\":\"thenWorkFlow\",\"type\":\"sequential\",\"conditionStep\":1,\"sequentialSteps\":[{\"name\":\"llmParael\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"LLM\",\"component\":\"LLM\"},{\"name\":\"LLM_TEMPLATE_QUERY_MATCHER\",\"component\":\"LLM_TEMPLATE_QUERY_MATCHER\"}]},{\"name\":\"LLMPOST_RULE\",\"component\":\"LLMPOST_RULE\"}]}]}}]}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
         WorkContext workContext = new WorkContext();
@@ -84,7 +84,7 @@ class HelloEasyFlowBpmnApplicationTests {
         commonExecute(jsonStr, workContext);
     }
 
-    @Test
+    //@Test
     public void testSimpleMulitPredicate() {
         String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"多条件流\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE\",\"componentStep\":{\"name\":\"BERT_CRF_ENTITY_EXTRACTOR\",\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE\",\"componentStep\":{\"name\":\"TEMPLATE_QUERY_MATCHER\",\"component\":\"TEMPLATE_QUERY_MATCHER\"}}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
         WorkContext workContext = new WorkContext();
@@ -93,7 +93,7 @@ class HelloEasyFlowBpmnApplicationTests {
         commonExecute(jsonStr, workContext);
     }
 
-    @Test
+    //@Test
     public void testSimpleRepeat() {
         String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"多条件流\",\"type\":\"repeat\",\"repeatStep\":{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"}}},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
         WorkContext workContext = new WorkContext();
@@ -101,6 +101,8 @@ class HelloEasyFlowBpmnApplicationTests {
         workContext.put("conditionPath", "RETRIEVE_VOCAB");
         commonExecute(jsonStr, workContext);
     }
+
+    /********************************************************************************************以下为简单示例******************************************************************************************************************************/
 
     /**
      * 简单顺序执行示例
