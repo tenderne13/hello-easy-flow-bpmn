@@ -14,7 +14,7 @@ import org.jeasy.flows.work.WorkReportPredicate;
  * 会尝试去实例化该类（此类需实现WorkReportPredicate 接口）
  * 示例 ：predicateClassName = "com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate"
  * 使用方法2 某个类中的属性
- * 示例 ： predicateClassName = "com.xiaopeng.workflow.components.predict.MulitPredicate@IF_RETRIEVE_VOCAB_CASE"
+ * 示例 ： predicateClassName = "com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE"
  *
  *
  * <p>
