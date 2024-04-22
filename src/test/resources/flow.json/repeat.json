@@ -1,0 +1,25 @@
+{
+  "name": "工作流",
+  "type": "SEQUENTIAL",
+  "sequentialSteps": [
+    {
+      "name": "初始化操作",
+      "component": "COMPONENT_I"
+    },
+    {
+      "name": "多条件流",
+      "type": "REPEAT",
+      "repeatStep": {
+        "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.REPEAT_PREDICATE",
+        "componentStep": {
+          "name": "获取词汇表",
+          "component": "COMPONENT_V"
+        }
+      }
+    },
+    {
+      "name": "全局场景融合",
+      "component": "COMPONENT_G"
+    }
+  ]
+}

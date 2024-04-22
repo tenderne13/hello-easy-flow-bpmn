@@ -11,6 +11,7 @@ import org.camunda.bpm.model.bpmn.Query;
 import org.camunda.bpm.model.bpmn.impl.instance.TaskImpl;
 import org.camunda.bpm.model.bpmn.instance.*;
 import org.camunda.bpm.model.bpmn.instance.Process;
+import org.camunda.bpm.model.xml.ModelInstance;
 
 
 import java.util.*;

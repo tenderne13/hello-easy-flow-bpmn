@@ -7,8 +7,8 @@ import com.xiaopeng.workflow.converter.event.StartEventConverter;
 import com.xiaopeng.workflow.converter.gateway.ParallelGatewayConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
-import org.activiti.bpmn.model.*;
 import org.activiti.bpmn.model.Process;
+import org.activiti.bpmn.model.*;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.xml.stream.FactoryConfigurationError;

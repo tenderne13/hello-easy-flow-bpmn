@@ -1,0 +1,48 @@
+{
+  "name": "条件判断工作流示例",
+  "type": "SEQUENTIAL",
+  "sequentialSteps": [
+    {
+      "name": "COMPONENT_I",
+      "component": "COMPONENT_I"
+    },
+    {
+      "name": "多条件流",
+      "type": "CONDITIONAL",
+      "conditionSteps": [
+        {
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_V_CASE",
+          "componentStep": {
+            "name": "COMPONENT_V",
+            "component": "COMPONENT_V"
+          }
+        },
+        {
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_BE_CASE",
+          "componentStep": {
+            "name": "COMPONENT_BE",
+            "component": "COMPONENT_BE"
+          }
+        },
+        {
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_QM_CASE",
+          "componentStep": {
+            "name": "COMPONENT_QM",
+            "component": "COMPONENT_QM"
+          }
+        },
+        {
+          "conditionStep": 2,
+          "componentStep": {
+            "name": "COMPONENT_L",
+            "component": "COMPONENT_L"
+          }
+        }
+      ]
+    },
+    {
+      "name": "COMPONENT_G",
+      "component": "COMPONENT_G"
+    }
+  ]
+}
