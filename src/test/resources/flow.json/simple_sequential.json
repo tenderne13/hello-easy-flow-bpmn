@@ -1,6 +1,6 @@
 {
   "name": "顺序流示例",
-  "type": "sequential",
+  "type": "SEQUENTIAL",
   "sequentialSteps": [
     {
       "name": "组件I",
