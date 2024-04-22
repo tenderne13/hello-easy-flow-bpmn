@@ -14,12 +14,12 @@ import java.util.List;
  * 多条件工作流
  */
 @Slf4j
-public class MulitConditionalFlow implements WorkFlow {
+public class MultiConditionalFlow implements WorkFlow {
 
     private List<PredictWorkPair> thenWorkList = new ArrayList<>();
     private Work otherWishWork = new NoOpWork();
 
-    public MulitConditionalFlow(List<PredictWorkPair> thenWorkList, Work otherWishWork) {
+    public MultiConditionalFlow(List<PredictWorkPair> thenWorkList, Work otherWishWork) {
         if (thenWorkList != null) {
             this.thenWorkList = thenWorkList;
         }
@@ -35,7 +35,12 @@ public class MulitConditionalFlow implements WorkFlow {
             WorkReportPredicate predicate = predictWorkPair.getPredicate();
             Work work = predictWorkPair.getWork();
             if (predicate.apply(workReport)) {
-                return work.execute(workContext);
+                try {
+                    return work.execute(workContext);
+                } catch (Exception e) {
+                    log.error("MultiConditionalFlow execute error", e);
+                    return new DefaultWorkReport(WorkStatus.FAILED, workContext);
+                }
             }
         }
         if (otherWishWork != null) {

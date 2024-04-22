@@ -52,7 +52,7 @@ graph LR
 条件类型的步骤表示在工作流中根据一定的条件选择执行不同的操作。在 `XPComponentStep` 中，如果 `type` 字段为 "conditional"
 ，则 `conditionSteps` 字段会包含一个 `XPConditionStep` 对象的列表，表示条件执行的步骤。
 因原始 `org.jeasy.flows.workflow.ConditionalFlow`
-未提供多条件实现，现重新定义多条件条件流，详情请看`com.xiaopeng.workflow.components.base.MulitConditionalFlow`。
+未提供多条件实现，现重新定义多条件条件流，详情请看`com.xiaopeng.workflow.components.base.MultiConditionalFlow`。
 
 ```mermaid
 graph TB
@@ -99,6 +99,7 @@ XPWorkFLowBuilder 类为流程解析的总入口类，它会根据传入的 `XPC
 首先，我们需要创建一个简单的顺序流工作流。在这个例子中，我们将创建一个包含三个步骤的顺序流：初始化操作，获取词汇表，全局场景融合。每个步骤都由一个组件来执行。
 
 以下是JSON字符串表示的工作流：
+[simple_sequential.json](src%2Ftest%2Fresources%2Fflow.json%2Fsimple_sequential.json)
 
 ```json
 {
@@ -159,6 +160,8 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 首先，我们需要创建一个简单的并行流工作流。在这个例子中，我们将创建一个包含三个步骤的并行流：初始化操作，获取词汇表，全局场景融合。每个步骤都由一个组件来执行，但是这些步骤会并行执行。
 
 以下是JSON字符串表示的工作流：
+
+[simple_parallel.json](src%2Ftest%2Fresources%2Fflow.json%2Fsimple_parallel.json)
 
 ```json
 {
@@ -222,6 +225,8 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 首先，我们需要创建一个多条件流工作流。在这个例子中，我们将创建一个包含三个个条件的多条件流：条件1和条件2
 以下为JSON字符串表示的工作流：
 
+[simple_multi_condition.json](src%2Ftest%2Fresources%2Fflow.json%2Fsimple_multi_condition.json)
+
 ```json
 {
   "name": "条件判断工作流示例",
@@ -236,21 +241,21 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
       "type": "conditional",
       "conditionSteps": [
         {
-          "predicateClassName": "com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_V_CASE",
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_V_CASE",
           "componentStep": {
             "name": "COMPONENT_V",
             "component": "COMPONENT_V"
           }
         },
         {
-          "predicateClassName": "com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_BE_CASE",
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_BE_CASE",
           "componentStep": {
             "name": "COMPONENT_BE",
             "component": "COMPONENT_BE"
           }
         },
         {
-          "predicateClassName": "com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_QM_CASE",
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_QM_CASE",
           "componentStep": {
             "name": "COMPONENT_QM",
             "component": "COMPONENT_QM"
@@ -294,10 +299,10 @@ flowchart TD
 UT
 
 ```shell
-mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#testSimpleMulitCondition -e
+mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#testSimpleMultiCondition -e
 
 
-11:14:06.354 [main] INFO   - jsonStr:{"name":"条件判断工作流示例","type":"sequential","sequentialSteps":[{"name":"COMPONENT_I","component":"COMPONENT_I"},{"name":"多条件流","type":"conditional","conditionSteps":[{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_V_CASE","componentStep":{"name":"COMPONENT_V","component":"COMPONENT_V"}},{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_BE_CASE","componentStep":{"name":"COMPONENT_BE","component":"COMPONENT_BE"}},{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_QM_CASE","componentStep":{"name":"COMPONENT_QM","component":"COMPONENT_QM"}},{"conditionStep":2,"componentStep":{"name":"COMPONENT_L","component":"COMPONENT_L"}}]},{"name":"COMPONENT_G","component":"COMPONENT_G"}]}
+11:14:06.354 [main] INFO   - jsonStr:{"name":"条件判断工作流示例","type":"sequential","sequentialSteps":[{"name":"COMPONENT_I","component":"COMPONENT_I"},{"name":"多条件流","type":"conditional","conditionSteps":[{"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_V_CASE","componentStep":{"name":"COMPONENT_V","component":"COMPONENT_V"}},{"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_BE_CASE","componentStep":{"name":"COMPONENT_BE","component":"COMPONENT_BE"}},{"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_QM_CASE","componentStep":{"name":"COMPONENT_QM","component":"COMPONENT_QM"}},{"conditionStep":2,"componentStep":{"name":"COMPONENT_L","component":"COMPONENT_L"}}]},{"name":"COMPONENT_G","component":"COMPONENT_G"}]}
 11:14:06.447 [main] INFO   - ===================> sequential IlJEQoki build start <====================
 11:14:06.448 [main] INFO   - build single component:COMPONENT_I
 11:14:06.448 [main] INFO   - ===================> conditional B1RmTlD3 build start <====================
@@ -305,9 +310,9 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 11:14:06.456 [main] INFO   - build single component:COMPONENT_BE
 11:14:06.457 [main] INFO   - build single component:COMPONENT_QM
 11:14:06.458 [main] INFO   - build single component:COMPONENT_L
-11:14:06.468 [main] INFO   - ===================> conditional B1RmTlD3 flow build success, component info  ==> {"name":"多条件流","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_V_CASE","componentStep":{"name":"COMPONENT_V","component":"COMPONENT_V","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_BE_CASE","componentStep":{"name":"COMPONENT_BE","component":"COMPONENT_BE","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_QM_CASE","componentStep":{"name":"COMPONENT_QM","component":"COMPONENT_QM","type":"single"}},{"conditionStep":2,"componentStep":{"name":"COMPONENT_L","component":"COMPONENT_L","type":"single"}}]} <===
+11:14:06.468 [main] INFO   - ===================> conditional B1RmTlD3 flow build success, component info  ==> {"name":"多条件流","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_V_CASE","componentStep":{"name":"COMPONENT_V","component":"COMPONENT_V","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_BE_CASE","componentStep":{"name":"COMPONENT_BE","component":"COMPONENT_BE","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_QM_CASE","componentStep":{"name":"COMPONENT_QM","component":"COMPONENT_QM","type":"single"}},{"conditionStep":2,"componentStep":{"name":"COMPONENT_L","component":"COMPONENT_L","type":"single"}}]} <===
 11:14:06.468 [main] INFO   - build single component:COMPONENT_G
-11:14:06.470 [main] INFO   - ===================> sequential IlJEQoki flow build success, component info  ==> {"name":"条件判断工作流示例","type":"sequential","sequentialSteps":[{"name":"COMPONENT_I","component":"COMPONENT_I","type":"single"},{"name":"多条件流","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_V_CASE","componentStep":{"name":"COMPONENT_V","component":"COMPONENT_V","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_BE_CASE","componentStep":{"name":"COMPONENT_BE","component":"COMPONENT_BE","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_QM_CASE","componentStep":{"name":"COMPONENT_QM","component":"COMPONENT_QM","type":"single"}},{"conditionStep":2,"componentStep":{"name":"COMPONENT_L","component":"COMPONENT_L","type":"single"}}]},{"name":"COMPONENT_G","component":"COMPONENT_G","type":"single"}]} <===
+11:14:06.470 [main] INFO   - ===================> sequential IlJEQoki flow build success, component info  ==> {"name":"条件判断工作流示例","type":"sequential","sequentialSteps":[{"name":"COMPONENT_I","component":"COMPONENT_I","type":"single"},{"name":"多条件流","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_V_CASE","componentStep":{"name":"COMPONENT_V","component":"COMPONENT_V","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_BE_CASE","componentStep":{"name":"COMPONENT_BE","component":"COMPONENT_BE","type":"single"}},{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_QM_CASE","componentStep":{"name":"COMPONENT_QM","component":"COMPONENT_QM","type":"single"}},{"conditionStep":2,"componentStep":{"name":"COMPONENT_L","component":"COMPONENT_L","type":"single"}}]},{"name":"COMPONENT_G","component":"COMPONENT_G","type":"single"}]} <===
 11:14:06.476 [main] INFO   - Running workflow ''条件判断工作流示例''
 11:14:06.477 [main] INFO   - COMPONENT_I execute start
 11:14:09.786 [main] INFO   - COMPONENT_I execute end ==> cost time:3303ms
@@ -327,6 +332,8 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 
 以下是JSON字符串表示的工作流：
 
+[simple_repeat.json](src%2Ftest%2Fresources%2Fflow.json%2Fsimple_repeat.json)
+
 ```json
 {
   "name": "repeat工作流示例",
@@ -336,7 +343,7 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
       "name": "重复3次",
       "type": "repeat",
       "repeatStep": {
-        "predicateClassName": "com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE",
+        "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.REPEAT_PREDICATE",
         "componentStep": {
           "name": "COMPONENT_I",
           "component": "COMPONENT_I"
@@ -360,12 +367,12 @@ graph LR
 ```shell
 mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#testSimpleRepeatCase -e
 
-11:17:18.421 [main] INFO   - jsonStr:{"name":"repeat工作流示例","type":"sequential","sequentialSteps":[{"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE","componentStep":{"name":"COMPONENT_I","component":"COMPONENT_I"}}}]}
+11:17:18.421 [main] INFO   - jsonStr:{"name":"repeat工作流示例","type":"sequential","sequentialSteps":[{"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.REPEAT_PREDICATE","componentStep":{"name":"COMPONENT_I","component":"COMPONENT_I"}}}]}
 11:17:18.487 [main] INFO   - ===================> sequential 8KQLrQgW build start <====================
 11:17:18.487 [main] INFO   - ===================> repeat iMC7vjt7 build start <====================
 11:17:18.492 [main] INFO   - build single component:COMPONENT_I
-11:17:18.501 [main] INFO   - ===================> repeat iMC7vjt7 flow build success, component info  ==> {"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE","componentStep":{"name":"COMPONENT_I","component":"COMPONENT_I","type":"single"}}} <===
-11:17:18.507 [main] INFO   - ===================> sequential 8KQLrQgW flow build success, component info  ==> {"name":"repeat工作流示例","type":"sequential","sequentialSteps":[{"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE","componentStep":{"name":"COMPONENT_I","component":"COMPONENT_I","type":"single"}}}]} <===
+11:17:18.501 [main] INFO   - ===================> repeat iMC7vjt7 flow build success, component info  ==> {"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.REPEAT_PREDICATE","componentStep":{"name":"COMPONENT_I","component":"COMPONENT_I","type":"single"}}} <===
+11:17:18.507 [main] INFO   - ===================> sequential 8KQLrQgW flow build success, component info  ==> {"name":"repeat工作流示例","type":"sequential","sequentialSteps":[{"name":"重复3次","type":"repeat","repeatStep":{"predicateClassName":"com.xiaopeng.workflow.components.predict.MultiPredicate.REPEAT_PREDICATE","componentStep":{"name":"COMPONENT_I","component":"COMPONENT_I","type":"single"}}}]} <===
 11:17:18.509 [main] INFO   - Running workflow ''repeat工作流示例''
 11:17:18.509 [main] INFO   - COMPONENT_I execute start
 11:17:19.789 [main] INFO   - COMPONENT_I execute end ==> cost time:1276ms
@@ -379,11 +386,12 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 11:17:22.183 [main] INFO   - report:{"status":"COMPLETED","workContext":{}}
 ```
 
-
-
 ## 复杂流程示例
 
 ### json 结构示例
+
+[simple_complex.json](src%2Ftest%2Fresources%2Fflow.json%2Fsimple_complex.json)
+
 ```json
 {
   "name": "复杂工作流示例",

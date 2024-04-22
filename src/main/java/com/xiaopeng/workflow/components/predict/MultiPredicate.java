@@ -14,14 +14,13 @@ import org.jeasy.flows.work.WorkReportPredicate;
  * 会尝试去实例化该类（此类需实现WorkReportPredicate 接口）
  * 示例 ：predicateClassName = "com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate"
  * 使用方法2 某个类中的属性
- * 示例 ： predicateClassName = "com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_V_CASE"
+ * 示例 ： predicateClassName = "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_V_CASE"
  *
  *
  * <p>
  */
 @Slf4j
-public class MulitPredicate {
-
+public class MultiPredicate {
 
     public WorkReportPredicate IF_COMPONENT_V_CASE = workReport -> {
         Object flag = workReport.getWorkContext().get("conditionPath");

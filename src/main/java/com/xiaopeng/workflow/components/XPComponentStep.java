@@ -27,10 +27,7 @@ public class XPComponentStep {
      */
     private String component;
 
-    /**
-     * 类型 single | sequential | parallel | conditional | repeat
-     */
-    private String type = "single";
+    private WorkFlowType type;
 
     /**
      * 多条件步骤

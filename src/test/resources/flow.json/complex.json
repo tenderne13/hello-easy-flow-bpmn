@@ -1,0 +1,122 @@
+{
+  "name": "复杂工作流示例",
+  "type": "SEQUENTIAL",
+  "sequentialSteps": [
+    {
+      "name": "COMPONENT_I",
+      "component": "COMPONENT_I"
+    },
+    {
+      "name": "e2e and COMPONENT_L flow",
+      "type": "PARALLEL",
+      "parallelSteps": [
+        {
+          "name": "e2e-flow",
+          "type": "SEQUENTIAL",
+          "sequentialSteps": [
+            {
+              "name": "COMPONENT_V",
+              "component": "COMPONENT_V"
+            },
+            {
+              "name": "并行执行",
+              "type": "PARALLEL",
+              "parallelSteps": [
+                {
+                  "component": "COMPONENT_BE"
+                },
+                {
+                  "component": "COMPONENT_QM"
+                }
+              ]
+            },
+            {
+              "name": "实体集成",
+              "component": "ENTITY_ENSEMBLE"
+            },
+            {
+              "name": "并行执行 全局节点 & COMPONENT_S 节点",
+              "type": "PARALLEL",
+              "parallelSteps": [
+                {
+                  "name": "全局节点",
+                  "type": "SEQUENTIAL",
+                  "sequentialSteps": [
+                    {
+                      "name": "初始化操作",
+                      "component": "COMPONENT_GEN"
+                    },
+                    {
+                      "name": "标签集成",
+                      "component": "COMPONENT_TAG"
+                    },
+                    {
+                      "name": "并行执行预测",
+                      "type": "PARALLEL",
+                      "parallelSteps": [
+                        {
+                          "component": "COMPONENT_PRE"
+                        },
+                        {
+                          "component": "COMPONENT_UN"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "COMPONENT_S",
+                  "component": "COMPONENT_S"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "L链路",
+          "type": "CONDITIONAL",
+          "conditionSteps": [
+            {
+              "predicateClassName": "com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate",
+              "componentStep": {
+                "type": "SEQUENTIAL",
+                "name": "thenWorkFlow",
+                "sequentialSteps": [
+                  {
+                    "name": "thenWorkFlow",
+                    "type": "SEQUENTIAL",
+                    "conditionStep": 1,
+                    "sequentialSteps": [
+                      {
+                        "name": "COMPONENT_LParael",
+                        "type": "PARALLEL",
+                        "parallelSteps": [
+                          {
+                            "name": "COMPONENT_L",
+                            "component": "COMPONENT_L"
+                          },
+                          {
+                            "name": "COMPONENT_L_COMPONENT_QM",
+                            "component": "COMPONENT_LQM"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "COMPONENT_LR",
+                        "component": "COMPONENT_LR"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "COMPONENT_G",
+      "component": "COMPONENT_G"
+    }
+  ]
+}

@@ -11,7 +11,6 @@ import org.camunda.bpm.model.bpmn.Query;
 import org.camunda.bpm.model.bpmn.impl.instance.TaskImpl;
 import org.camunda.bpm.model.bpmn.instance.*;
 import org.camunda.bpm.model.bpmn.instance.Process;
-import org.camunda.bpm.model.xml.Model;
 import org.camunda.bpm.model.xml.ModelInstance;
 
 import java.util.ArrayList;
@@ -44,20 +43,20 @@ public class CamundaBpmnConverter {
             }
             StartEvent startEvent = eventOptional.get();
             processName = process.getName();
-            XPComponentStep rootXPComponentStep = XPComponentStep.builder().type(ComponentType.SEQUENTIAL.getCode()).name(processName).build();
-            buildXPComponentStep(startEvent, rootXPComponentStep);
+            /*XPComponentStep rootXPComponentStep = XPComponentStep.builder().type(ComponentType.SEQUENTIAL.getCode()).name(processName).build();
+            buildXPComponentStep(startEvent, rootXPComponentStep);*/
         }
 
         Definitions definitions = bpmnModelInstance.getDefinitions();
         ModelInstance modelInstance = definitions.getModelInstance();
 
 
-        XPComponentStep rootXPComponentStep = XPComponentStep.builder().type(ComponentType.SEQUENTIAL.getCode()).name(processName).build();
+        /*XPComponentStep rootXPComponentStep = XPComponentStep.builder().type(ComponentType.SEQUENTIAL.getCode()).name(processName).build();
         //buildXPComponentStep(modelInstance, rootXPComponentStep);
         //从StartEvent 开始构建
 
 
-        System.out.println(JSONUtil.toJsonStr(rootXPComponentStep));
+        System.out.println(JSONUtil.toJsonStr(rootXPComponentStep));*/
         for (StartEvent startEvent : startEvents) {
             trace(startEvent);
         }
@@ -75,12 +74,12 @@ public class CamundaBpmnConverter {
             StartEvent startEvent = (StartEvent) flowNode;
             List<FlowNode> flowNodes = startEvent.getSucceedingNodes().list();
             if (flowNodes.size() > 1) {
-                XPComponentStep parallelXPComponentStep = XPComponentStep.builder().type(ComponentType.PARALLEL.getCode()).name("parallel").build();
+                /*XPComponentStep parallelXPComponentStep = XPComponentStep.builder().type(ComponentType.PARALLEL.getCode()).name("parallel").build();
                 List<XPComponentStep> parallelSteps = new ArrayList<>();
                 parallelXPComponentStep.setParallelSteps(parallelSteps);
                 for (FlowNode node : flowNodes) {
                     buildXPComponentStep(node, parallelXPComponentStep);
-                }
+                }*/
             } else {
                 for (FlowNode node : flowNodes) {
                     buildXPComponentStep(node, xpComponentStep);
@@ -96,14 +95,14 @@ public class CamundaBpmnConverter {
         if (flowNode instanceof SubProcess) {
             SubProcess subProcess = (SubProcess) flowNode;
             //todo 获取子流程的节点的类型  可能为 repeat conditional sequential parallel
-            XPComponentStep rootXPComponentStep = XPComponentStep.builder().type(ComponentType.SEQUENTIAL.getCode()).name(subProcess.getName()).build();
+            /*XPComponentStep rootXPComponentStep = XPComponentStep.builder().type(ComponentType.SEQUENTIAL.getCode()).name(subProcess.getName()).build();
             Optional<StartEvent> eventOptional = subProcess.getChildElementsByType(StartEvent.class).stream().findFirst();
             if (eventOptional.isEmpty()) {
                 //todo 此处应该抛异常
                 log.error("SubProcess {} has no start event", subProcess.getName());
             }
             StartEvent startEvent = eventOptional.get();
-            buildXPComponentStep(startEvent, rootXPComponentStep);
+            buildXPComponentStep(startEvent, rootXPComponentStep);*/
         }
     }
 

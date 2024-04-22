@@ -2,35 +2,30 @@ package com.xiaopeng.workflow;
 
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
-import com.xiaopeng.workflow.components.XPComponentStep;
-import com.xiaopeng.workflow.components.XPWorkFLowBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.jeasy.flows.engine.WorkFlowEngine;
 import org.jeasy.flows.work.DefaultWorkReport;
 import org.jeasy.flows.work.WorkContext;
-import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.work.WorkStatus;
 import org.jeasy.flows.workflow.WorkFlow;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests.*;
 import static org.jeasy.flows.engine.WorkFlowEngineBuilder.aNewWorkFlowEngine;
-
 @SpringBootTest
 @Slf4j
-class HelloEasyFlowBpmnApplicationTests {
+public class HelloTests {
     private static final ExecutorService THREAD_POOL = new ThreadPoolExecutor(10, 10, 100, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(2048));
     private static HashMap<String, WorkFlow> componentMap;
     private static WorkFlowEngine engine = aNewWorkFlowEngine().build();
@@ -137,80 +132,50 @@ class HelloEasyFlowBpmnApplicationTests {
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
     }
-
-    static Resource getResource(String path) {
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource resource = resolver.getResource(path);
-        return resource;
-    }
-
-    static void commonExecute(JSON json, WorkContext workContext) {
-        XPComponentStep xpComponentStep = JSONUtil.toBean(json, XPComponentStep.class, false);
-        commonExecute(workContext, xpComponentStep);
-    }
-
-    static void commonExecute(WorkContext workContext, XPComponentStep xpComponentStep) {
-        WorkFlow workFlow = XPWorkFLowBuilder.buildWorkFlow(componentMap, xpComponentStep, THREAD_POOL);
-        final WorkReport report = engine.run(workFlow, workContext);
-        log.info("report:{}", JSONUtil.toJsonStr(report));
-    }
-
     /**
-     * 简单顺序执行示例
+     * 拉齐现有工作流功能 case
      */
     @Test
-    public void testSimpleSequential() throws IOException {
-        Resource resource = getResource("classpath:flow.json/simple_sequential.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
-        WorkContext workContext = new WorkContext();
-        commonExecute(json, workContext);
-    }
-
-    @Test
-    public void testSimpleParallel() throws IOException {
-        Resource resource = getResource("classpath:flow.json/simple_parallel.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
-        WorkContext workContext = new WorkContext();
-        commonExecute(json, workContext);
-    }
-
-    @Test
-    public void testSimpleMultiCondition() throws IOException {
-        Resource resource = getResource("classpath:flow.json/simple_multi_condition.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
-        WorkContext workContext = new WorkContext();
-        //workContext.put("conditionPath", "COMPONENT_V");
-        commonExecute(json, workContext);
-    }
-
-    @Test
-    public void testSimpleRepeatCase() throws IOException {
-        Resource resource = getResource("classpath:flow.json/simple_repeat.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
-        WorkContext workContext = new WorkContext();
-        commonExecute(json, workContext);
-    }
-
-    /**
-     * 复杂 场景示例
-     */
-    @Test
-    public void testComplexFlow() throws IOException {
-        Resource resource = getResource("classpath:flow.json/complex.json");
+    public void testConvertXPComp() throws IOException {
+        Resource resource = getResource("classpath:flow.json/1.json");
         JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
+        workContext.put("conditionPath", "COMPONENT_V");
         commonExecute(json, workContext);
     }
 
-    static void sleepForAWhile(String componentName) {
-        Random random = new Random();
-        int sleepTime = random.nextInt(5000); // Generates a random sleep time between 0 and 5000 milliseconds
-        try {
-            Thread.sleep(sleepTime);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        log.info("{} execute end ==> cost time:{}ms", componentName, sleepTime);
+    /**
+     * 测试条件组件
+     */
+    @Test
+    public void testConditionXPComp() throws IOException {
+        Resource resource = getResource("classpath:flow.json/condition.json");
+        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
+        WorkContext workContext = new WorkContext();
+        workContext.put("XGPTSwitch", true);
+        workContext.put("conditionPath", "COMPONENT_V");
+        commonExecute(json, workContext);
+    }
+
+
+    @Test
+    public void testSimpleMultiPredicate() throws IOException {
+        Resource resource = getResource("classpath:flow.json/3.json");
+        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
+        WorkContext workContext = new WorkContext();
+        workContext.put("XGPTSwitch", true);
+        workContext.put("conditionPath", "COMPONENT_V");
+        commonExecute(json, workContext);
+    }
+
+    @Test
+    public void testSimpleRepeat() throws IOException {
+        Resource resource = getResource("classpath:flow.json/repeat.json");
+        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
+        WorkContext workContext = new WorkContext();
+        workContext.put("XGPTSwitch", true);
+        workContext.put("conditionPath", "COMPONENT_V");
+        commonExecute(json, workContext);
     }
 }
