@@ -22,7 +22,7 @@ graph LR
 
 顺序类型的步骤表示在工作流中按照一定的顺序执行一系列的操作。在 `XPComponentStep` 中，如果 `type` 字段为 "sequential"
 ，则 `sequentialSteps` 字段会包含一个 `XPComponentStep` 对象的列表，表示顺序执行的步骤。
-以下示例中第一步、第二步、第N步操作都可能为其他类型工作流组合撑得业务单元。
+以下示例中第一步、第二步、第N步操作都可能为其他类型工作流组合成的业务单元。
 
 ```mermaid
 graph LR
@@ -597,7 +597,7 @@ flowchart TD
     subgraph LLM_FLOW
         START --> PREDICT1{PREDICT1}
         PREDICT1 -- 大模型开关开启 --> thenFlow
-        START -- else --> NoOpWork
+        PREDICT1 -- else --> NoOpWork
 
         subgraph thenFlow
             direction TB
