@@ -618,72 +618,72 @@ flowchart TD
 ```shell
 mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#testComplexFlow -e
 
-17:03:53.665 [main] INFO   - jsonStr:{"name":"复杂工作流示例","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_I"},{"name":"e2e and llm flow","type":"parallel","parallelSteps":[{"name":"e2e-flow","type":"sequential","sequentialSteps":[{"name":"获取词汇表","component":"COMPONENT_V"},{"name":"并行执行","type":"parallel","parallelSteps":[{"component":"COMPONENT_BE"},{"component":"COMPONENT_QM"}]},{"name":"实体集成","component":"ENTITY_ENSEMBLE"},{"name":"并行执行全局节点和可见及可说节点","type":"parallel","parallelSteps":[{"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN"},{"name":"标签集成","component":"COMPONENT_TAG"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE"},{"component":"COMPONENT_UN"}]}]},{"name":"场景ES","component":"COMPONENT_S"}]}]},{"name":"llm 链路","type":"conditional","conditionSteps":[{"predicateClassName":"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate","componentStep":{"type":"sequential","name":"thenWorkFlow","sequentialSteps":[{"name":"thenWorkFlow","type":"sequential","conditionStep":1,"sequentialSteps":[{"name":"llmParael","type":"parallel","parallelSteps":[{"name":"COMPONENT_L","component":"COMPONENT_L"},{"name":"COMPONENT_LQM","component":"COMPONENT_LQM"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR"}]}]}}]}]},{"name":"全局场景融合","component":"COMPONENT_G"}]}
-17:03:53.759 [main] INFO   - ===================> sequential fV1vtF0l build start <====================
-17:03:53.760 [main] INFO   - build single component:COMPONENT_I
-17:03:53.760 [main] INFO   - ===================> parallel AFwTblRW build start <====================
-17:03:53.760 [main] INFO   - ===================> sequential KqVNtx3Z build start <====================
-17:03:53.760 [main] INFO   - build single component:COMPONENT_V
-17:03:53.760 [main] INFO   - ===================> parallel MRVaL6Dw build start <====================
-17:03:53.760 [main] INFO   - build single component:COMPONENT_BE
-17:03:53.760 [main] INFO   - build single component:COMPONENT_QM
-17:03:53.765 [main] INFO   - ===================> parallel MRVaL6Dw flow build success, component info  ==> {"name":"并行执行","type":"parallel","parallelSteps":[{"component":"COMPONENT_BE","type":"single"},{"component":"COMPONENT_QM","type":"single"}]} <===
-17:03:53.771 [main] INFO   - build single component:ENTITY_ENSEMBLE
-17:03:53.771 [main] INFO   - ===================> parallel 0AVqwXO4 build start <====================
-17:03:53.771 [main] INFO   - ===================> sequential 7W3jkBzD build start <====================
-17:03:53.771 [main] INFO   - build single component:COMPONENT_GEN
-17:03:53.771 [main] INFO   - build single component:COMPONENT_TAG
-17:03:53.771 [main] INFO   - ===================> parallel 6Co6BAWJ build start <====================
-17:03:53.771 [main] INFO   - build single component:COMPONENT_PRE
-17:03:53.771 [main] INFO   - build single component:COMPONENT_UN
-17:03:53.772 [main] INFO   - ===================> parallel 6Co6BAWJ flow build success, component info  ==> {"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]} <===
-17:03:53.773 [main] INFO   - ===================> sequential 7W3jkBzD flow build success, component info  ==> {"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN","type":"single"},{"name":"标签集成","component":"COMPONENT_TAG","type":"single"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]}]} <===
-17:03:53.775 [main] INFO   - build single component:COMPONENT_S
-17:03:53.777 [main] INFO   - ===================> parallel 0AVqwXO4 flow build success, component info  ==> {"name":"并行执行全局节点和可见及可说节点","type":"parallel","parallelSteps":[{"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN","type":"single"},{"name":"标签集成","component":"COMPONENT_TAG","type":"single"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]}]},{"name":"场景ES","component":"COMPONENT_S","type":"single"}]} <===
-17:03:53.779 [main] INFO   - ===================> sequential KqVNtx3Z flow build success, component info  ==> {"name":"e2e-flow","type":"sequential","sequentialSteps":[{"name":"获取词汇表","component":"COMPONENT_V","type":"single"},{"name":"并行执行","type":"parallel","parallelSteps":[{"component":"COMPONENT_BE","type":"single"},{"component":"COMPONENT_QM","type":"single"}]},{"name":"实体集成","component":"ENTITY_ENSEMBLE","type":"single"},{"name":"并行执行全局节点和可见及可说节点","type":"parallel","parallelSteps":[{"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN","type":"single"},{"name":"标签集成","component":"COMPONENT_TAG","type":"single"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]}]},{"name":"场景ES","component":"COMPONENT_S","type":"single"}]}]} <===
-17:03:53.780 [main] INFO   - ===================> conditional JzwMR2u6 build start <====================
-17:03:53.781 [main] INFO   - ===================> sequential SxDRO7yz build start <====================
-17:03:53.781 [main] INFO   - ===================> sequential jPiZxeuo build start <====================
-17:03:53.781 [main] INFO   - ===================> parallel oAJdjghr build start <====================
-17:03:53.781 [main] INFO   - build single component:COMPONENT_L
-17:03:53.781 [main] INFO   - build single component:COMPONENT_LQM
-17:03:53.782 [main] INFO   - ===================> parallel oAJdjghr flow build success, component info  ==> {"name":"llmParael","type":"parallel","parallelSteps":[{"name":"COMPONENT_L","component":"COMPONENT_L","type":"single"},{"name":"COMPONENT_LQM","component":"COMPONENT_LQM","type":"single"}]} <===
-17:03:53.782 [main] INFO   - build single component:COMPONENT_LR
-17:03:53.783 [main] INFO   - ===================> sequential jPiZxeuo flow build success, component info  ==> {"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"llmParael","type":"parallel","parallelSteps":[{"name":"LLM","component":"LLM","type":"single"},{"name":"COMPONENT_LQM","component":"COMPONENT_LQM","type":"single"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR","type":"single"}]} <===
-17:03:53.785 [main] INFO   - ===================> sequential SxDRO7yz flow build success, component info  ==> {"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"llmParael","type":"parallel","parallelSteps":[{"name":"LLM","component":"LLM","type":"single"},{"name":"COMPONENT_LQM","component":"COMPONENT_LQM","type":"single"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR","type":"single"}]}]} <===
-17:03:53.791 [main] INFO   - ===================> conditional JzwMR2u6 flow build success, component info  ==> {"name":"llm 链路","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate","componentStep":{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"llmParael","type":"parallel","parallelSteps":[{"name":"LLM","component":"LLM","type":"single"},{"name":"COMPONENT_LQM","component":"COMPONENT_LQM","type":"single"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR","type":"single"}]}]}}]} <===
-17:03:53.793 [main] INFO   - ===================> parallel AFwTblRW flow build success, component info  ==> {"name":"e2e and llm flow","type":"parallel","parallelSteps":[{"name":"e2e-flow","type":"sequential","sequentialSteps":[{"name":"获取词汇表","component":"COMPONENT_V","type":"single"},{"name":"并行执行","type":"parallel","parallelSteps":[{"component":"COMPONENT_BE","type":"single"},{"component":"COMPONENT_QM","type":"single"}]},{"name":"实体集成","component":"ENTITY_ENSEMBLE","type":"single"},{"name":"并行执行全局节点和可见及可说节点","type":"parallel","parallelSteps":[{"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN","type":"single"},{"name":"标签集成","component":"COMPONENT_TAG","type":"single"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]}]},{"name":"场景ES","component":"COMPONENT_S","type":"single"}]}]},{"name":"llm 链路","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate","componentStep":{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"llmParael","type":"parallel","parallelSteps":[{"name":"LLM","component":"LLM","type":"single"},{"name":"COMPONENT_LQM","component":"COMPONENT_LQM","type":"single"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR","type":"single"}]}]}}]}]} <===
-17:03:53.793 [main] INFO   - build single component:COMPONENT_G
-17:03:53.795 [main] INFO   - ===================> sequential fV1vtF0l flow build success, component info  ==> {"name":"复杂工作流示例","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_I","type":"single"},{"name":"e2e and llm flow","type":"parallel","parallelSteps":[{"name":"e2e-flow","type":"sequential","sequentialSteps":[{"name":"获取词汇表","component":"COMPONENT_V","type":"single"},{"name":"并行执行","type":"parallel","parallelSteps":[{"component":"COMPONENT_BE","type":"single"},{"component":"COMPONENT_QM","type":"single"}]},{"name":"实体集成","component":"ENTITY_ENSEMBLE","type":"single"},{"name":"并行执行全局节点和可见及可说节点","type":"parallel","parallelSteps":[{"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN","type":"single"},{"name":"标签集成","component":"COMPONENT_TAG","type":"single"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]}]},{"name":"场景ES","component":"COMPONENT_S","type":"single"}]}]},{"name":"llm 链路","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate","componentStep":{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"llmParael","type":"parallel","parallelSteps":[{"name":"LLM","component":"LLM","type":"single"},{"name":"COMPONENT_LQM","component":"COMPONENT_LQM","type":"single"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR","type":"single"}]}]}}]}]},{"name":"全局场景融合","component":"COMPONENT_G","type":"single"}]} <===
-17:03:53.797 [main] INFO   - Running workflow ''复杂工作流示例''
-17:03:53.797 [main] INFO   - COMPONENT_I execute start
-17:03:58.655 [main] INFO   - COMPONENT_I execute end ==> cost time:4854ms
-17:03:58.658 [pool-2-thread-1] INFO   - COMPONENT_V execute start
-17:03:58.658 [pool-2-thread-2] INFO   - XGPTSwitchPredicate 大模型开关开启状态 ==> true
-17:03:58.658 [pool-2-thread-3] INFO   - LLM execute start
-17:03:58.658 [pool-2-thread-4] INFO   - COMPONENT_LQM execute start
-17:03:58.662 [pool-2-thread-3] INFO   - LLM execute end ==> cost time:3ms
-17:03:59.990 [pool-2-thread-4] INFO   - COMPONENT_LQM execute end ==> cost time:1328ms
-17:03:59.991 [pool-2-thread-2] INFO   - COMPONENT_LR execute start
-17:04:00.674 [pool-2-thread-2] INFO   - COMPONENT_LR execute end ==> cost time:679ms
-17:04:03.109 [pool-2-thread-1] INFO   - COMPONENT_V execute end ==> cost time:4447ms
-17:04:03.110 [pool-2-thread-5] INFO   - COMPONENT_BE execute start
-17:04:03.111 [pool-2-thread-6] INFO   - COMPONENT_QM execute start
-17:04:03.717 [pool-2-thread-6] INFO   - COMPONENT_QM execute end ==> cost time:602ms
-17:04:04.102 [pool-2-thread-5] INFO   - COMPONENT_BE execute end ==> cost time:989ms
-17:04:04.103 [pool-2-thread-1] INFO   - ENTITY_ENSEMBLE execute start
-17:04:06.877 [pool-2-thread-1] INFO   - ENTITY_ENSEMBLE execute end ==> cost time:2771ms
-17:04:06.877 [pool-2-thread-7] INFO   - COMPONENT_GEN execute start
-17:04:06.877 [pool-2-thread-8] INFO   - COMPONENT_S execute start
-17:04:07.692 [pool-2-thread-7] INFO   - COMPONENT_GEN execute end ==> cost time:813ms
-17:04:07.692 [pool-2-thread-7] INFO   - COMPONENT_TAG execute start
-17:04:10.517 [pool-2-thread-8] INFO   - COMPONENT_S execute end ==> cost time:3635ms
-17:04:10.541 [pool-2-thread-7] INFO   - COMPONENT_TAG execute end ==> cost time:2846ms
-17:04:10.542 [pool-2-thread-10] INFO   - COMPONENT_UN execute start
-17:04:10.542 [pool-2-thread-9] INFO   - COMPONENT_PRE execute start
-17:04:13.428 [pool-2-thread-9] INFO   - COMPONENT_PRE execute end ==> cost time:2880ms
-17:04:15.498 [pool-2-thread-10] INFO   - COMPONENT_UN execute end ==> cost time:4952ms
-17:04:15.499 [main] INFO   - COMPONENT_G execute start
-17:04:19.166 [main] INFO   - COMPONENT_G execute end ==> cost time:3661ms
-17:04:19.167 [main] INFO   - report:{"status":"COMPLETED","workContext":{}}
+11:49:04.163 [main] INFO   - jsonStr:{"name":"复杂工作流示例","type":"sequential","sequentialSteps":[{"name":"COMPONENT_I","component":"COMPONENT_I"},{"name":"e2e and COMPONENT_L flow","type":"parallel","parallelSteps":[{"name":"e2e-flow","type":"sequential","sequentialSteps":[{"name":"COMPONENT_V","component":"COMPONENT_V"},{"name":"并行执行","type":"parallel","parallelSteps":[{"component":"COMPONENT_BE"},{"component":"COMPONENT_QM"}]},{"name":"实体集成","component":"ENTITY_ENSEMBLE"},{"name":"并行执行 全局节点 & COMPONENT_S 节点","type":"parallel","parallelSteps":[{"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN"},{"name":"标签集成","component":"COMPONENT_TAG"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE"},{"component":"COMPONENT_UN"}]}]},{"name":"COMPONENT_S","component":"COMPONENT_S"}]}]},{"name":"L链路","type":"conditional","conditionSteps":[{"predicateClassName":"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate","componentStep":{"type":"sequential","name":"thenWorkFlow","sequentialSteps":[{"name":"thenWorkFlow","type":"sequential","conditionStep":1,"sequentialSteps":[{"name":"COMPONENT_LParael","type":"parallel","parallelSteps":[{"name":"COMPONENT_L","component":"COMPONENT_L"},{"name":"COMPONENT_L_COMPONENT_QM","component":"COMPONENT_LQM"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR"}]}]}}]}]},{"name":"COMPONENT_G","component":"COMPONENT_G"}]}
+11:49:04.258 [main] INFO   - ===================> sequential V9hKB2U8 build start <====================
+11:49:04.258 [main] INFO   - build single component:COMPONENT_I
+11:49:04.259 [main] INFO   - ===================> parallel Wz8wZbMJ build start <====================
+11:49:04.259 [main] INFO   - ===================> sequential RG4bHjoc build start <====================
+11:49:04.259 [main] INFO   - build single component:COMPONENT_V
+11:49:04.259 [main] INFO   - ===================> parallel xqVcFf76 build start <====================
+11:49:04.259 [main] INFO   - build single component:COMPONENT_BE
+11:49:04.259 [main] INFO   - build single component:COMPONENT_QM
+11:49:04.264 [main] INFO   - ===================> parallel xqVcFf76 flow build success, component info  ==> {"name":"并行执行","type":"parallel","parallelSteps":[{"component":"COMPONENT_BE","type":"single"},{"component":"COMPONENT_QM","type":"single"}]} <===
+11:49:04.269 [main] INFO   - build single component:ENTITY_ENSEMBLE
+11:49:04.270 [main] INFO   - ===================> parallel XmRWc9M5 build start <====================
+11:49:04.270 [main] INFO   - ===================> sequential lPsHOaSZ build start <====================
+11:49:04.270 [main] INFO   - build single component:COMPONENT_GEN
+11:49:04.270 [main] INFO   - build single component:COMPONENT_TAG
+11:49:04.270 [main] INFO   - ===================> parallel hrriC7vk build start <====================
+11:49:04.270 [main] INFO   - build single component:COMPONENT_PRE
+11:49:04.270 [main] INFO   - build single component:COMPONENT_UN
+11:49:04.271 [main] INFO   - ===================> parallel hrriC7vk flow build success, component info  ==> {"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]} <===
+11:49:04.272 [main] INFO   - ===================> sequential lPsHOaSZ flow build success, component info  ==> {"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN","type":"single"},{"name":"标签集成","component":"COMPONENT_TAG","type":"single"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]}]} <===
+11:49:04.274 [main] INFO   - build single component:COMPONENT_S
+11:49:04.275 [main] INFO   - ===================> parallel XmRWc9M5 flow build success, component info  ==> {"name":"并行执行 全局节点 & COMPONENT_S 节点","type":"parallel","parallelSteps":[{"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN","type":"single"},{"name":"标签集成","component":"COMPONENT_TAG","type":"single"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]}]},{"name":"COMPONENT_S","component":"COMPONENT_S","type":"single"}]} <===
+11:49:04.277 [main] INFO   - ===================> sequential RG4bHjoc flow build success, component info  ==> {"name":"e2e-flow","type":"sequential","sequentialSteps":[{"name":"COMPONENT_V","component":"COMPONENT_V","type":"single"},{"name":"并行执行","type":"parallel","parallelSteps":[{"component":"COMPONENT_BE","type":"single"},{"component":"COMPONENT_QM","type":"single"}]},{"name":"实体集成","component":"ENTITY_ENSEMBLE","type":"single"},{"name":"并行执行 全局节点 & COMPONENT_S 节点","type":"parallel","parallelSteps":[{"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN","type":"single"},{"name":"标签集成","component":"COMPONENT_TAG","type":"single"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]}]},{"name":"COMPONENT_S","component":"COMPONENT_S","type":"single"}]}]} <===
+11:49:04.277 [main] INFO   - ===================> conditional LgqBHRX1 build start <====================
+11:49:04.278 [main] INFO   - ===================> sequential OaAqTANt build start <====================
+11:49:04.279 [main] INFO   - ===================> sequential jN2af3FQ build start <====================
+11:49:04.279 [main] INFO   - ===================> parallel 6GehYjPQ build start <====================
+11:49:04.279 [main] INFO   - build single component:COMPONENT_L
+11:49:04.279 [main] INFO   - build single component:COMPONENT_LQM
+11:49:04.279 [main] INFO   - ===================> parallel 6GehYjPQ flow build success, component info  ==> {"name":"COMPONENT_LParael","type":"parallel","parallelSteps":[{"name":"COMPONENT_L","component":"COMPONENT_L","type":"single"},{"name":"COMPONENT_L_COMPONENT_QM","component":"COMPONENT_LQM","type":"single"}]} <===
+11:49:04.279 [main] INFO   - build single component:COMPONENT_LR
+11:49:04.280 [main] INFO   - ===================> sequential jN2af3FQ flow build success, component info  ==> {"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"COMPONENT_LParael","type":"parallel","parallelSteps":[{"name":"COMPONENT_L","component":"COMPONENT_L","type":"single"},{"name":"COMPONENT_L_COMPONENT_QM","component":"COMPONENT_LQM","type":"single"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR","type":"single"}]} <===
+11:49:04.281 [main] INFO   - ===================> sequential OaAqTANt flow build success, component info  ==> {"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"COMPONENT_LParael","type":"parallel","parallelSteps":[{"name":"COMPONENT_L","component":"COMPONENT_L","type":"single"},{"name":"COMPONENT_L_COMPONENT_QM","component":"COMPONENT_LQM","type":"single"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR","type":"single"}]}]} <===
+11:49:04.285 [main] INFO   - ===================> conditional LgqBHRX1 flow build success, component info  ==> {"name":"L链路","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate","componentStep":{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"COMPONENT_LParael","type":"parallel","parallelSteps":[{"name":"COMPONENT_L","component":"COMPONENT_L","type":"single"},{"name":"COMPONENT_L_COMPONENT_QM","component":"COMPONENT_LQM","type":"single"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR","type":"single"}]}]}}]} <===
+11:49:04.287 [main] INFO   - ===================> parallel Wz8wZbMJ flow build success, component info  ==> {"name":"e2e and COMPONENT_L flow","type":"parallel","parallelSteps":[{"name":"e2e-flow","type":"sequential","sequentialSteps":[{"name":"COMPONENT_V","component":"COMPONENT_V","type":"single"},{"name":"并行执行","type":"parallel","parallelSteps":[{"component":"COMPONENT_BE","type":"single"},{"component":"COMPONENT_QM","type":"single"}]},{"name":"实体集成","component":"ENTITY_ENSEMBLE","type":"single"},{"name":"并行执行 全局节点 & COMPONENT_S 节点","type":"parallel","parallelSteps":[{"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN","type":"single"},{"name":"标签集成","component":"COMPONENT_TAG","type":"single"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]}]},{"name":"COMPONENT_S","component":"COMPONENT_S","type":"single"}]}]},{"name":"L链路","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate","componentStep":{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"COMPONENT_LParael","type":"parallel","parallelSteps":[{"name":"COMPONENT_L","component":"COMPONENT_L","type":"single"},{"name":"COMPONENT_L_COMPONENT_QM","component":"COMPONENT_LQM","type":"single"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR","type":"single"}]}]}}]}]} <===
+11:49:04.288 [main] INFO   - build single component:COMPONENT_G
+11:49:04.290 [main] INFO   - ===================> sequential V9hKB2U8 flow build success, component info  ==> {"name":"复杂工作流示例","type":"sequential","sequentialSteps":[{"name":"COMPONENT_I","component":"COMPONENT_I","type":"single"},{"name":"e2e and COMPONENT_L flow","type":"parallel","parallelSteps":[{"name":"e2e-flow","type":"sequential","sequentialSteps":[{"name":"COMPONENT_V","component":"COMPONENT_V","type":"single"},{"name":"并行执行","type":"parallel","parallelSteps":[{"component":"COMPONENT_BE","type":"single"},{"component":"COMPONENT_QM","type":"single"}]},{"name":"实体集成","component":"ENTITY_ENSEMBLE","type":"single"},{"name":"并行执行 全局节点 & COMPONENT_S 节点","type":"parallel","parallelSteps":[{"name":"全局节点","type":"sequential","sequentialSteps":[{"name":"初始化操作","component":"COMPONENT_GEN","type":"single"},{"name":"标签集成","component":"COMPONENT_TAG","type":"single"},{"name":"并行执行预测","type":"parallel","parallelSteps":[{"component":"COMPONENT_PRE","type":"single"},{"component":"COMPONENT_UN","type":"single"}]}]},{"name":"COMPONENT_S","component":"COMPONENT_S","type":"single"}]}]},{"name":"L链路","type":"conditional","conditionSteps":[{"conditionStep":1,"predicateClassName":"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate","componentStep":{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"thenWorkFlow","type":"sequential","sequentialSteps":[{"name":"COMPONENT_LParael","type":"parallel","parallelSteps":[{"name":"COMPONENT_L","component":"COMPONENT_L","type":"single"},{"name":"COMPONENT_L_COMPONENT_QM","component":"COMPONENT_LQM","type":"single"}]},{"name":"COMPONENT_LR","component":"COMPONENT_LR","type":"single"}]}]}}]}]},{"name":"COMPONENT_G","component":"COMPONENT_G","type":"single"}]} <===
+11:49:04.291 [main] INFO   - Running workflow ''复杂工作流示例''
+11:49:04.291 [main] INFO   - COMPONENT_I execute start
+11:49:07.793 [main] INFO   - COMPONENT_I execute end ==> cost time:3498ms
+11:49:07.795 [pool-2-thread-1] INFO   - COMPONENT_V execute start
+11:49:07.795 [pool-2-thread-2] INFO   - XGPTSwitchPredicate 大模型开关开启状态 ==> true
+11:49:07.796 [pool-2-thread-4] INFO   - COMPONENT_LQM execute start
+11:49:07.796 [pool-2-thread-3] INFO   - COMPONENT_L execute start
+11:49:08.216 [pool-2-thread-3] INFO   - COMPONENT_L execute end ==> cost time:417ms
+11:49:08.394 [pool-2-thread-4] INFO   - COMPONENT_LQM execute end ==> cost time:597ms
+11:49:08.394 [pool-2-thread-2] INFO   - COMPONENT_LR execute start
+11:49:09.445 [pool-2-thread-1] INFO   - COMPONENT_V execute end ==> cost time:1645ms
+11:49:09.445 [pool-2-thread-5] INFO   - COMPONENT_BE execute start
+11:49:09.445 [pool-2-thread-6] INFO   - COMPONENT_QM execute start
+11:49:11.126 [pool-2-thread-6] INFO   - COMPONENT_QM execute end ==> cost time:1676ms
+11:49:11.305 [pool-2-thread-2] INFO   - COMPONENT_LR execute end ==> cost time:2908ms
+11:49:11.675 [pool-2-thread-5] INFO   - COMPONENT_BE execute end ==> cost time:2225ms
+11:49:11.675 [pool-2-thread-1] INFO   - ENTITY_ENSEMBLE execute start
+11:49:15.817 [pool-2-thread-1] INFO   - ENTITY_ENSEMBLE execute end ==> cost time:4138ms
+11:49:15.819 [pool-2-thread-8] INFO   - COMPONENT_S execute start
+11:49:15.819 [pool-2-thread-7] INFO   - COMPONENT_GEN execute start
+11:49:16.915 [pool-2-thread-7] INFO   - COMPONENT_GEN execute end ==> cost time:1092ms
+11:49:16.916 [pool-2-thread-7] INFO   - COMPONENT_TAG execute start
+11:49:16.939 [pool-2-thread-8] INFO   - COMPONENT_S execute end ==> cost time:1116ms
+11:49:20.309 [pool-2-thread-7] INFO   - COMPONENT_TAG execute end ==> cost time:3388ms
+11:49:20.310 [pool-2-thread-9] INFO   - COMPONENT_PRE execute start
+11:49:20.310 [pool-2-thread-10] INFO   - COMPONENT_UN execute start
+11:49:21.918 [pool-2-thread-9] INFO   - COMPONENT_PRE execute end ==> cost time:1604ms
+11:49:22.244 [pool-2-thread-10] INFO   - COMPONENT_UN execute end ==> cost time:1931ms
+11:49:22.244 [main] INFO   - COMPONENT_G execute start
+11:49:27.112 [main] INFO   - COMPONENT_G execute end ==> cost time:4864ms
+11:49:27.113 [main] INFO   - report:{"status":"COMPLETED","workContext":{}}
 ```
