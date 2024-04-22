@@ -1,0 +1,41 @@
+{
+  "name": "工作流",
+  "type": "SEQUENTIAL",
+  "sequentialSteps": [
+    {
+      "name": "初始化操作",
+      "component": "COMPONENT_I"
+    },
+    {
+      "name": "多条件流",
+      "type": "CONDITIONAL",
+      "conditionSteps": [
+        {
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_V_CASE",
+          "componentStep": {
+            "name": "获取词汇表",
+            "component": "COMPONENT_V"
+          }
+        },
+        {
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_BE_CASE",
+          "componentStep": {
+            "name": "COMPONENT_BE",
+            "component": "COMPONENT_BE"
+          }
+        },
+        {
+          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_QM_CASE",
+          "componentStep": {
+            "name": "COMPONENT_QM",
+            "component": "COMPONENT_QM"
+          }
+        }
+      ]
+    },
+    {
+      "name": "全局场景融合",
+      "component": "COMPONENT_G"
+    }
+  ]
+}

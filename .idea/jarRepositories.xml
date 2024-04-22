@@ -7,9 +7,19 @@
       <option name="url" value="http://maven.aliyun.com/nexus/content/groups/public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="Snapshots" />
+      <option name="name" value="internal nexus snapshots" />
+      <option name="url" value="http://nexus.logan.xiaopeng.local:8081/nexus/repository/snapshots/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="3rd" />
       <option name="name" value="3rd" />
       <option name="url" value="http://nexus.logan.xiaopeng.local:8081/nexus/content/repositories/thirdparty/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Publics" />
+      <option name="name" value="Publics" />
+      <option name="url" value="http://nexus.logan.xiaopeng.local:8081/nexus/content/groups/public" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
@@ -25,6 +35,11 @@
       <option name="id" value="xiaopeng" />
       <option name="name" value="xiaopeng" />
       <option name="url" value="http://nexus.logan.xiaopeng.local:8081/nexus/content/groups/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Releases" />
+      <option name="name" value="internal nexus releases" />
+      <option name="url" value="http://nexus.logan.xiaopeng.local:8081/nexus/repository/releases/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="qcloud-central" />

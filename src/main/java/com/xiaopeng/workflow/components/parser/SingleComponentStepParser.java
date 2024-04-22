@@ -11,7 +11,13 @@ import java.util.concurrent.ExecutorService;
 public class SingleComponentStepParser implements ComponentStepParser {
     @Override
     public WorkFlow parse(Map<String, WorkFlow> componentMap, XPComponentStep componentStep, ExecutorService threadPool) {
-        log.info("build single component:{}", componentStep.getComponent());
-        return componentMap.get(componentStep.getComponent());
+        String component = componentStep.getComponent();
+        log.info("build single component:{}", component);
+        WorkFlow workFlow = componentMap.get(component);
+        if (workFlow == null) {
+            log.error("{} is not found", component);
+            throw new RuntimeException("component not found:" + component);
+        }
+        return workFlow;
     }
 }
