@@ -54,10 +54,10 @@ class HelloEasyFlowBpmnApplicationTests {
     //@Test
     public void testConvertXPComp() {
 
-        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"并行执行\",\"parallelSteps\":[{\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"},{\"component\":\"TEMPLATE_QUERY_MATCHER\"}],\"type\":\"parallel\"},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行全局节点和可见及可说节点\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"全局节点\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"GENERAL_RULE_TAGGER\"},{\"name\":\"标签集成\",\"component\":\"TAG_ENSEMBLE\"},{\"name\":\"并行执行预测\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"TEMPLATE_ACTION_PREDICTION\"},{\"component\":\"UNILM_ACTION_PREDICTION\"}]}]},{\"name\":\"场景ES\",\"component\":\"SCENE_ES\"}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"COMPONENT_I\"},{\"name\":\"获取词汇表\",\"component\":\"COMPONENT_V\"},{\"name\":\"并行执行\",\"parallelSteps\":[{\"component\":\"COMPONENT_BE\"},{\"component\":\"COMPONENT_QM\"}],\"type\":\"parallel\"},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行全局节点和可见及可说节点\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"全局节点\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"COMPONENT_GEN\"},{\"name\":\"标签集成\",\"component\":\"COMPONENT_TAG\"},{\"name\":\"并行执行预测\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"COMPONENT_PRE\"},{\"component\":\"COMPONENT_UN\"}]}]},{\"name\":\"场景ES\",\"component\":\"COMPONENT_S\"}]},{\"name\":\"全局场景融合\",\"component\":\"COMPONENT_G\"}]}";
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
-        workContext.put("conditionPath", "RETRIEVE_VOCAB");
+        workContext.put("conditionPath", "COMPONENT_V");
         commonExecute(jsonStr, workContext);
     }
 
@@ -77,28 +77,28 @@ class HelloEasyFlowBpmnApplicationTests {
      */
     //@Test
     public void testConditionXPComp() {
-        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"e2e and llm flow\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"e2e-flow\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"并行执行\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"},{\"component\":\"TEMPLATE_QUERY_MATCHER\"}]},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行全局节点和可见及可说节点\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"全局节点\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"GENERAL_RULE_TAGGER\"},{\"name\":\"标签集成\",\"component\":\"TAG_ENSEMBLE\"},{\"name\":\"并行执行预测\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"TEMPLATE_ACTION_PREDICTION\"},{\"component\":\"UNILM_ACTION_PREDICTION\"}]}]},{\"name\":\"场景ES\",\"component\":\"SCENE_ES\"}]}]},{\"name\":\"llm 链路\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate\",\"componentStep\":{\"type\":\"sequential\",\"name\":\"thenWorkFlow\",\"sequentialSteps\":[{\"name\":\"thenWorkFlow\",\"type\":\"sequential\",\"conditionStep\":1,\"sequentialSteps\":[{\"name\":\"llmParael\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"LLM\",\"component\":\"LLM\"},{\"name\":\"LLM_TEMPLATE_QUERY_MATCHER\",\"component\":\"LLM_TEMPLATE_QUERY_MATCHER\"}]},{\"name\":\"LLMPOST_RULE\",\"component\":\"LLMPOST_RULE\"}]}]}}]}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"COMPONENT_I\"},{\"name\":\"e2e and llm flow\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"e2e-flow\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"获取词汇表\",\"component\":\"COMPONENT_V\"},{\"name\":\"并行执行\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"COMPONENT_BE\"},{\"component\":\"COMPONENT_QM\"}]},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行全局节点和可见及可说节点\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"全局节点\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"COMPONENT_GEN\"},{\"name\":\"标签集成\",\"component\":\"COMPONENT_TAG\"},{\"name\":\"并行执行预测\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"COMPONENT_PRE\"},{\"component\":\"COMPONENT_UN\"}]}]},{\"name\":\"场景ES\",\"component\":\"COMPONENT_S\"}]}]},{\"name\":\"llm 链路\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate\",\"componentStep\":{\"type\":\"sequential\",\"name\":\"thenWorkFlow\",\"sequentialSteps\":[{\"name\":\"thenWorkFlow\",\"type\":\"sequential\",\"conditionStep\":1,\"sequentialSteps\":[{\"name\":\"llmParael\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"LLM\",\"component\":\"LLM\"},{\"name\":\"COMPONENT_LQM\",\"component\":\"COMPONENT_LQM\"}]},{\"name\":\"COMPONENT_LR\",\"component\":\"COMPONENT_LR\"}]}]}}]}]},{\"name\":\"全局场景融合\",\"component\":\"COMPONENT_G\"}]}";
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
-        workContext.put("conditionPath", "RETRIEVE_VOCAB");
+        workContext.put("conditionPath", "COMPONENT_V");
         commonExecute(jsonStr, workContext);
     }
 
     //@Test
     public void testSimpleMulitPredicate() {
-        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"多条件流\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE\",\"componentStep\":{\"name\":\"BERT_CRF_ENTITY_EXTRACTOR\",\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE\",\"componentStep\":{\"name\":\"TEMPLATE_QUERY_MATCHER\",\"component\":\"TEMPLATE_QUERY_MATCHER\"}}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"COMPONENT_I\"},{\"name\":\"多条件流\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_V_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"COMPONENT_V\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_BE_CASE\",\"componentStep\":{\"name\":\"COMPONENT_BE\",\"component\":\"COMPONENT_BE\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_QM_CASE\",\"componentStep\":{\"name\":\"COMPONENT_QM\",\"component\":\"COMPONENT_QM\"}}]},{\"name\":\"全局场景融合\",\"component\":\"COMPONENT_G\"}]}";
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
-        workContext.put("conditionPath", "RETRIEVE_VOCAB");
+        workContext.put("conditionPath", "COMPONENT_V");
         commonExecute(jsonStr, workContext);
     }
 
     //@Test
     public void testSimpleRepeat() {
-        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"多条件流\",\"type\":\"repeat\",\"repeatStep\":{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"}}},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        String jsonStr = "{\"name\":\"工作流\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"COMPONENT_I\"},{\"name\":\"多条件流\",\"type\":\"repeat\",\"repeatStep\":{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_V_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"COMPONENT_V\"}}},{\"name\":\"全局场景融合\",\"component\":\"COMPONENT_G\"}]}";
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
-        workContext.put("conditionPath", "RETRIEVE_VOCAB");
+        workContext.put("conditionPath", "COMPONENT_V");
         commonExecute(jsonStr, workContext);
     }
 
@@ -109,30 +109,30 @@ class HelloEasyFlowBpmnApplicationTests {
      */
     @Test
     public void testSimpleSequential() {
-        String jsonStr = "{\"name\":\"顺序流示例\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        String jsonStr = "{\"name\":\"顺序流示例\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"组件I\",\"component\":\"COMPONENT_I\"},{\"name\":\"组件V\",\"component\":\"COMPONENT_V\"},{\"name\":\"组件G\",\"component\":\"COMPONENT_G\"}]}";
         WorkContext workContext = new WorkContext();
         commonExecute(jsonStr, workContext);
     }
 
     @Test
     public void testSimpleParallel() {
-        String jsonStr = "{\"name\":\"并行流示例\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        String jsonStr = "{\"name\":\"并行流示例\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"组件I\",\"component\":\"COMPONENT_I\"},{\"name\":\"组件V\",\"component\":\"COMPONENT_V\"},{\"name\":\"组件G\",\"component\":\"COMPONENT_G\"}]}";
         WorkContext workContext = new WorkContext();
         commonExecute(jsonStr, workContext);
     }
 
     @Test
     public void testSimpleMulitCondition() {
-        String jsonStr = "{\"name\":\"条件判断工作流示例\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"多条件流\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE\",\"componentStep\":{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_BERT_CRF_ENTITY_EXTRACTOR_CASE\",\"componentStep\":{\"name\":\"BERT_CRF_ENTITY_EXTRACTOR\",\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_TEMPLATE_QUERY_MATCHER_CASE\",\"componentStep\":{\"name\":\"TEMPLATE_QUERY_MATCHER\",\"component\":\"TEMPLATE_QUERY_MATCHER\"}},{\"conditionStep\":2,\"componentStep\":{\"name\":\"LLM\",\"component\":\"LLM\"}}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        String jsonStr = "{\"name\":\"条件判断工作流示例\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"COMPONENT_I\",\"component\":\"COMPONENT_I\"},{\"name\":\"多条件流\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_V_CASE\",\"componentStep\":{\"name\":\"COMPONENT_V\",\"component\":\"COMPONENT_V\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_BE_CASE\",\"componentStep\":{\"name\":\"COMPONENT_BE\",\"component\":\"COMPONENT_BE\"}},{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_QM_CASE\",\"componentStep\":{\"name\":\"COMPONENT_QM\",\"component\":\"COMPONENT_QM\"}},{\"conditionStep\":2,\"componentStep\":{\"name\":\"COMPONENT_L\",\"component\":\"COMPONENT_L\"}}]},{\"name\":\"COMPONENT_G\",\"component\":\"COMPONENT_G\"}]}";
         WorkContext workContext = new WorkContext();
-        //workContext.put("conditionPath", "RETRIEVE_VOCAB");
+        //workContext.put("conditionPath", "COMPONENT_V");
         commonExecute(jsonStr, workContext);
     }
 
 
     @Test
     public void testSimpleRepeatCase() {
-        String jsonStr = "{\"name\":\"repeat工作流示例\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"重复3次\",\"type\":\"repeat\",\"repeatStep\":{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE\",\"componentStep\":{\"name\":\"INIT_ENV\",\"component\":\"INIT_ENV\"}}}]}";
+        String jsonStr = "{\"name\":\"repeat工作流示例\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"重复3次\",\"type\":\"repeat\",\"repeatStep\":{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.MulitPredicate.REPEAT_PREDICATE\",\"componentStep\":{\"name\":\"COMPONENT_I\",\"component\":\"COMPONENT_I\"}}}]}";
         WorkContext workContext = new WorkContext();
         commonExecute(jsonStr, workContext);
     }
@@ -142,7 +142,7 @@ class HelloEasyFlowBpmnApplicationTests {
      */
     @Test
     public void testComplexFlow() {
-        String jsonStr = "{\"name\":\"复杂工作流示例\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"INIT_ENV\"},{\"name\":\"e2e and llm flow\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"e2e-flow\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"获取词汇表\",\"component\":\"RETRIEVE_VOCAB\"},{\"name\":\"并行执行\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"BERT_CRF_ENTITY_EXTRACTOR\"},{\"component\":\"TEMPLATE_QUERY_MATCHER\"}]},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行全局节点和可见及可说节点\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"全局节点\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"GENERAL_RULE_TAGGER\"},{\"name\":\"标签集成\",\"component\":\"TAG_ENSEMBLE\"},{\"name\":\"并行执行预测\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"TEMPLATE_ACTION_PREDICTION\"},{\"component\":\"UNILM_ACTION_PREDICTION\"}]}]},{\"name\":\"场景ES\",\"component\":\"SCENE_ES\"}]}]},{\"name\":\"llm 链路\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate\",\"componentStep\":{\"type\":\"sequential\",\"name\":\"thenWorkFlow\",\"sequentialSteps\":[{\"name\":\"thenWorkFlow\",\"type\":\"sequential\",\"conditionStep\":1,\"sequentialSteps\":[{\"name\":\"llmParael\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"LLM\",\"component\":\"LLM\"},{\"name\":\"LLM_TEMPLATE_QUERY_MATCHER\",\"component\":\"LLM_TEMPLATE_QUERY_MATCHER\"}]},{\"name\":\"LLMPOST_RULE\",\"component\":\"LLMPOST_RULE\"}]}]}}]}]},{\"name\":\"全局场景融合\",\"component\":\"GLOBAL_SCENE_FUSION\"}]}";
+        String jsonStr = "{\"name\":\"复杂工作流示例\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"COMPONENT_I\",\"component\":\"COMPONENT_I\"},{\"name\":\"e2e and COMPONENT_L flow\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"e2e-flow\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"COMPONENT_V\",\"component\":\"COMPONENT_V\"},{\"name\":\"并行执行\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"COMPONENT_BE\"},{\"component\":\"COMPONENT_QM\"}]},{\"name\":\"实体集成\",\"component\":\"ENTITY_ENSEMBLE\"},{\"name\":\"并行执行 全局节点 & COMPONENT_S 节点\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"全局节点\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"初始化操作\",\"component\":\"COMPONENT_GEN\"},{\"name\":\"标签集成\",\"component\":\"COMPONENT_TAG\"},{\"name\":\"并行执行预测\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"COMPONENT_PRE\"},{\"component\":\"COMPONENT_UN\"}]}]},{\"name\":\"COMPONENT_S\",\"component\":\"COMPONENT_S\"}]}]},{\"name\":\"L链路\",\"type\":\"conditional\",\"conditionSteps\":[{\"predicateClassName\":\"com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate\",\"componentStep\":{\"type\":\"sequential\",\"name\":\"thenWorkFlow\",\"sequentialSteps\":[{\"name\":\"thenWorkFlow\",\"type\":\"sequential\",\"conditionStep\":1,\"sequentialSteps\":[{\"name\":\"COMPONENT_LParael\",\"type\":\"parallel\",\"parallelSteps\":[{\"name\":\"COMPONENT_L\",\"component\":\"COMPONENT_L\"},{\"name\":\"COMPONENT_L_COMPONENT_QM\",\"component\":\"COMPONENT_LQM\"}]},{\"name\":\"COMPONENT_LR\",\"component\":\"COMPONENT_LR\"}]}]}}]}]},{\"name\":\"COMPONENT_G\",\"component\":\"COMPONENT_G\"}]}";
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
         commonExecute(jsonStr, workContext);
@@ -150,41 +150,41 @@ class HelloEasyFlowBpmnApplicationTests {
 
 
     private static HashMap<String, WorkFlow> buildComponentMap() {
-        String sceneEs = "SCENE_ES";
-        String globalSceneFusion = "GLOBAL_SCENE_FUSION";
-        String initEnv = "INIT_ENV";
-        String retrieveVocab = "RETRIEVE_VOCAB";
-        String bertCrfEntityExtractor = "BERT_CRF_ENTITY_EXTRACTOR";
-        String templateQueryMatcher = "TEMPLATE_QUERY_MATCHER";
-        String generalRuleTagger = "GENERAL_RULE_TAGGER";
-        String tagEnsemble = "TAG_ENSEMBLE";
-        String templateActionPrediction = "TEMPLATE_ACTION_PREDICTION";
-        String unilmActionPrediction = "UNILM_ACTION_PREDICTION";
+        String COMPONENT_S = "COMPONENT_S";
+        String COMPONENT_G = "COMPONENT_G";
+        String COMPONENT_I = "COMPONENT_I";
+        String COMPONENT_V = "COMPONENT_V";
+        String COMPONENT_BE = "COMPONENT_BE";
+        String COMPONENT_QM = "COMPONENT_QM";
+        String COMPONENT_GEN = "COMPONENT_GEN";
+        String COMPONENT_TAG = "COMPONENT_TAG";
+        String COMPONENT_PRE = "COMPONENT_PRE";
+        String COMPONENT_UN = "COMPONENT_UN";
 
-        String LLM = "LLM";
-        String LLM_TEMPLATE_QUERY_MATCHER = "LLM_TEMPLATE_QUERY_MATCHER";
-        String LLMPOST_RULE = "LLMPOST_RULE";
+        String COMPONENT_L = "COMPONENT_L";
+        String COMPONENT_LQM = "COMPONENT_LQM";
+        String COMPONENT_LR = "COMPONENT_LR";
         HashMap<String, WorkFlow> componentMap = new HashMap<>();
-        componentMap.put(initEnv, workContext -> {
-            log.info("INIT_ENV execute start");
-            sleepForAWhile(initEnv);
+        componentMap.put(COMPONENT_I, workContext -> {
+            log.info("COMPONENT_I execute start");
+            sleepForAWhile(COMPONENT_I);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
-        componentMap.put(retrieveVocab, workContext -> {
-            log.info("RETRIEVE_VOCAB execute start");
-            sleepForAWhile(retrieveVocab);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put(bertCrfEntityExtractor, workContext -> {
-            log.info(bertCrfEntityExtractor + " execute start");
-            sleepForAWhile(bertCrfEntityExtractor);
+        componentMap.put(COMPONENT_V, workContext -> {
+            log.info("COMPONENT_V execute start");
+            sleepForAWhile(COMPONENT_V);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
 
-        componentMap.put(templateQueryMatcher, workContext -> {
-            log.info(templateQueryMatcher + " execute start");
-            sleepForAWhile(templateQueryMatcher);
+        componentMap.put(COMPONENT_BE, workContext -> {
+            log.info(COMPONENT_BE + " execute start");
+            sleepForAWhile(COMPONENT_BE);
+            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
+        });
+
+        componentMap.put(COMPONENT_QM, workContext -> {
+            log.info(COMPONENT_QM + " execute start");
+            sleepForAWhile(COMPONENT_QM);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
 
@@ -195,60 +195,60 @@ class HelloEasyFlowBpmnApplicationTests {
         });
 
 
-        componentMap.put(generalRuleTagger, workContext -> {
-            log.info(generalRuleTagger + " execute start");
-            sleepForAWhile(generalRuleTagger);
+        componentMap.put(COMPONENT_GEN, workContext -> {
+            log.info(COMPONENT_GEN + " execute start");
+            sleepForAWhile(COMPONENT_GEN);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
 
 
-        componentMap.put(tagEnsemble, workContext -> {
-            log.info(tagEnsemble + " execute start");
-            sleepForAWhile(tagEnsemble);
+        componentMap.put(COMPONENT_TAG, workContext -> {
+            log.info(COMPONENT_TAG + " execute start");
+            sleepForAWhile(COMPONENT_TAG);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
 
 
-        componentMap.put(templateActionPrediction, workContext -> {
-            log.info(templateActionPrediction + " execute start");
-            sleepForAWhile(templateActionPrediction);
+        componentMap.put(COMPONENT_PRE, workContext -> {
+            log.info(COMPONENT_PRE + " execute start");
+            sleepForAWhile(COMPONENT_PRE);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
 
-        componentMap.put(unilmActionPrediction, workContext -> {
-            log.info(unilmActionPrediction + " execute start");
-            sleepForAWhile(unilmActionPrediction);
+        componentMap.put(COMPONENT_UN, workContext -> {
+            log.info(COMPONENT_UN + " execute start");
+            sleepForAWhile(COMPONENT_UN);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
 
-        componentMap.put(sceneEs, workContext -> {
-            log.info(sceneEs + " execute start");
-            sleepForAWhile(sceneEs);
+        componentMap.put(COMPONENT_S, workContext -> {
+            log.info(COMPONENT_S + " execute start");
+            sleepForAWhile(COMPONENT_S);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
 
-        componentMap.put(globalSceneFusion, workContext -> {
-            log.info("globalSceneFusion execute start");
-            sleepForAWhile(globalSceneFusion);
+        componentMap.put(COMPONENT_G, workContext -> {
+            log.info("COMPONENT_G execute start");
+            sleepForAWhile(COMPONENT_G);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
 
 
-        componentMap.put(LLM, workContext -> {
-            log.info(LLM + " execute start");
-            sleepForAWhile(LLM);
+        componentMap.put(COMPONENT_L, workContext -> {
+            log.info(COMPONENT_L + " execute start");
+            sleepForAWhile(COMPONENT_L);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
 
-        componentMap.put(LLM_TEMPLATE_QUERY_MATCHER, workContext -> {
-            log.info(LLM_TEMPLATE_QUERY_MATCHER + " execute start");
-            sleepForAWhile(LLM_TEMPLATE_QUERY_MATCHER);
+        componentMap.put(COMPONENT_LQM, workContext -> {
+            log.info(COMPONENT_LQM + " execute start");
+            sleepForAWhile(COMPONENT_LQM);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
 
-        componentMap.put(LLMPOST_RULE, workContext -> {
-            log.info(LLMPOST_RULE + " execute start");
-            sleepForAWhile(LLMPOST_RULE);
+        componentMap.put(COMPONENT_LR, workContext -> {
+            log.info(COMPONENT_LR + " execute start");
+            sleepForAWhile(COMPONENT_LR);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         });
         return componentMap;

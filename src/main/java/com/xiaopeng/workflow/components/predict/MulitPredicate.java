@@ -14,7 +14,7 @@ import org.jeasy.flows.work.WorkReportPredicate;
  * 会尝试去实例化该类（此类需实现WorkReportPredicate 接口）
  * 示例 ：predicateClassName = "com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate"
  * 使用方法2 某个类中的属性
- * 示例 ： predicateClassName = "com.xiaopeng.workflow.components.predict.MulitPredicate.IF_RETRIEVE_VOCAB_CASE"
+ * 示例 ： predicateClassName = "com.xiaopeng.workflow.components.predict.MulitPredicate.IF_COMPONENT_V_CASE"
  *
  *
  * <p>
@@ -23,24 +23,24 @@ import org.jeasy.flows.work.WorkReportPredicate;
 public class MulitPredicate {
 
 
-    public WorkReportPredicate IF_RETRIEVE_VOCAB_CASE = workReport -> {
+    public WorkReportPredicate IF_COMPONENT_V_CASE = workReport -> {
         Object flag = workReport.getWorkContext().get("conditionPath");
-        boolean equals = "RETRIEVE_VOCAB".equals(flag);
-        log.info("IF_RETRIEVE_VOCAB_CASE judge 是否命中分支条件 ==> {}", equals);
+        boolean equals = "COMPONENT_V".equals(flag);
+        log.info("IF_COMPONENT_V_CASE judge 是否命中分支条件 ==> {}", equals);
         return equals;
     };
 
-    public WorkReportPredicate IF_BERT_CRF_ENTITY_EXTRACTOR_CASE = workReport -> {
+    public WorkReportPredicate IF_COMPONENT_BE_CASE = workReport -> {
         Object flag = workReport.getWorkContext().get("conditionPath");
-        boolean equals = "BERT_CRF_ENTITY_EXTRACTOR".equals(flag);
-        log.info("IF_BERT_CRF_ENTITY_EXTRACTOR_CASE judge 是否命中分支条件 ==> {}", equals);
+        boolean equals = "COMPONENT_BE".equals(flag);
+        log.info("IF_COMPONENT_BE_CASE judge 是否命中分支条件 ==> {}", equals);
         return equals;
     };
 
-    public WorkReportPredicate IF_TEMPLATE_QUERY_MATCHER_CASE = workReport -> {
+    public WorkReportPredicate IF_COMPONENT_QM_CASE = workReport -> {
         Object flag = workReport.getWorkContext().get("conditionPath");
-        boolean equals = "TEMPLATE_QUERY_MATCHER".equals(flag);
-        log.info("IF_TEMPLATE_QUERY_MATCHER_CASE judge 是否命中分支条件 ==> {}", equals);
+        boolean equals = "COMPONENT_QM".equals(flag);
+        log.info("IF_COMPONENT_QM_CASE judge 是否命中分支条件 ==> {}", equals);
         return equals;
     };
 
