@@ -75,6 +75,14 @@
 			<artifactId>easy-flows</artifactId>
 			<version>${easy-flows.version}</version>
 		</dependency>
+
+		<!-- camunda bpmn引入 -->
+		<dependency>
+			<groupId>org.camunda.bpm.model</groupId>
+			<artifactId>camunda-bpmn-model</artifactId>
+			<version>7.18.0</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

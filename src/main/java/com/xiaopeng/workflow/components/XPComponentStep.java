@@ -1,6 +1,9 @@
 package com.xiaopeng.workflow.components;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -11,6 +14,9 @@ import java.util.List;
  */
 @Data
 @Slf4j
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class XPComponentStep {
     /**
      * 组件名称

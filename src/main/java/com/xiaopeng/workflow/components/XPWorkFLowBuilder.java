@@ -1,5 +1,6 @@
 package com.xiaopeng.workflow.components;
 
+import com.xiaopeng.workflow.components.enums.ComponentType;
 import com.xiaopeng.workflow.components.parser.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jeasy.flows.workflow.WorkFlow;
@@ -14,11 +15,11 @@ public class XPWorkFLowBuilder {
     public static final Map<String, ComponentStepParser> componentStepParserMap = new HashMap<>();
 
     static {
-        componentStepParserMap.put("single", new SingleComponentStepParser());
-        componentStepParserMap.put("parallel", new ParallelComponentStepParser());
-        componentStepParserMap.put("sequential", new SequentialComponentStepParser());
-        componentStepParserMap.put("conditional", new MultConditionalComponentStepParser());
-        componentStepParserMap.put("repeat", new RepeatComponentStepParser());
+        componentStepParserMap.put(ComponentType.SINGLE.getCode(), new SingleComponentStepParser());
+        componentStepParserMap.put(ComponentType.PARALLEL.getCode(), new ParallelComponentStepParser());
+        componentStepParserMap.put(ComponentType.SEQUENTIAL.getCode(), new SequentialComponentStepParser());
+        componentStepParserMap.put(ComponentType.CONDITIONAL.getCode(), new MultConditionalComponentStepParser());
+        componentStepParserMap.put(ComponentType.REPEAT.getCode(), new RepeatComponentStepParser());
     }
 
 
