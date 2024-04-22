@@ -148,6 +148,14 @@ class HelloEasyFlowBpmnApplicationTests {
         commonExecute(jsonStr, workContext);
     }
 
+    @Test
+    public void testStandFlow() {
+        String jsonStr = "{\"name\":\"顺序流示例\",\"type\":\"sequential\",\"sequentialSteps\":[{\"name\":\"主流程\",\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"COMPONENT_G\"},{\"type\":\"sequential\",\"sequentialSteps\":[{\"type\":\"parallel\",\"parallelSteps\":[{\"component\":\"COMPONENT_I\"},{\"component\":\"COMPONENT_TAG\"}]},{\"component\":\"COMPONENT_UN\"}]}]}]}";
+        WorkContext workContext = new WorkContext();
+        workContext.put("XGPTSwitch", true);
+        commonExecute(jsonStr, workContext);
+    }
+
 
     private static HashMap<String, WorkFlow> buildComponentMap() {
         String COMPONENT_S = "COMPONENT_S";

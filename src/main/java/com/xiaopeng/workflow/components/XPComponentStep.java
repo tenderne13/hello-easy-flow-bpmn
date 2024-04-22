@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,7 +36,7 @@ public class XPComponentStep {
     /**
      * 多条件步骤
      */
-    private List<XPConditionStep> conditionSteps;
+    private List<XPConditionStep> conditionSteps = new ArrayList<>();
 
     /**
      * 重复执行步骤
@@ -46,9 +47,9 @@ public class XPComponentStep {
     /**
      * 串行流步骤
      */
-    private List<XPComponentStep> sequentialSteps;
+    private List<XPComponentStep> sequentialSteps = new ArrayList<>();
     /**
      * 并行流步骤
      */
-    private List<XPComponentStep> parallelSteps;
+    private List<XPComponentStep> parallelSteps = new ArrayList<>();
 }
