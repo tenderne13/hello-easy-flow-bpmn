@@ -32,105 +32,7 @@ public class HelloTests {
 
     @BeforeAll
     public static void init() {
-
-        String COMPONENT_S = "COMPONENT_S";
-        String COMPONENT_G = "COMPONENT_G";
-        String COMPONENT_I = "COMPONENT_I";
-        String COMPONENT_V = "COMPONENT_V";
-        String COMPONENT_BE = "COMPONENT_BE";
-        String COMPONENT_QM = "COMPONENT_QM";
-        String COMPONENT_GEN = "COMPONENT_GEN";
-        String COMPONENT_TAG = "COMPONENT_TAG";
-        String COMPONENT_PRE = "COMPONENT_PRE";
-        String COMPONENT_UN = "COMPONENT_UN";
-
-        String COMPONENT_L = "COMPONENT_L";
-        String COMPONENT_LQM = "COMPONENT_LQM";
-        String COMPONENT_LR = "COMPONENT_LR";
-        componentMap = new HashMap<>();
-        componentMap.put(COMPONENT_I, workContext -> {
-            log.info("COMPONENT_I execute start");
-            sleepForAWhile(COMPONENT_I);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-        componentMap.put(COMPONENT_V, workContext -> {
-            log.info("COMPONENT_V execute start");
-            sleepForAWhile(COMPONENT_V);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put(COMPONENT_BE, workContext -> {
-            log.info(COMPONENT_BE, "{} execute start");
-            sleepForAWhile(COMPONENT_BE);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put(COMPONENT_QM, workContext -> {
-            log.info(COMPONENT_QM, "{} execute start");
-            sleepForAWhile(COMPONENT_QM);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put("ENTITY_ENSEMBLE", workContext -> {
-            log.info("ENTITY_ENSEMBLE execute start");
-            sleepForAWhile("ENTITY_ENSEMBLE");
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put(COMPONENT_GEN, workContext -> {
-            log.info(COMPONENT_GEN, "{} execute start");
-            sleepForAWhile(COMPONENT_GEN);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put(COMPONENT_TAG, workContext -> {
-            log.info(COMPONENT_TAG, "{} execute start");
-            sleepForAWhile(COMPONENT_TAG);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-
-        componentMap.put(COMPONENT_PRE, workContext -> {
-            log.info(COMPONENT_PRE, "{} execute start");
-            sleepForAWhile(COMPONENT_PRE);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put(COMPONENT_UN, workContext -> {
-            log.info(COMPONENT_UN, "{} execute start");
-            sleepForAWhile(COMPONENT_UN);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put(COMPONENT_S, workContext -> {
-            log.info(COMPONENT_S, "{} execute start");
-            sleepForAWhile(COMPONENT_S);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put(COMPONENT_G, workContext -> {
-            log.info("COMPONENT_G execute start");
-            sleepForAWhile(COMPONENT_G);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put(COMPONENT_L, workContext -> {
-            log.info(COMPONENT_L, "{} execute start");
-            sleepForAWhile(COMPONENT_L);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put(COMPONENT_LQM, workContext -> {
-            log.info(COMPONENT_LQM, "{} execute start");
-            sleepForAWhile(COMPONENT_LQM);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
-
-        componentMap.put(COMPONENT_LR, workContext -> {
-            log.info(COMPONENT_LR, "{} execute start");
-            sleepForAWhile(COMPONENT_LR);
-            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
-        });
+        HelloEasyFlowBpmnApplicationTests.init();
     }
     /**
      * 拉齐现有工作流功能 case
@@ -176,6 +78,17 @@ public class HelloTests {
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
         workContext.put("conditionPath", "COMPONENT_V");
+        commonExecute(json, workContext);
+    }
+
+
+    @Test
+    public void testBpmn2Json() throws IOException {
+        Resource resource = getResource("classpath:flow.json/bpmn2json.json");
+        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
+        log.info("Model is:{}", json);
+        WorkContext workContext = new WorkContext();
+        workContext.put("XGPTSwitch", true);
         commonExecute(json, workContext);
     }
 }

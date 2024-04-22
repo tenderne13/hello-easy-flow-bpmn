@@ -7,6 +7,7 @@
     </bpmn:startEvent>
     <bpmn:task id="Activity_1ek2el4" name="COMPONENT_G">
       <bpmn:incoming>Flow_1bdi2la</bpmn:incoming>
+      <bpmn:outgoing>Flow_1own9wo</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="Flow_1bdi2la" sourceRef="StartEvent_1" targetRef="Activity_1ek2el4" />
     <bpmn:subProcess id="Activity_0vhvf0c">
@@ -33,6 +34,10 @@
       <bpmn:sequenceFlow id="Flow_14d4rh0" sourceRef="Activity_0rglivg" targetRef="Activity_01xbx9f" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_1a3sqvb" sourceRef="StartEvent_1" targetRef="Activity_0vhvf0c" />
+    <bpmn:task id="Activity_1ypjwki" name="COMPONENT_V">
+      <bpmn:incoming>Flow_1own9wo</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1own9wo" sourceRef="Activity_1ek2el4" targetRef="Activity_1ypjwki" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_044unzg">
@@ -45,6 +50,10 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="154" y="125" width="55" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ypjwki_di" bpmnElement="Activity_1ypjwki">
+        <dc:Bounds x="160" y="600" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0vhvf0c_di" bpmnElement="Activity_0vhvf0c" isExpanded="true">
         <dc:Bounds x="360" y="270" width="370" height="420" />
@@ -95,6 +104,10 @@
         <di:waypoint x="358" y="100" />
         <di:waypoint x="535" y="100" />
         <di:waypoint x="535" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1own9wo_di" bpmnElement="Flow_1own9wo">
+        <di:waypoint x="210" y="540" />
+        <di:waypoint x="210" y="600" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

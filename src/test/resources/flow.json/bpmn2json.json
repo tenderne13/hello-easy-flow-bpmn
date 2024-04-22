@@ -1,0 +1,42 @@
+{
+  "name": "顺序流示例",
+  "type": "SEQUENTIAL",
+  "sequentialSteps": [
+    {
+      "name": "主流程",
+      "type": "PARALLEL",
+      "parallelSteps": [
+        {
+          "type": "SEQUENTIAL",
+          "sequentialSteps": [
+            {
+              "component": "COMPONENT_G"
+            },
+            {
+              "component": "COMPONENT_V"
+            }
+          ]
+        },
+        {
+          "type": "SEQUENTIAL",
+          "sequentialSteps": [
+            {
+              "type": "PARALLEL",
+              "parallelSteps": [
+                {
+                  "component": "COMPONENT_I"
+                },
+                {
+                  "component": "COMPONENT_TAG"
+                }
+              ]
+            },
+            {
+              "component": "COMPONENT_UN"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
