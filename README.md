@@ -514,15 +514,15 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 name: 复杂工作流示例
 type: sequential
 sequentialSteps:
-  - name: 初始化操作
+  - name: COMPONENT_I
     component: COMPONENT_I
-  - name: e2e and llm flow
+  - name: e2e and COMPONENT_L flow
     type: parallel
     parallelSteps:
       - name: e2e-flow
         type: sequential
         sequentialSteps:
-          - name: 获取词汇表
+          - name: COMPONENT_V
             component: COMPONENT_V
           - name: 并行执行
             type: parallel
@@ -531,7 +531,7 @@ sequentialSteps:
               - component: COMPONENT_QM
           - name: 实体集成
             component: ENTITY_ENSEMBLE
-          - name: 并行执行全局节点和可见及可说节点
+          - name: 并行执行 全局节点 & COMPONENT_S 节点
             type: parallel
             parallelSteps:
               - name: 全局节点
@@ -546,9 +546,9 @@ sequentialSteps:
                     parallelSteps:
                       - component: COMPONENT_PRE
                       - component: COMPONENT_UN
-              - name: 场景ES
+              - name: COMPONENT_S
                 component: COMPONENT_S
-      - name: llm 链路
+      - name: L链路
         type: conditional
         conditionSteps:
           - predicateClassName: com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate
@@ -560,16 +560,16 @@ sequentialSteps:
                   type: sequential
                   conditionStep: 1
                   sequentialSteps:
-                    - name: llmParael
+                    - name: COMPONENT_LParael
                       type: parallel
                       parallelSteps:
                         - name: COMPONENT_L
                           component: COMPONENT_L
-                        - name: COMPONENT_LQM
+                        - name: COMPONENT_L_COMPONENT_QM
                           component: COMPONENT_LQM
                     - name: COMPONENT_LR
                       component: COMPONENT_LR
-  - name: 全局场景融合
+  - name: COMPONENT_G
     component: COMPONENT_G
 
 ```
