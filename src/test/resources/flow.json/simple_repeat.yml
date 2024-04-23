@@ -1,0 +1,10 @@
+name: repeat工作流示例
+type: SEQUENTIAL
+sequentialSteps:
+  - name: 重复3次
+    type: REPEAT
+    repeatStep:
+      predicateClassName: com.xiaopeng.workflow.components.predict.MultiPredicate.REPEAT_PREDICATE
+      componentStep:
+        name: COMPONENT_I
+        component: COMPONENT_I

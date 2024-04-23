@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -34,10 +35,10 @@ class HelloEasyFlowBpmnApplicationTests {
     private static final ExecutorService THREAD_POOL = new ThreadPoolExecutor(10, 10, 100, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(2048));
     private static HashMap<String, WorkFlow> componentMap;
     private static WorkFlowEngine engine = aNewWorkFlowEngine().build();
+    private static final Yaml yaml = new Yaml();
 
     @BeforeAll
     public static void init() {
-
         String COMPONENT_S = "COMPONENT_S";
         String COMPONENT_G = "COMPONENT_G";
         String COMPONENT_I = "COMPONENT_I";
@@ -144,51 +145,72 @@ class HelloEasyFlowBpmnApplicationTests {
         return resource;
     }
 
-    static void commonExecute(JSON json, WorkContext workContext) {
-        XPComponentStep xpComponentStep = JSONUtil.toBean(json, XPComponentStep.class, false);
-        commonExecute(workContext, xpComponentStep);
-    }
-
     static void commonExecute(WorkContext workContext, XPComponentStep xpComponentStep) {
         WorkFlow workFlow = XPWorkFLowBuilder.buildWorkFlow(componentMap, xpComponentStep, THREAD_POOL);
         final WorkReport report = engine.run(workFlow, workContext);
         log.info("report:{}", JSONUtil.toJsonStr(report));
     }
 
+    static XPComponentStep loadConfig(String configPath) throws IOException {
+        Resource resource = getResource(configPath);
+        if (configPath.endsWith(".json")) {
+            JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
+            return JSONUtil.toBean(json, XPComponentStep.class, false);
+        } else {
+            resource = getResource(configPath);
+            return yaml.loadAs(resource.getInputStream(), XPComponentStep.class);
+        }
+    }
+
     /**
      * 简单顺序执行示例
      */
     @Test
-    public void testSimpleSequential() throws IOException {
-        Resource resource = getResource("classpath:flow.json/simple_sequential.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
-        WorkContext workContext = new WorkContext();
-        commonExecute(json, workContext);
+    public void testSimpleSequentialFromJson() throws IOException {
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/simple_sequential.json");
+        commonExecute(new WorkContext(), xpComponentStep);
     }
 
     @Test
-    public void testSimpleParallel() throws IOException {
-        Resource resource = getResource("classpath:flow.json/simple_parallel.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
-        WorkContext workContext = new WorkContext();
-        commonExecute(json, workContext);
+    public void testSimpleSequentialFromYml() throws IOException {
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/simple_sequential.yml");
+        commonExecute(new WorkContext(), xpComponentStep);
     }
 
     @Test
-    public void testSimpleMultiCondition() throws IOException {
-        Resource resource = getResource("classpath:flow.json/simple_multi_condition.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
-        WorkContext workContext = new WorkContext();
-        //workContext.put("conditionPath", "COMPONENT_V");
-        commonExecute(json, workContext);
+    public void testSimpleParallelJ() throws IOException {
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/simple_parallel.json");
+        commonExecute(new WorkContext(), xpComponentStep);
     }
 
     @Test
-    public void testSimpleRepeatCase() throws IOException {
-        Resource resource = getResource("classpath:flow.json/simple_repeat.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
-        WorkContext workContext = new WorkContext();
-        commonExecute(json, workContext);
+    public void testSimpleParallelY() throws IOException {
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/simple_parallel.yml");
+        commonExecute(new WorkContext(), xpComponentStep);
+    }
+
+    @Test
+    public void testSimpleMultiConditionJ() throws IOException {
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/simple_multi_condition.json");
+        commonExecute(new WorkContext(), xpComponentStep);
+    }
+
+    @Test
+    public void testSimpleMultiConditionY() throws IOException {
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/simple_multi_condition.yml");
+        commonExecute(new WorkContext(), xpComponentStep);
+    }
+
+    @Test
+    public void testSimpleRepeatCaseJ() throws IOException {
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/simple_repeat.json");
+        commonExecute(new WorkContext(), xpComponentStep);
+    }
+
+    @Test
+    public void testSimpleRepeatCaseY() throws IOException {
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/simple_repeat.yml");
+        commonExecute(new WorkContext(), xpComponentStep);
     }
 
     /**
@@ -196,11 +218,10 @@ class HelloEasyFlowBpmnApplicationTests {
      */
     @Test
     public void testComplexFlow() throws IOException {
-        Resource resource = getResource("classpath:flow.json/complex.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/complex.json");
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
-        commonExecute(json, workContext);
+        commonExecute(workContext, xpComponentStep);
     }
 
     static void sleepForAWhile(String componentName) {

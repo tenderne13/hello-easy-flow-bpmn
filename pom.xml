@@ -25,21 +25,44 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<groupId>org.jeasy</groupId>
+			<artifactId>easy-flows</artifactId>
+			<version>${easy-flows.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>5.8.27</version>
+		</dependency>
+
+		<!-- camunda bpmn引入 -->
+		<dependency>
+			<groupId>org.camunda.bpm.model</groupId>
+			<artifactId>camunda-bpmn-model</artifactId>
+			<version>7.18.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-bpmn-converter</artifactId>
 			<version>${activiti.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
 		</dependency>
 
 		<dependency>
@@ -55,33 +78,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
-			<version>5.8.27</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jeasy</groupId>
-			<artifactId>easy-flows</artifactId>
-			<version>${easy-flows.version}</version>
-		</dependency>
-
-		<!-- camunda bpmn引入 -->
-		<dependency>
-			<groupId>org.camunda.bpm.model</groupId>
-			<artifactId>camunda-bpmn-model</artifactId>
-			<version>7.18.0</version>
-			<scope>compile</scope>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

@@ -2,6 +2,7 @@ package com.xiaopeng.workflow;
 
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
+import com.xiaopeng.workflow.components.XPComponentStep;
 import lombok.extern.slf4j.Slf4j;
 import org.jeasy.flows.engine.WorkFlowEngine;
 import org.jeasy.flows.work.DefaultWorkReport;
@@ -39,12 +40,11 @@ public class HelloTests {
      */
     @Test
     public void testConvertXPComp() throws IOException {
-        Resource resource = getResource("classpath:flow.json/1.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/1.json");
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
         workContext.put("conditionPath", "COMPONENT_V");
-        commonExecute(json, workContext);
+        commonExecute(workContext, xpComponentStep);
     }
 
     /**
@@ -52,43 +52,38 @@ public class HelloTests {
      */
     @Test
     public void testConditionXPComp() throws IOException {
-        Resource resource = getResource("classpath:flow.json/condition.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/condition.json");
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
         workContext.put("conditionPath", "COMPONENT_V");
-        commonExecute(json, workContext);
+        commonExecute(workContext, xpComponentStep);
     }
 
 
     @Test
     public void testSimpleMultiPredicate() throws IOException {
-        Resource resource = getResource("classpath:flow.json/3.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/3.json");
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
         workContext.put("conditionPath", "COMPONENT_V");
-        commonExecute(json, workContext);
+        commonExecute(workContext, xpComponentStep);
     }
 
     @Test
     public void testSimpleRepeat() throws IOException {
-        Resource resource = getResource("classpath:flow.json/repeat.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/repeat.json");
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
         workContext.put("conditionPath", "COMPONENT_V");
-        commonExecute(json, workContext);
+        commonExecute(workContext, xpComponentStep);
     }
 
 
     @Test
     public void testBpmn2Json() throws IOException {
-        Resource resource = getResource("classpath:flow.json/bpmn2json.json");
-        JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
-        log.info("Model is:{}", json);
+        XPComponentStep xpComponentStep = loadConfig("classpath:flow.json/bpmn2json.json");
         WorkContext workContext = new WorkContext();
         workContext.put("XGPTSwitch", true);
-        commonExecute(json, workContext);
+        commonExecute(workContext, xpComponentStep);
     }
 }
