@@ -141,8 +141,7 @@ class HelloEasyFlowBpmnApplicationTests {
 
     static Resource getResource(String path) {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource resource = resolver.getResource(path);
-        return resource;
+        return resolver.getResource(path);
     }
 
     static void commonExecute(WorkContext workContext, XPComponentStep xpComponentStep) {
@@ -152,13 +151,11 @@ class HelloEasyFlowBpmnApplicationTests {
     }
 
     static XPComponentStep loadConfig(String configPath) throws IOException {
-        Resource resource = getResource(configPath);
         if (configPath.endsWith(".json")) {
-            JSON json = JSONUtil.readJSON(resource.getFile(), StandardCharsets.UTF_8);
+            JSON json = JSONUtil.readJSON(getResource(configPath).getFile(), StandardCharsets.UTF_8);
             return JSONUtil.toBean(json, XPComponentStep.class, false);
         } else {
-            resource = getResource(configPath);
-            return yaml.loadAs(resource.getInputStream(), XPComponentStep.class);
+            return yaml.loadAs(getResource(configPath).getInputStream(), XPComponentStep.class);
         }
     }
 
