@@ -1,0 +1,9 @@
+name: 顺序流示例
+type: SEQUENTIAL
+sequentialSteps:
+  - name: 组件I
+    component: COMPONENT_I
+  - name: 组件V
+    component: COMPONENT_V
+  - name: 组件G
+    component: COMPONENT_G
