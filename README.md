@@ -129,27 +129,6 @@ XPWorkFLowBuilder 类为流程解析的总入口类，它会根据传入的 `XPC
 以下是JSON字符串表示的工作流：
 [simple_sequential.json](src%2Ftest%2Fresources%2Fflow.json%2Fsimple_sequential.json)
 
-```json
-{
-  "name": "顺序流示例",
-  "type": "sequential",
-  "sequentialSteps": [
-    {
-      "name": "组件I",
-      "component": "COMPONENT_I"
-    },
-    {
-      "name": "组件V",
-      "component": "COMPONENT_V"
-    },
-    {
-      "name": "组件G",
-      "component": "COMPONENT_G"
-    }
-  ]
-}
-```
-
 对应流程图如下：
 
 ```mermaid
@@ -191,26 +170,6 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 
 [simple_parallel.json](src%2Ftest%2Fresources%2Fflow.json%2Fsimple_parallel.json)
 
-```json
-{
-  "name": "并行流示例",
-  "type": "parallel",
-  "parallelSteps": [
-    {
-      "name": "组件I",
-      "component": "COMPONENT_I"
-    },
-    {
-      "name": "组件V",
-      "component": "COMPONENT_V"
-    },
-    {
-      "name": "组件G",
-      "component": "COMPONENT_G"
-    }
-  ]
-}
-```
 
 对应流程图如下：
 
@@ -254,57 +213,6 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 以下为JSON字符串表示的工作流：
 
 [simple_multi_condition.json](src%2Ftest%2Fresources%2Fflow.json%2Fsimple_multi_condition.json)
-
-```json
-{
-  "name": "条件判断工作流示例",
-  "type": "sequential",
-  "sequentialSteps": [
-    {
-      "name": "COMPONENT_I",
-      "component": "COMPONENT_I"
-    },
-    {
-      "name": "多条件流",
-      "type": "conditional",
-      "conditionSteps": [
-        {
-          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_V_CASE",
-          "componentStep": {
-            "name": "COMPONENT_V",
-            "component": "COMPONENT_V"
-          }
-        },
-        {
-          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_BE_CASE",
-          "componentStep": {
-            "name": "COMPONENT_BE",
-            "component": "COMPONENT_BE"
-          }
-        },
-        {
-          "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.IF_COMPONENT_QM_CASE",
-          "componentStep": {
-            "name": "COMPONENT_QM",
-            "component": "COMPONENT_QM"
-          }
-        },
-        {
-          "conditionStep": 2,
-          "componentStep": {
-            "name": "COMPONENT_L",
-            "component": "COMPONENT_L"
-          }
-        }
-      ]
-    },
-    {
-      "name": "COMPONENT_G",
-      "component": "COMPONENT_G"
-    }
-  ]
-}
-```   
 
 对应流程图如下：
 
@@ -362,25 +270,6 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 
 [simple_repeat.json](src%2Ftest%2Fresources%2Fflow.json%2Fsimple_repeat.json)
 
-```json
-{
-  "name": "repeat工作流示例",
-  "type": "sequential",
-  "sequentialSteps": [
-    {
-      "name": "重复3次",
-      "type": "repeat",
-      "repeatStep": {
-        "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.REPEAT_PREDICATE",
-        "componentStep": {
-          "name": "COMPONENT_I",
-          "component": "COMPONENT_I"
-        }
-      }
-    }
-  ]
-}
-```
 
 对应流程图如下：
 
@@ -419,196 +308,6 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 ### json 结构示例
 
 [simple_complex.json](src%2Ftest%2Fresources%2Fflow.json%2Fsimple_complex.json)
-
-```json
-{
-  "name": "复杂工作流示例",
-  "type": "sequential",
-  "sequentialSteps": [
-    {
-      "name": "COMPONENT_I",
-      "component": "COMPONENT_I"
-    },
-    {
-      "name": "e2e and COMPONENT_L flow",
-      "type": "parallel",
-      "parallelSteps": [
-        {
-          "name": "e2e-flow",
-          "type": "sequential",
-          "sequentialSteps": [
-            {
-              "name": "COMPONENT_V",
-              "component": "COMPONENT_V"
-            },
-            {
-              "name": "并行执行",
-              "type": "parallel",
-              "parallelSteps": [
-                {
-                  "component": "COMPONENT_BE"
-                },
-                {
-                  "component": "COMPONENT_QM"
-                }
-              ]
-            },
-            {
-              "name": "实体集成",
-              "component": "ENTITY_ENSEMBLE"
-            },
-            {
-              "name": "并行执行 全局节点 & COMPONENT_S 节点",
-              "type": "parallel",
-              "parallelSteps": [
-                {
-                  "name": "全局节点",
-                  "type": "sequential",
-                  "sequentialSteps": [
-                    {
-                      "name": "初始化操作",
-                      "component": "COMPONENT_GEN"
-                    },
-                    {
-                      "name": "标签集成",
-                      "component": "COMPONENT_TAG"
-                    },
-                    {
-                      "name": "并行执行预测",
-                      "type": "parallel",
-                      "parallelSteps": [
-                        {
-                          "component": "COMPONENT_PRE"
-                        },
-                        {
-                          "component": "COMPONENT_UN"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "name": "COMPONENT_S",
-                  "component": "COMPONENT_S"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "L链路",
-          "type": "conditional",
-          "conditionSteps": [
-            {
-              "predicateClassName": "com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate",
-              "componentStep": {
-                "type": "sequential",
-                "name": "thenWorkFlow",
-                "sequentialSteps": [
-                  {
-                    "name": "thenWorkFlow",
-                    "type": "sequential",
-                    "conditionStep": 1,
-                    "sequentialSteps": [
-                      {
-                        "name": "COMPONENT_LParael",
-                        "type": "parallel",
-                        "parallelSteps": [
-                          {
-                            "name": "COMPONENT_L",
-                            "component": "COMPONENT_L"
-                          },
-                          {
-                            "name": "COMPONENT_L_COMPONENT_QM",
-                            "component": "COMPONENT_LQM"
-                          }
-                        ]
-                      },
-                      {
-                        "name": "COMPONENT_LR",
-                        "component": "COMPONENT_LR"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "COMPONENT_G",
-      "component": "COMPONENT_G"
-    }
-  ]
-}
-```
-
-### yml 结构示例
-```yaml
-name: 复杂工作流示例
-type: sequential
-sequentialSteps:
-  - name: COMPONENT_I
-    component: COMPONENT_I
-  - name: e2e and COMPONENT_L flow
-    type: parallel
-    parallelSteps:
-      - name: e2e-flow
-        type: sequential
-        sequentialSteps:
-          - name: COMPONENT_V
-            component: COMPONENT_V
-          - name: 并行执行
-            type: parallel
-            parallelSteps:
-              - component: COMPONENT_BE
-              - component: COMPONENT_QM
-          - name: 实体集成
-            component: ENTITY_ENSEMBLE
-          - name: 并行执行 全局节点 & COMPONENT_S 节点
-            type: parallel
-            parallelSteps:
-              - name: 全局节点
-                type: sequential
-                sequentialSteps:
-                  - name: 初始化操作
-                    component: COMPONENT_GEN
-                  - name: 标签集成
-                    component: COMPONENT_TAG
-                  - name: 并行执行预测
-                    type: parallel
-                    parallelSteps:
-                      - component: COMPONENT_PRE
-                      - component: COMPONENT_UN
-              - name: COMPONENT_S
-                component: COMPONENT_S
-      - name: L链路
-        type: conditional
-        conditionSteps:
-          - predicateClassName: com.xiaopeng.workflow.components.predict.XGPTSwitchPredicate
-            componentStep:
-              type: sequential
-              name: thenWorkFlow
-              sequentialSteps:
-                - name: thenWorkFlow
-                  type: sequential
-                  conditionStep: 1
-                  sequentialSteps:
-                    - name: COMPONENT_LParael
-                      type: parallel
-                      parallelSteps:
-                        - name: COMPONENT_L
-                          component: COMPONENT_L
-                        - name: COMPONENT_L_COMPONENT_QM
-                          component: COMPONENT_LQM
-                    - name: COMPONENT_LR
-                      component: COMPONENT_LR
-  - name: COMPONENT_G
-    component: COMPONENT_G
-
-```
 
 
 ## 流程图
