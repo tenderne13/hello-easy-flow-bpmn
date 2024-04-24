@@ -1,3 +1,31 @@
+# 整体规划
+## 规划图
+```mermaid
+graph TD
+
+    subgraph BPMN
+        direction TB
+        Bpmn --> XpComponentTree
+    end
+
+    subgraph dataTransform
+        direction TB
+        json --> XPComponentStep
+        yaml --> XPComponentStep
+    end
+
+    subgraph easyWorkFlow
+        XPWorkFLowBuilder --> workFlow
+    end
+    BPMN --> dataTransform
+
+    dataTransform --> easyWorkFlow
+```
+- [ ] BPMN图形化转换为组件树
+- [x] json/yaml转换为组件树
+- [x] 组件树转换为easy-flow可识别的工作流
+
+
 # XPComponentStep 类文档说明
 
 ## 概述
