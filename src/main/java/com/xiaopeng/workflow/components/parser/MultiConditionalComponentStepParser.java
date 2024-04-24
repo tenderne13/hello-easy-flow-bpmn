@@ -56,7 +56,7 @@ public class MultiConditionalComponentStepParser implements ComponentStepParser 
             WorkFlow workFlow = buildWorkFlow(componentMap, componentStep, threadPool);
             // 构建条件判断器
             String predicateClassName = step.getPredicateClassName();
-            WorkReportPredicate predicate = StringUtils.isNotEmpty(predicateClassName) ? WorkReportPredicateFactory.createPredicate(predicateClassName) : WorkReportPredicate.ALWAYS_FALSE;
+            WorkReportPredicate predicate = StringUtils.isNotEmpty(predicateClassName) ? WorkReportPredicateFactory.createPredicate(predicateClassName,step.getPredicateParameterTypes()) : WorkReportPredicate.ALWAYS_FALSE;
             return new MultiConditionalFlow.PredictWorkPair(predicate, workFlow);
         }).toList();
     }

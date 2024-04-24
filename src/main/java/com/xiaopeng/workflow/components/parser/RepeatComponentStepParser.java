@@ -25,7 +25,7 @@ public class RepeatComponentStepParser implements ComponentStepParser {
         log.info("===================> repeat {} build start <====================", stepId);
         XPRepeatStep repeatStep = componentStep.getRepeatStep();
         String predicateClassName = repeatStep.getPredicateClassName();
-        WorkReportPredicate predicate = StringUtils.isNotEmpty(predicateClassName) ? WorkReportPredicateFactory.createPredicate(predicateClassName) : WorkReportPredicate.ALWAYS_FALSE;
+        WorkReportPredicate predicate = StringUtils.isNotEmpty(predicateClassName) ? WorkReportPredicateFactory.createPredicate(predicateClassName, repeatStep.getPredicateParameterTypes()) : WorkReportPredicate.ALWAYS_FALSE;
         WorkFlow workFlow = buildWorkFlow(componentMap, repeatStep.getComponentStep(), threadPool);
         log.info("===================> repeat {} flow build success, component info  ==> {} <===", stepId, JSONUtil.toJsonStr(componentStep));
         return RepeatFlowFactory.buildRepeatFlow(componentStep.getName(), workFlow, predicate);

@@ -6,7 +6,16 @@
       "name": "重复3次",
       "type": "REPEAT",
       "repeatStep": {
-        "predicateClassName": "com.xiaopeng.workflow.components.predict.MultiPredicate.REPEAT_PREDICATE",
+        "predicateClassName": "com.xiaopeng.workflow.components.predict.CustomConsPredicate",
+        "predicateParameterTypes": [
+          {
+            "className": "com.xiaopeng.workflow.components.predict.CustomEntity",
+            "value": {
+              "times": 2,
+              "componentName": "测试对应组件复杂入参"
+            }
+          }
+        ],
         "componentStep": {
           "name": "COMPONENT_I",
           "component": "COMPONENT_I"
