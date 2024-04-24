@@ -6,6 +6,7 @@ import com.xiaopeng.workflow.components.XPComponentStep;
 import com.xiaopeng.workflow.components.XPConditionStep;
 import com.xiaopeng.workflow.components.base.MultiConditionalFlow;
 import com.xiaopeng.workflow.components.constants.FlowConstants;
+import com.xiaopeng.workflow.components.factory.ConditionFlowFactory;
 import com.xiaopeng.workflow.components.factory.WorkReportPredicateFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -34,7 +35,7 @@ public class MultiConditionalComponentStepParser implements ComponentStepParser 
         List<MultiConditionalFlow.PredictWorkPair> predictWorkPairs = buildPredictWorkPairList(conditionSteps, componentMap, threadPool);
         // 2, 构建OTHERWISE 工作流
         Work otherWishWork = buildOtherWishWork(conditionSteps, componentMap, threadPool);
-        MultiConditionalFlow conditionalFlow = new MultiConditionalFlow(predictWorkPairs, otherWishWork);
+        MultiConditionalFlow conditionalFlow = ConditionFlowFactory.buildMultiConditionalFlow(predictWorkPairs, otherWishWork);
         log.info("===================> conditional {} flow build success, component info  ==> {} <===", stepId, JSONUtil.toJsonStr(componentStep));
         return conditionalFlow;
     }
@@ -56,7 +57,7 @@ public class MultiConditionalComponentStepParser implements ComponentStepParser 
             WorkFlow workFlow = buildWorkFlow(componentMap, componentStep, threadPool);
             // 构建条件判断器
             String predicateClassName = step.getPredicateClassName();
-            WorkReportPredicate predicate = StringUtils.isNotEmpty(predicateClassName) ? WorkReportPredicateFactory.createPredicate(predicateClassName,step.getPredicateParameterTypes()) : WorkReportPredicate.ALWAYS_FALSE;
+            WorkReportPredicate predicate = StringUtils.isNotEmpty(predicateClassName) ? WorkReportPredicateFactory.createPredicate(predicateClassName, step.getPredicateParameterTypes()) : WorkReportPredicate.ALWAYS_FALSE;
             return new MultiConditionalFlow.PredictWorkPair(predicate, workFlow);
         }).toList();
     }

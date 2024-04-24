@@ -15,7 +15,15 @@ public class CustomConsPredicate implements WorkReportPredicate {
 
     private String componentName;
 
+    private Boolean gptSwitch = false;
+
     private AtomicInteger counter = new AtomicInteger();
+
+    public CustomConsPredicate(CustomEntity customEntity, Boolean gptSwitch) {
+        this.times = customEntity.getTimes() == null ? 0 : customEntity.getTimes();
+        this.componentName = customEntity.getComponentName();
+        this.gptSwitch = gptSwitch;
+    }
 
     public CustomConsPredicate(CustomEntity customEntity) {
         this.times = customEntity.getTimes() == null ? 0 : customEntity.getTimes();
@@ -24,7 +32,7 @@ public class CustomConsPredicate implements WorkReportPredicate {
 
     @Override
     public boolean apply(WorkReport workReport) {
-        log.info("CustomConsPredicate apply: {} , 组件名称{}", counter.get(), componentName);
+        log.info("CustomConsPredicate apply: {} , 组件名称{},开关状态：{}", counter.get(), componentName, gptSwitch);
         return counter.incrementAndGet() != times;
     }
 }

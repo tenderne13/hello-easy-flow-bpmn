@@ -14,6 +14,10 @@
               "times": 2,
               "componentName": "测试对应组件复杂入参"
             }
+          },
+          {
+            "className": "java.lang.Boolean",
+            "value": true
           }
         ],
         "componentStep": {

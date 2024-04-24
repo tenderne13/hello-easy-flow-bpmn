@@ -50,7 +50,6 @@ public class MultiConditionalFlow implements WorkFlow {
         return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
     }
 
-    @Builder
     @Data
     public static class PredictWorkPair {
         private WorkReportPredicate predicate;
@@ -59,6 +58,53 @@ public class MultiConditionalFlow implements WorkFlow {
         public PredictWorkPair(WorkReportPredicate predicate, Work work) {
             this.predicate = predicate;
             this.work = work;
+        }
+    }
+
+
+    public static class Builder {
+
+        private Builder() {
+
+        }
+
+        public static ThenWorkListStep aNewMultiConditionalFlow() {
+            return new BuildSteps();
+        }
+
+        public interface ThenWorkListStep {
+            OtherWishWorkStep withThenWorkList(List<PredictWorkPair> thenWorkList);
+        }
+
+        public interface OtherWishWorkStep {
+            BuildStep withOtherWishWork(Work otherWishWork);
+        }
+
+        public interface BuildStep {
+            MultiConditionalFlow build();
+        }
+
+        private static class BuildSteps implements ThenWorkListStep, OtherWishWorkStep, BuildStep {
+
+            private List<PredictWorkPair> thenWorkList;
+            private Work otherWishWork;
+
+            @Override
+            public OtherWishWorkStep withThenWorkList(List<PredictWorkPair> thenWorkList) {
+                this.thenWorkList = thenWorkList;
+                return this;
+            }
+
+            @Override
+            public BuildStep withOtherWishWork(Work otherWishWork) {
+                this.otherWishWork = otherWishWork;
+                return this;
+            }
+
+            @Override
+            public MultiConditionalFlow build() {
+                return new MultiConditionalFlow(this.thenWorkList, this.otherWishWork);
+            }
         }
     }
 }
