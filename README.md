@@ -307,7 +307,7 @@ mvn clean test -D test=com.xiaopeng.workflow.HelloEasyFlowBpmnApplicationTests#t
 
 ### json 结构示例
 
-[simple_complex.json](src%2Ftest%2Fresources%2Fflow.json%2Fsimple_complex.json)
+[complex.json](src%2Ftest%2Fresources%2Fflow.json%2Fcomplex.json)
 
 
 ## 流程图
