@@ -6,7 +6,11 @@ import cn.hutool.json.JSONUtil;
 import com.xiaopeng.workflow.components.WorkFlowType;
 import com.xiaopeng.workflow.components.WorkFlowTypeConverter;
 import com.xiaopeng.workflow.components.XPComponentStep;
+import com.xiaopeng.workflow.components.XPConditionStep;
+import com.xiaopeng.workflow.components.base.MultiConditionalFlow;
+import com.xiaopeng.workflow.components.constants.FlowConstants;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.Process;
@@ -27,7 +31,7 @@ public class CamundaBpmnConverter {
 
 
     public static void main(String[] args) {
-        BpmnModelInstance bpmnModelInstance = Bpmn.readModelFromStream(new ClassPathResource("simple_paral.bpmn").getStream());
+        BpmnModelInstance bpmnModelInstance = Bpmn.readModelFromStream(new ClassPathResource("simple_condition.bpmn").getStream());
 
         Collection<Process> processList = bpmnModelInstance.getModelElementsByType(Process.class);
 
@@ -108,11 +112,43 @@ public class CamundaBpmnConverter {
                     }
                     return parallelStep;
                 case CONDITIONAL:
-                    break;
+                    log.warn("SubProcess 未做实现 ===> CONDITIONAL");
+                    //排他网关
+                    FlowNode judgeNode = realFlowNodeList.get(0);
+                    log.info("judgeNode : {}", judgeNode.getName());
+                    if (!(judgeNode instanceof ExclusiveGateway)) {
+                        throw new RuntimeException("judgeNode is not Gateway");
+                    }
+                    ExclusiveGateway exclusiveGateway = (ExclusiveGateway) judgeNode;
+                    SequenceFlow defaultBranch = exclusiveGateway.getDefault();
+
+                    XPComponentStep conditionStep = XPComponentStep.builder().type(WorkFlowType.CONDITIONAL).build();
+                    List<XPConditionStep> conditionSteps = new ArrayList<>();
+                    judgeNode.getOutgoing().forEach(sequenceFlow -> {
+
+                        XPConditionStep xpConditionStep = new XPConditionStep();
+                        String predicateClassName = getPredicateClassName(sequenceFlow);
+                        xpConditionStep.setPredicateClassName(predicateClassName);
+
+                        if (defaultBranch == sequenceFlow) {
+                            xpConditionStep.setConditionStep(FlowConstants.OTHERWISE_STEP);
+                        }
+
+                        FlowNode targetNode = sequenceFlow.getTarget();
+                        log.info("targetNode : {}", targetNode.getName());
+                        XPComponentStep componentStep = buildXPComponentStepBeta(targetNode);
+                        xpConditionStep.setComponentStep(componentStep);
+                        conditionSteps.add(xpConditionStep);
+                    });
+                    conditionStep.setConditionSteps(conditionSteps);
+                    return conditionStep;
                 case REPEAT:
-                    break;
+                    log.warn("SubProcess 未做实现 ===> REPEAT");
+                    throw new RuntimeException("SubProcess 未做实现 ===> REPEAT");
+                    //break;
                 default:
-                    break;
+                    log.warn("SubProcess 未做实现 ===> {}", flowType);
+                    throw new RuntimeException("SubProcess 未做实现 ===> " + flowType);
             }
         } else if (flowNode instanceof Task) {
             log.info("baseCase  ==> singleTask : {}", flowNode.getName());
@@ -125,20 +161,27 @@ public class CamundaBpmnConverter {
 
     private static WorkFlowType getStepType(FlowNode flowNode) {
         ExtensionElements extensionElements = flowNode.getExtensionElements();
+        String typeValue = getSingleExtensionPropertie(extensionElements, "type");
+        WorkFlowTypeConverter converter = new WorkFlowTypeConverter();
+        return converter.convert(typeValue, WorkFlowType.SEQUENTIAL);
+    }
+
+    private static String getPredicateClassName(SequenceFlow sequenceFlow) {
+        return getSingleExtensionPropertie(sequenceFlow.getExtensionElements(), "predicateClassName");
+    }
+
+    private static String getSingleExtensionPropertie(ExtensionElements extensionElements, String key) {
         if (extensionElements != null) {
             List<CamundaProperties> list = extensionElements.getElementsQuery().filterByType(CamundaProperties.class).list();
             if (CollectionUtil.isNotEmpty(list)) {
                 CamundaProperties camundaProperties = list.get(0);
-                Optional<CamundaProperty> propertyOptional = camundaProperties.getCamundaProperties().stream().filter(item -> "type".equals(item.getCamundaName())).findFirst();
+                Optional<CamundaProperty> propertyOptional = camundaProperties.getCamundaProperties().stream().filter(item -> StringUtils.isNotEmpty(key) && key.equals(item.getCamundaName())).findFirst();
                 if (propertyOptional.isPresent()) {
                     CamundaProperty property = propertyOptional.get();
-                    String camundaValue = property.getCamundaValue();
-                    WorkFlowTypeConverter converter = new WorkFlowTypeConverter();
-                    WorkFlowType workFlowType = converter.convert(camundaValue, WorkFlowType.SEQUENTIAL);
-                    return workFlowType;
+                    return property.getCamundaValue();
                 }
             }
         }
-        return WorkFlowType.SEQUENTIAL;
+        return "";
     }
 }
