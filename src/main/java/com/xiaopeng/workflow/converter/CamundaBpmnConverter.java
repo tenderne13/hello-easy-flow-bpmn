@@ -7,7 +7,6 @@ import com.xiaopeng.workflow.components.WorkFlowType;
 import com.xiaopeng.workflow.components.WorkFlowTypeConverter;
 import com.xiaopeng.workflow.components.XPComponentStep;
 import com.xiaopeng.workflow.components.XPConditionStep;
-import com.xiaopeng.workflow.components.base.MultiConditionalFlow;
 import com.xiaopeng.workflow.components.constants.FlowConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +16,7 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.*;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaProperties;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaProperty;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,22 +33,29 @@ public class CamundaBpmnConverter {
     public static void main(String[] args) {
         BpmnModelInstance bpmnModelInstance = Bpmn.readModelFromStream(new ClassPathResource("simple_condition.bpmn").getStream());
 
-        Collection<Process> processList = bpmnModelInstance.getModelElementsByType(Process.class);
+        XPComponentStep convertResult = convert(bpmnModelInstance);
+        log.info("convertResult : {}", JSONUtil.toJsonStr(convertResult));
+    }
 
-        for (Process process : processList) {
-            System.out.println("process id: " + process.getId());
-            System.out.println("process Name: " + process.getName());
-            List<StartEvent> startEventList = process.getChildElementsByType(StartEvent.class).stream().toList();
-            if (startEventList.isEmpty()) {
-                log.error("process {} has no start event", process.getName());
-                break;
-            }
-            XPComponentStep rootXPComponentStep = XPComponentStep.builder().type(WorkFlowType.SEQUENTIAL).name(process.getName()).sequentialSteps(new ArrayList<>()).build();
-            List<FlowNode> flowNodes = startEventList.get(0).getSucceedingNodes().list();
-            //todo 一个层级中只能有一个startEvent
-            buildSequentialXPComponentSteps(flowNodes, rootXPComponentStep);
-            log.info(JSONUtil.toJsonStr(rootXPComponentStep));
+
+    public static XPComponentStep convert(BpmnModelInstance bpmnModelInstance) {
+        Collection<Process> processList = bpmnModelInstance.getModelElementsByType(Process.class);
+        if (CollectionUtils.isEmpty(processList)) {
+            log.error("bpmnModelInstance has no process");
+            throw new RuntimeException("bpmnModelInstance has no process");
         }
+        Process process = processList.iterator().next();
+        List<StartEvent> startEventList = process.getChildElementsByType(StartEvent.class).stream().toList();
+        if (startEventList.isEmpty()) {
+            log.error("process {} has no start event", process.getName());
+            throw new RuntimeException("process has no start event");
+        }
+        XPComponentStep rootXPComponentStep = XPComponentStep.builder().type(WorkFlowType.SEQUENTIAL).name(process.getName()).sequentialSteps(new ArrayList<>()).build();
+        List<FlowNode> flowNodes = startEventList.get(0).getSucceedingNodes().list();
+        //一个层级中只能有一个startEvent
+        buildSequentialXPComponentSteps(flowNodes, rootXPComponentStep);
+        log.info(JSONUtil.toJsonStr(rootXPComponentStep));
+        return rootXPComponentStep;
     }
 
 
