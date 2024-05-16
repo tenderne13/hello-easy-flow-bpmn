@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_09zvvq5" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.19.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.20.0">
+  <bpmn:process id="Process_0uq3vua" name="repeat示例" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0wicp1p</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="Activity_11g73r2" name="REPEAT标识体">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property name="type" value="REPEAT" />
+          <camunda:property name="predicateClassName" value="com.xiaopeng.workflow.components.predict.CustomConsPredicate" />
+          <camunda:property name="predicateParameterTypes" value="[{&#34;className&#34;:&#34;com.xiaopeng.workflow.components.predict.CustomEntity&#34;,&#34;value&#34;:{&#34;times&#34;:2,&#34;componentName&#34;:&#34;测试对应组件复杂入参&#34;}},{&#34;className&#34;:&#34;java.lang.Boolean&#34;,&#34;value&#34;:true}]" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0wicp1p</bpmn:incoming>
+      <bpmn:outgoing>Flow_0udnu8h</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1sxo0r8">
+        <bpmn:outgoing>Flow_0jroqv6</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:subProcess id="Activity_19agrez" name="顺序流标识">
+        <bpmn:extensionElements>
+          <camunda:properties>
+            <camunda:property name="type" value="SEQUENTIAL" />
+          </camunda:properties>
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0jroqv6</bpmn:incoming>
+        <bpmn:startEvent id="Event_028pnkt">
+          <bpmn:outgoing>Flow_0un12lb</bpmn:outgoing>
+        </bpmn:startEvent>
+        <bpmn:task id="Activity_0cfw4su" name="COMPONENT_GEN">
+          <bpmn:incoming>Flow_0un12lb</bpmn:incoming>
+          <bpmn:outgoing>Flow_1msdv6s</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_0un12lb" sourceRef="Event_028pnkt" targetRef="Activity_0cfw4su" />
+        <bpmn:task id="Activity_0rglivg" name="COMPONENT_TAG">
+          <bpmn:incoming>Flow_1msdv6s</bpmn:incoming>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_1msdv6s" sourceRef="Activity_0cfw4su" targetRef="Activity_0rglivg" />
+      </bpmn:subProcess>
+      <bpmn:sequenceFlow id="Flow_0jroqv6" sourceRef="Event_1sxo0r8" targetRef="Activity_19agrez" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0wicp1p" sourceRef="StartEvent_1" targetRef="Activity_11g73r2" />
+    <bpmn:task id="Activity_16qzbw3" name="COMPONENT_I">
+      <bpmn:incoming>Flow_0udnu8h</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0udnu8h" sourceRef="Activity_11g73r2" targetRef="Activity_16qzbw3" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0uq3vua">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="522" y="62" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16qzbw3_di" bpmnElement="Activity_16qzbw3">
+        <dc:Bounds x="450" y="1040" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11g73r2_di" bpmnElement="Activity_11g73r2" isExpanded="true">
+        <dc:Bounds x="160" y="252" width="725" height="678" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1sxo0r8_di" bpmnElement="Event_1sxo0r8">
+        <dc:Bounds x="512" y="302" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19agrez_di" bpmnElement="Activity_19agrez" isExpanded="true">
+        <dc:Bounds x="305" y="370" width="450" height="440" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_028pnkt_di" bpmnElement="Event_028pnkt">
+        <dc:Bounds x="502" y="442" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cfw4su_di" bpmnElement="Activity_0cfw4su">
+        <dc:Bounds x="470" y="510" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rglivg_di" bpmnElement="Activity_0rglivg">
+        <dc:Bounds x="470" y="660" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0un12lb_di" bpmnElement="Flow_0un12lb">
+        <di:waypoint x="520" y="478" />
+        <di:waypoint x="520" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1msdv6s_di" bpmnElement="Flow_1msdv6s">
+        <di:waypoint x="520" y="590" />
+        <di:waypoint x="520" y="660" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jroqv6_di" bpmnElement="Flow_0jroqv6">
+        <di:waypoint x="530" y="338" />
+        <di:waypoint x="530" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wicp1p_di" bpmnElement="Flow_0wicp1p">
+        <di:waypoint x="540" y="98" />
+        <di:waypoint x="540" y="252" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0udnu8h_di" bpmnElement="Flow_0udnu8h">
+        <di:waypoint x="500" y="930" />
+        <di:waypoint x="500" y="1040" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
