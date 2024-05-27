@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.xiaopeng.workflow.components.WorkFlowType;
 import com.xiaopeng.workflow.components.WorkFlowTypeConverter;
 import com.xiaopeng.workflow.components.XPComponentStep;
+import com.xiaopeng.workflow.converter.exception.ConversionException;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
@@ -53,13 +54,13 @@ public class CamundaBpmnConverter {
         Collection<Process> processList = bpmnModelInstance.getModelElementsByType(Process.class);
         if (CollectionUtils.isEmpty(processList)) {
             log.error("bpmnModelInstance has no process");
-            throw new RuntimeException("bpmnModelInstance has no process");
+            throw new ConversionException("bpmnModelInstance has no process");
         }
         Process process = processList.iterator().next();
         List<StartEvent> startEventList = process.getChildElementsByType(StartEvent.class).stream().toList();
         if (startEventList.isEmpty()) {
             log.error("process {} has no start event", process.getName());
-            throw new RuntimeException("process has no start event");
+            throw new ConversionException("process has no start event");
         }
         //最外层Process 为顺序流
         XPComponentStep rootXPComponentStep = XPComponentStep.builder().type(WorkFlowType.SEQUENTIAL).name(process.getName()).sequentialSteps(new ArrayList<>()).build();
@@ -81,7 +82,7 @@ public class CamundaBpmnConverter {
     private static void buildSequentialXPComponentSteps(List<FlowNode> flowNodeList, XPComponentStep xpComponentStep) {
         if (flowNodeList.size() > 1) {
             log.warn(" 主流程存在多个 出口，暂不支持 =====");
-            throw new RuntimeException("主流程存在多个 出口，暂不支持");
+            throw new ConversionException("主流程存在多个 出口，暂不支持");
         }
         FlowNode flowNode = flowNodeList.get(0);
         do {
@@ -100,7 +101,7 @@ public class CamundaBpmnConverter {
             List<StartEvent> startEventList = flowNode.getChildElementsByType(StartEvent.class).stream().toList();
             if (startEventList.isEmpty()) {
                 log.error("SubProcess {} has no start event", flowNode.getName());
-                throw new RuntimeException("SubProcess has no start event");
+                throw new ConversionException("SubProcess has no start event");
             }
             switch (flowType) {
                 case SEQUENTIAL:
@@ -113,14 +114,14 @@ public class CamundaBpmnConverter {
                     return REPEAT_COMPONENT_STEP_CONVERTER.convert(flowNode);
                 default:
                     log.warn("SubProcess 未做实现 ===> {}", flowType);
-                    throw new RuntimeException("SubProcess 未做实现 ===> " + flowType);
+                    throw new ConversionException("SubProcess 未做实现 ===> " + flowType);
             }
         } else if (flowNode instanceof Task) {
             log.info("baseCase  ==> singleTask : {}", flowNode.getName());
             return XPComponentStep.builder().component(flowNode.getName()).build();
         } else {
             log.warn("该类别未做实现 ===> {}", flowNode.getElementType());
-            throw new RuntimeException("该类别未做实现 ===> " + flowNode.getElementType());
+            throw new ConversionException("该类别未做实现 ===> " + flowNode.getElementType());
         }
     }
 
